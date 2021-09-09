@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Capítulo 6: Funções com resultado | PensePython2e</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Capítulo 6: Funções com resultado" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey" />
+<meta property="og:description" content="Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey" />
+<link rel="canonical" href="06-funcoes-result.html" />
+<meta property="og:url" content="https://penseallen.github.io/PensePython2e/06-funcoes-result.html" />
+<meta property="og:site_name" content="PensePython2e" />
+<script type="application/ld+json">
+{"@type":"WebPage","headline":"Capítulo 6: Funções com resultado","url":"https://penseallen.github.io/PensePython2e/06-funcoes-result.html","description":"Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <link rel="stylesheet" href="assets/css/style.css@v=afa460130599dbde01620e86c38923f785023956.css">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">PensePython2e</h1>
+      <h2 class="project-tagline">Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey</h2>
+      
+        <a href="https://github.com/PenseAllen/PensePython2e" class="btn">View on GitHub</a>
+      
+      
+    </section>
+
+    <section class="main-content">
+      <h1 id="capítulo-6-funções-com-resultado">Capítulo 6: Funções com resultado</h1>
+
+<p>Muitas das funções do Python que usamos, como as matemáticas, produzem valores de retorno. Mas as funções que escrevemos até agora são todas nulas: têm um efeito, como exibir um valor ou mover uma tartaruga, mas não têm um valor de retorno. Neste capítulo você aprenderá a escrever funções com resultados.</p>
+
+<h2 id="61---valores-de-retorno">6.1 - Valores de retorno</h2>
+
+<p>A chamada de função gera um valor de retorno, que normalmente atribuímos a uma variável ou usamos como parte de uma expressão.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">e</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">height</span> <span class="o">=</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">radians</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>As funções que descrevemos, por enquanto, são todas nulas. Resumindo, elas não têm valores de retorno; mais precisamente, o seu valor de retorno é None.</p>
+
+<p>Neste capítulo veremos (finalmente) como escrever funções com resultados. O primeiro exemplo é area, que devolve a área de um círculo com o raio dado:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="n">radius</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">a</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">radius</span><span class="o">**</span><span class="mi">2</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">a</span>
+</code></pre></div></div>
+
+<p>Já vimos a instrução return, mas em uma função com resultado ela inclui uma expressão. Esta instrução significa: “Volte imediatamente desta função e use a seguinte expressão como valor de retorno”. A expressão pode ser arbitrariamente complicada, então poderíamos ter escrito esta função de forma mais concisa:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="n">radius</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">radius</span><span class="o">**</span><span class="mi">2</span>
+</code></pre></div></div>
+
+<p>Por outro lado, variáveis temporárias como a, tornam a depuração mais fácil.</p>
+
+<p>Às vezes, é útil ter várias instruções de retorno, uma em cada ramo de uma condicional:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">absolute_value</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="o">-</span><span class="n">x</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">else</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">x</span>
+</code></pre></div></div>
+
+<p>Como essas instruções return estão em uma condicional alternativa, apenas uma é executada.</p>
+
+<p>Logo que uma instrução de retorno seja executada, a função termina sem executar nenhuma instrução subsequente. Qualquer código que apareça depois de uma instrução return, ou em qualquer outro lugar que o fluxo da execução não atinja, é chamado de código morto.</p>
+
+<p>Em uma função com resultado, é uma boa ideia garantir que cada caminho possível pelo programa atinja uma instrução return. Por exemplo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">absolute_value</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="o">-</span><span class="n">x</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">x</span>
+</code></pre></div></div>
+
+<p>Essa função é incorreta porque se x for 0, nenhuma condição é verdade, e a função termina sem chegar a uma instrução return. Se o fluxo de execução chegar ao fim de uma função, o valor de retorno é None, que não é o valor absoluto de 0:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">absolute_value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="bp">None</span>
+</code></pre></div></div>
+
+<p>A propósito, o Python oferece uma função integrada chamada abs, que calcula valores absolutos.</p>
+
+<p>Como exercício, escreva uma função compare que receba dois valores, x e y, e retorne 1 se x &gt; y, 0 se x == y e -1 se x &lt; y.</p>
+
+<h2 id="62---desenvolvimento-incremental">6.2 - Desenvolvimento incremental</h2>
+
+<p>Conforme você escrever funções maiores, pode ser que passe mais tempo as depurando.</p>
+
+<p>Para lidar com programas cada vez mais complexos, você pode querer tentar usar um processo chamado de desenvolvimento incremental. A meta do desenvolvimento incremental é evitar longas sessões de depuração, acrescentando e testando pequenas partes do código de cada vez.</p>
+
+<p>Como um exemplo, vamos supor que você queira encontrar a distância entre dois pontos dados pelas coordenadas (x1, y1) e(x2, y2). Pelo teorema de Pitágoras, a distância é:</p>
+
+<p><img src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/p63f1.png" alt="Fórmula – Distância entre dois pontos." /></p>
+
+<p>O primeiro passo é pensar como uma função distance deveria ser no Python. Em outras palavras, quais são as entradas (parâmetros) e qual é a saída (valor de retorno)?</p>
+
+<p>Nesse caso, as entradas são dois pontos que você pode representar usando quatro números. O valor de retorno é a distância representada por um valor de ponto flutuante.</p>
+
+<p>Imediatamente, é possível escrever um rascunho da função:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="mf">0.0</span>
+</code></pre></div></div>
+
+<p>Claro que esta versão não calcula distâncias; sempre retorna zero. Mas está sintaticamente correta, e pode ser executada, o que significa que você pode testá-la antes de torná-la mais complicada.</p>
+
+<p>Para testar a nova função, chame-a com argumentos de amostra:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">distance</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="mf">0.0</span>
+</code></pre></div></div>
+
+<p>Escolhi esses valores para que a distância horizontal seja 3 e a distância vertical, 4; assim, o resultado final é 5, a hipotenusa de um triângulo 3-4-5. Ao testar uma função, é útil saber a resposta certa.</p>
+
+<p>Neste ponto confirmamos que a função está sintaticamente correta, e podemos começar a acrescentar código ao corpo. Um próximo passo razoável é encontrar as diferenças x2 − x1 e y2 − y1. A próxima versão guarda esses valores em variáveis temporárias e os exibe:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">dx</span> <span class="o">=</span> <span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">dy</span> <span class="o">=</span> <span class="n">y2</span> <span class="o">-</span> <span class="n">y1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="s">'dx is'</span><span class="p">,</span> <span class="n">dx</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="s">'dy is'</span><span class="p">,</span> <span class="n">dy</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="mf">0.0</span>
+</code></pre></div></div>
+
+<p>Se a função estiver funcionando, deve exibir dx is 3 e dy is 4. Nesse caso sabemos que a função está recebendo os argumentos corretos e executando o primeiro cálculo acertadamente. Se não, há poucas linhas para verificar.</p>
+
+<p>Depois calculamos a soma dos quadrados de dx e dy:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">dx</span> <span class="o">=</span> <span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">dy</span> <span class="o">=</span> <span class="n">y2</span> <span class="o">-</span> <span class="n">y1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">dsquared</span> <span class="o">=</span> <span class="n">dx</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">dy</span><span class="o">**</span><span class="mi">2</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="s">'dsquared is: '</span><span class="p">,</span> <span class="n">dsquared</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="mf">0.0</span>
+</code></pre></div></div>
+
+<p>Nesta etapa você executaria o programa mais uma vez e verificaria a saída (que deve ser 25). Finalmente, pode usar math.sqrt para calcular e devolver o resultado:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">dx</span> <span class="o">=</span> <span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">dy</span> <span class="o">=</span> <span class="n">y2</span> <span class="o">-</span> <span class="n">y1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">dsquared</span> <span class="o">=</span> <span class="n">dx</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">dy</span><span class="o">**</span><span class="mi">2</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">result</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dsquared</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">result</span>
+</code></pre></div></div>
+
+<p>Se funcionar corretamente, pronto. Senão, uma ideia é exibir o valor result antes da instrução de retorno.</p>
+
+<p>A versão final da função não exibe nada ao ser executada; apenas retorna um valor. As instruções print que escrevemos são úteis para depuração, mas assim que conferir se a função está funcionando você deve retirá-las. Códigos desse tipo são chamados de scaffolding (andaime) porque são úteis para construir o programa, mas não são parte do produto final.</p>
+
+<p>Ao começar, você deveria acrescentar apenas uma linha ou duas de código de cada vez. Conforme adquira mais experiência, poderá escrever e depurar parcelas maiores. De qualquer forma, o desenvolvimento incremental pode economizar muito tempo de depuração.</p>
+
+<p>Os principais aspectos do processo são:</p>
+
+<ol>
+  <li>
+    <p>Comece com um programa que funcione e faça pequenas alterações incrementais. Se houver um erro em qualquer ponto, será bem mais fácil encontrá-lo.</p>
+  </li>
+  <li>
+    <p>Use variáveis para guardar valores intermediários, assim poderá exibi-los e verificá-los.</p>
+  </li>
+  <li>
+    <p>Uma vez que o programa esteja funcionando, você pode querer remover uma parte do scaffolding ou consolidar várias instruções em expressões compostas, mas apenas se isso não tornar o programa difícil de ler.</p>
+  </li>
+</ol>
+
+<p>Como exercício, use o desenvolvimento incremental para escrever uma função chamada hypotenuse, que devolva o comprimento da hipotenusa de um triângulo retângulo dados os comprimentos dos outros dois lados como argumentos. Registre cada etapa do processo de desenvolvimento no decorrer do processo.</p>
+
+<h2 id="63---composição">6.3 - Composição</h2>
+
+<p>Como você já deveria esperar a essa altura, é possível chamar uma função de dentro de outra. Como exemplo, escreveremos uma função que recebe dois pontos, o centro do círculo e um ponto no perímetro, para calcular a área do círculo.</p>
+
+<p>Suponha que o ponto do centro seja guardado nas variáveis xc e yc e o ponto de perímetro está em xp e yp. O primeiro passo deve ser encontrar o raio do círculo, que é a distância entre os dois pontos. Acabamos de escrever uma função, distance, que faz isto:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">radius</span> <span class="o">=</span> <span class="n">distance</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">xp</span><span class="p">,</span> <span class="n">yp</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>O próximo passo deve ser encontrar a área de um círculo com aquele raio; acabamos de escrever isso também:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">result</span> <span class="o">=</span> <span class="n">area</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Encapsulando esses passos em uma função, temos:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">circle_area</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">xp</span><span class="p">,</span> <span class="n">yp</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">radius</span> <span class="o">=</span> <span class="n">distance</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">xp</span><span class="p">,</span> <span class="n">yp</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">result</span> <span class="o">=</span> <span class="n">area</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">result</span>
+</code></pre></div></div>
+
+<p>As variáveis temporárias radius e result são úteis para desenvolvimento e depuração, e uma vez que o programa esteja funcionando podemos torná-lo mais conciso compondo chamadas de função:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">circle_area</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">xp</span><span class="p">,</span> <span class="n">yp</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">area</span><span class="p">(</span><span class="n">distance</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">xp</span><span class="p">,</span> <span class="n">yp</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h2 id="64---funções-booleanas">6.4 - Funções booleanas</h2>
+
+<p>As funções podem retornar booleans, o que pode ser conveniente para esconder testes complicados dentro de funções. Por exemplo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">is_divisible</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="n">y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">True</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">else</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">False</span>
+</code></pre></div></div>
+
+<p>É comum dar nomes de funções booleanas que pareçam perguntas de sim ou não; is_divisible retorna True ou False para indicar se x é divisível por y.</p>
+
+<p>Aqui está um exemplo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">is_divisible</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="bp">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">is_divisible</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="bp">True</span>
+</code></pre></div></div>
+
+<p>O resultado do operador == é um booleano, então podemos escrever a função de forma mais concisa, retornando-o diretamente:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">is_divisible</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">x</span> <span class="o">%</span> <span class="n">y</span> <span class="o">==</span> <span class="mi">0</span>
+</code></pre></div></div>
+
+<p>As funções booleanas muitas vezes são usadas em instruções condicionais:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">is_divisible</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="s">'x is divisible by y'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Pode ser tentador escrever algo assim:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">is_divisible</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="s">'x is divisible by y'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Mas a comparação extra é desnecessária.</p>
+
+<p>Como um exercício, escreva uma função <code class="highlighter-rouge">is_between(x, y, z)</code> que retorne True, se x ≤ y ≤ z, ou False, se não for o caso.</p>
+
+<h2 id="65---mais-recursividade">6.5 - Mais recursividade</h2>
+
+<p>Cobrimos apenas um pequeno subconjunto do Python, mas talvez seja bom você saber que este subconjunto é uma linguagem de programação completa, ou seja, qualquer coisa que possa ser calculada pode ser expressa nesta linguagem. Qualquer programa que já foi escrito pode ser reescrito apenas com os recursos da linguagem que você aprendeu até agora (na verdade, seria preciso alguns comandos para dispositivos de controle como mouse, discos etc., mas isso é tudo).</p>
+
+<p>Comprovar esta declaração é um exercício nada trivial realizado pela primeira vez por Alan Turing, um dos primeiros cientistas da computação (alguns diriam que ele foi matemático, mas muitos dos primeiros cientistas da computação começaram como matemáticos). Assim, é conhecida como a Tese de Turing. Para uma exposição mais completa (e exata) da Tese de Turing, recomendo o livro de Michael Sipser, Introduction to the Theory of Computation (Introdução à teoria da computação, Course Technology, 2012).</p>
+
+<p>Para dar uma ideia do que podemos fazer com as ferramentas que aprendeu até agora, avaliaremos algumas funções matemáticas definidas recursivamente. Uma definição recursiva é semelhante a uma definição circular, no sentido de que a definição contém uma referência à coisa que é definida. Uma definição realmente circular não é muito útil:</p>
+
+<dl>
+<dt>vorpal</dt>
+<dd>Adjetivo usado para descrever algo que é vorpal.</dd>
+</dl>
+
+<p>Ver uma definição assim no dicionário pode ser irritante. Por outro lado, se procurar a definição da função de fatorial, denotada pelo símbolo !, você pode encontrar algo assim:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0! = 1
+n! = n·(n − 1)!
+</code></pre></div></div>
+
+<p>Esta definição diz que o fatorial de 0 é 1, e o fatorial de qualquer outro valor, n, é n multiplicado pelo fatorial de n-1.</p>
+
+<p>Então 3! é 3 vezes 2!, que é 2 vezes 1!, que é 1 vez 0!. Juntando tudo, 3! é igual a 3 vezes 2 vezes 1 vezes 1, que é 6.</p>
+
+<p>Se puder escrever uma definição recursiva de algo, você poderá escrever um programa em Python que a avalie. O primeiro passo deve ser decidir quais parâmetros ela deve ter. Neste caso, deve estar claro que factorial recebe um número inteiro:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</code></pre></div></div>
+
+<p>Se o argumento for 0, tudo que temos de fazer é retornar 1:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<p>Senão, e aí é que fica interessante, temos que fazer uma chamada recursiva para encontrar o fatorial de n-1 e então multiplicá-lo por n:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="mi">1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">else</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">recurse</span> <span class="o">=</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">result</span> <span class="o">=</span> <span class="n">n</span> <span class="o">*</span> <span class="n">recurse</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">result</span>
+</code></pre></div></div>
+
+<p>O fluxo de execução deste programa é semelhante ao fluxo de countdown em “Recursividade”, na página 81. Se chamarmos factorial com o valor 3:</p>
+
+<p>Como 3 não é 0, tomamos o segundo ramo e calculamos o fatorial de n-1…</p>
+
+<p>    Como 2 não é 0, tomamos o segundo ramo e calculamos o fatorial de n-1…</p>
+
+<p>        Como 1 não é 0, tomamos o segundo ramo e calculamos o fatorial de n-1…</p>
+
+<p>            Como 0 é igual a 0, tomamos o primeiro ramo e devolvemos 1 sem fazer mais chamadas recursivas.</p>
+
+<p>        O valor de retorno, 1, é multiplicado por n, que é 1, e o resultado é devolvido.</p>
+
+<p>    O valor de retorno, 1, é multiplicado por n, que é 2, e o resultado é devolvido.</p>
+
+<p>O valor devolvido (2) é multiplicado por n, que é 3, e o resultado, 6, torna-se o valor devolvido pela chamada de função que começou o processo inteiro.</p>
+
+<p>A Figura 6.1 mostra como é o diagrama da pilha para esta sequência de chamadas de função.</p>
+
+<p><img src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_0601.png" alt="Figura 6.1 – Diagrama da pilha para factorial." />
+<br /><em>Figura 6.1 – Diagrama da pilha para factorial.</em></p>
+
+<p>Os valores devolvidos são mostrados ao serem passados de volta até o alto da pilha. Em cada frame, o valor devolvido é o valor de <code class="highlighter-rouge">result</code>, que é o produto de <code class="highlighter-rouge">n</code> e <code class="highlighter-rouge">recurse</code>.</p>
+
+<p>No último frame, as variáveis locais recurse e result não existem, porque o ramo que os cria não é executado.</p>
+
+<h2 id="66---salto-de-fé">6.6 - Salto de fé</h2>
+
+<p>Seguir o fluxo da execução é uma forma de ler programas, mas poderá ser trabalhoso demais. Uma alternativa é o que chamo de “salto de fé” (leap of faith). Ao chegar a uma chamada de função, em vez de seguir o fluxo de execução suponha que a função esteja funcionando corretamente e que está retornando o resultado certo.</p>
+
+<p>Na verdade, você já está praticando este salto de fé quando usa funções integradas. Quando chama math.cos ou math.exp, você não examina o corpo dessas funções. Apenas supõe que funcionem porque as pessoas que as escreveram eram bons programadores.</p>
+
+<p>O mesmo acontece ao chamar uma das suas próprias funções. Por exemplo, em “Funções booleanas”, na página 97, escrevemos uma função chamada is_divisible que determina se um número é divisível por outro. Uma vez que estejamos convencidos de que esta função está correta – examinando o código e testando – podemos usar a função sem ver o corpo novamente.</p>
+
+<p>O mesmo é verdade para programas recursivos. Quando chega à chamada recursiva, em vez de seguir o fluxo de execução, você deveria supor que a chamada recursiva funcione (devolva o resultado correto) e então perguntar-se: “Supondo que eu possa encontrar o fatorial de n-1, posso calcular o fatorial de n?”. É claro que pode, multiplicando por n.</p>
+
+<p>Naturalmente, é um pouco estranho supor que a função funcione corretamente quando ainda não terminou de escrevê-la, mas é por isso que se chama um salto de fé!</p>
+
+<h2 id="67---mais-um-exemplo">6.7 - Mais um exemplo</h2>
+
+<p>Depois do factorial, o exemplo mais comum de uma função matemática definida recursivamente é fibonacci, que tem a seguinte definição (ver http://en.wikipedia.org/wiki/Fibonacci_number):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fibonacci(0) = 0
+fibonacci(1) = 1
+fibonacci(n) = fibonacci(n − 1) + fibonacci(n − 2)
+</code></pre></div></div>
+
+<p>Traduzida para Python, ela fica assim:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">fibonacci</span> <span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="mi">0</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">elif</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="mi">1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">else</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Se tentar seguir o fluxo de execução aqui, até para valores razoavelmente pequenos de n, sua cabeça explode. Porém, seguindo o salto de fé, supondo que as duas chamadas recursivas funcionem corretamente, então é claro que vai receber o resultado correto adicionando-as juntas.</p>
+
+<h2 id="68---verificação-de-tipos">6.8 - Verificação de tipos</h2>
+
+<p>O que acontece se chamarmos factorial e usarmos 1.5 como argumento?</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">factorial</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="nb">RuntimeError</span><span class="p">:</span> <span class="n">Maximum</span> <span class="n">recursion</span> <span class="n">depth</span> <span class="n">exceeded</span>
+</code></pre></div></div>
+
+<p>Parece uma recursividade infinita. No entanto, por que isso acontece? A função tem um caso-base – quando n == 0. Mas se n não é um número inteiro, podemos perder o caso-base e recorrer para sempre.</p>
+
+<p>Na primeira chamada recursiva, o valor de n é 0.5. No seguinte, é -0.5. Daí, torna-se menor (mais negativo), mas nunca será 0.</p>
+
+<p>Temos duas escolhas. Podemos tentar generalizar a função factorial para trabalhar com números de ponto flutuante, ou podemos fazer factorial controlar o tipo de argumento que recebe. A primeira opção chama-se função gamma e está um pouco além do alcance deste livro. Então usaremos a segunda opção.</p>
+
+<p>Podemos usar a função integrada isinstance para verificar o tipo de argumento. E vamos aproveitar para verificar também se o argumento é positivo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">factorial</span> <span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="s">'Factorial is only defined for integers.'</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">None</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">elif</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="s">'Factorial is not defined for negative integers.'</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">None</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">elif</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="mi">1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">else</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>O primeiro caso-base lida com números não inteiros; o segundo, com números inteiros negativos. Em ambos os casos o programa exibe uma mensagem de erro e retorna None para indicar que algo deu errado:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">factorial</span><span class="p">(</span><span class="s">'fred'</span><span class="p">)</span>
+<span class="n">Factorial</span> <span class="ow">is</span> <span class="n">only</span> <span class="n">defined</span> <span class="k">for</span> <span class="n">integers</span><span class="o">.</span>
+<span class="bp">None</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">factorial</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">Factorial</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">defined</span> <span class="k">for</span> <span class="n">negative</span> <span class="n">integers</span><span class="o">.</span>
+<span class="bp">None</span>
+</code></pre></div></div>
+
+<p>Se passarmos por ambas as verificações, sabemos que n é positivo ou zero, então podemos comprovar que a recursividade termina.</p>
+
+<p>Esse programa demonstra um padrão às vezes chamado de guardião. As duas primeiras condicionais atuam como guardiãs, protegendo o código que segue de valores que poderiam causar um erro. As guardiãs permitem comprovar a correção do código.</p>
+
+<p>Na “Busca reversa”, na página 165, veremos uma alternativa mais flexível para a exibição de uma mensagem de erro: o levantamento de exceções.</p>
+
+<h2 id="69---depuração">6.9 - Depuração</h2>
+
+<p>Quebrar um grande programa em funções menores cria controles naturais da depuração. Se uma função não estiver funcionando, há três possibilidades a considerar:</p>
+
+<ul>
+  <li>
+    <p>Há algo errado com os argumentos que a função está recebendo; uma precondição está sendo violada.</p>
+  </li>
+  <li>
+    <p>Há algo errado com a função; uma pós-condição foi violada.</p>
+  </li>
+  <li>
+    <p>Há algo errado com o valor de retorno ou a forma na qual está sendo usado.</p>
+  </li>
+</ul>
+
+<p>Para excluir a primeira possibilidade, você pode acrescentar uma instrução print no início da função e exibir os valores dos parâmetros (e talvez os seus tipos). Ou escrever código que verifique as precondições explicitamente.</p>
+
+<p>Se os parâmetros parecerem bons, acrescente uma instrução print antes de cada instrução return e exiba o valor de retorno. Se possível, verifique o resultado à mão. Uma possibilidade é chamar a função com valores facilitem a verificação do resultado (como no “Desenvolvimento incremental”, da página 94).</p>
+
+<p>Se a função parecer funcionar, veja a chamada da função para ter certeza de que o valor de retorno está sendo usado corretamente (ou se está sendo usado mesmo!).</p>
+
+<p>Acrescentar instruções de exibição no começo e no fim de uma função pode ajudar a tornar o fluxo de execução mais visível. Por exemplo, aqui está uma versão de factorial com instruções de exibição:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">space</span> <span class="o">=</span> <span class="s">' '</span> <span class="o">*</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="n">space</span><span class="p">,</span> <span class="s">'factorial'</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="n">space</span><span class="p">,</span> <span class="s">'returning 1'</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="mi">1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">else</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">recurse</span> <span class="o">=</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">result</span> <span class="o">=</span> <span class="n">n</span> <span class="o">*</span> <span class="n">recurse</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="n">space</span><span class="p">,</span> <span class="s">'returning'</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">result</span>
+</code></pre></div></div>
+
+<p>space é uma string de caracteres especiais que controla a endentação da saída. Aqui está o resultado de factorial(4):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>                factorial 4
+            factorial 3
+        factorial 2
+    factorial 1
+factorial 0
+returning 1
+    returning 1
+        returning 2
+            returning 6
+                returning 24
+</code></pre></div></div>
+
+<p>Se o fluxo de execução parecer confuso a você, este tipo de saída pode ser útil. Leva um tempo para desenvolver um scaffolding eficaz, mas um pouco dele pode economizar muita depuração.</p>
+
+<h2 id="610---glossário">6.10 - Glossário</h2>
+
+<dl>
+<dt><a id="glos:variável temporária" href="06-funcoes-result.html#termo:variável temporária">variável temporária</a></dt>
+<dd>Uma variável usada para guardar um valor intermediário em um cálculo complexo.</dd>
+
+<dt><a id="glos:código morto" href="06-funcoes-result.html#termo:código morto">código morto</a></dt>
+<dd>A parte de um programa que nunca pode ser executada, muitas vezes porque aparece depois de uma instrução return.</dd>
+
+<dt><a id="glos:desenvolvimento incremental" href="06-funcoes-result.html#termo:desenvolvimento incremental">desenvolvimento incremental</a></dt>
+<dd>Um plano de desenvolvimento de programa para evitar a depuração, que acrescenta e testa poucas linhas de código de cada vez.</dd>
+
+<dt><a id="glos:scaffolding (andaime)" href="06-funcoes-result.html#termo:scaffolding (andaime)">scaffolding (andaime)</a></dt>
+<dd>O código que se usa durante o desenvolvimento de programa, mas que não faz parte da versão final.</dd>
+
+<dt><a id="glos:guardião" href="06-funcoes-result.html#termo:guardião">guardião</a></dt>
+<dd>Um padrão de programação que usa uma instrução condicional para verificar e lidar com circunstâncias que possam causar erros.</dd>
+
+</dl>
+
+<h2 id="611---exercícios">6.11 - Exercícios</h2>
+
+<h3 id="exercício-61">Exercício 6.1</h3>
+
+<p>Desenhe um diagrama da pilha do seguinte programa. O que o programa exibe?</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">b</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">prod</span> <span class="o">=</span> <span class="n">a</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">prod</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">prod</span>
+
+<span class="k">def</span> <span class="nf">a</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span>
+
+<span class="k">def</span> <span class="nf">c</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">total</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">square</span> <span class="o">=</span> <span class="n">b</span><span class="p">(</span><span class="n">total</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">square</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="k">print</span><span class="p">(</span><span class="n">c</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">+</span><span class="mi">3</span><span class="p">,</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h3 id="exercício-62">Exercício 6.2</h3>
+
+<p>A função de Ackermann, A(m, n), é definida assim:</p>
+
+<p><img src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/p72f1.png" alt="Fórmula – Função de Ackermann." /></p>
+
+<p>Veja http://en.wikipedia.org/wiki/Ackermann_function. Escreva uma função denominada ack que avalie a função de Ackermann. Use a sua função para avaliar <code class="highlighter-rouge">ack(3, 4)</code>, cujo resultado deve ser 125. O que acontece para valores maiores de m e n?</p>
+
+<p>Solução: http://thinkpython2.com/code/ackermann.py.</p>
+
+<h3 id="exercício-63">Exercício 6.3</h3>
+
+<p>Um palíndromo é uma palavra que se soletra da mesma forma nos dois sentidos, como “osso” e “reviver”. Recursivamente, uma palavra é um palíndromo se a primeira e última letras forem iguais e o meio for um palíndromo.</p>
+
+<p>As funções seguintes recebem uma string como argumento e retornam as letras iniciais, finais e do meio das palavras:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">first</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">def</span> <span class="nf">last</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">word</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">def</span> <span class="nf">middle</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">word</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Veremos como funcionam no Capítulo 8.</p>
+
+<ol>
+  <li>
+    <p>Digite essas funções em um arquivo chamado palindrome.py e teste-as. O que acontece se chamar middle com uma string de duas letras? Uma letra? E se a string estiver vazia, escrita com <code class="highlighter-rouge">''</code> e não contiver nenhuma letra?</p>
+  </li>
+  <li>
+    <p>Escreva uma função chamada <code class="highlighter-rouge">is_palindrome</code> que receba uma string como argumento e retorne True se for um palíndromo e False se não for. Lembre-se de que você pode usar a função integrada len para verificar o comprimento de uma string.</p>
+  </li>
+</ol>
+
+<p>Solução: http://thinkpython2.com/code/palindrome_soln.py.</p>
+
+<h3 id="exercício-64">Exercício 6.4</h3>
+
+<p>Um número a é uma potência de b se for divisível por b e a/b for uma potência de b. Escreva uma função chamada is_power que receba os parâmetros a e b e retorne True se a for uma potência de b. Dica: pense no caso-base.</p>
+
+<h3 id="exercício-65">Exercício 6.5</h3>
+
+<p>O maior divisor comum (MDC, ou GCD em inglês) de a e b é o maior número que divide ambos sem sobrar resto.</p>
+
+<p>Um modo de encontrar o MDC de dois números é observar qual é o resto r quando a é dividido por b, verificando que gcd(a, b) = gcd(b, r). Como caso-base, podemos usar gcd(a, 0) = a.</p>
+
+<p>Escreva uma função chamada gcd que receba os parâmetros a e b e devolva o maior divisor comum.</p>
+
+<p>Crédito: Este exercício é baseado em um exemplo do livro de Abelson e Sussman, Structure and Interpretation of Computer Programs (Estrutura e interpretação de programas de computador, MIT Press, 1996).</p>
+
+
+      <footer class="site-footer">
+        
+          <span class="site-footer-owner"><a href="https://github.com/PenseAllen/PensePython2e">PensePython2e</a> is maintained by <a href="https://github.com/PenseAllen">PenseAllen</a>.</span>
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </section>
+
+    
+  </body>
+</html>

@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Capítulo 10: Listas | PensePython2e</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Capítulo 10: Listas" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey" />
+<meta property="og:description" content="Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey" />
+<link rel="canonical" href="10-listas.html" />
+<meta property="og:url" content="https://penseallen.github.io/PensePython2e/10-listas.html" />
+<meta property="og:site_name" content="PensePython2e" />
+<script type="application/ld+json">
+{"@type":"WebPage","headline":"Capítulo 10: Listas","url":"https://penseallen.github.io/PensePython2e/10-listas.html","description":"Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <link rel="stylesheet" href="assets/css/style.css@v=afa460130599dbde01620e86c38923f785023956.css">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">PensePython2e</h1>
+      <h2 class="project-tagline">Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey</h2>
+      
+        <a href="https://github.com/PenseAllen/PensePython2e" class="btn">View on GitHub</a>
+      
+      
+    </section>
+
+    <section class="main-content">
+      <h1 id="capítulo-10-listas">Capítulo 10: Listas</h1>
+
+<p>Este capítulo apresenta um dos tipos integrados mais úteis do Python: listas. Você também aprenderá mais sobre objetos e o que pode acontecer quando o mesmo objeto tem mais de um nome.</p>
+
+<h2 id="101---uma-lista-é-uma-sequência">10.1 - Uma lista é uma sequência</h2>
+
+<p>Como uma string, uma lista é uma sequência de valores. Em uma string, os valores são caracteres; em uma lista, eles podem ser de qualquer tipo. Os valores em uma lista são chamados de elementos, ou, algumas vezes, de itens.</p>
+
+<p>Há várias formas para criar uma lista; a mais simples é colocar os elementos entre colchetes (<code class="highlighter-rouge">[</code> e <code class="highlighter-rouge">]</code>):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">]</span>
+<span class="p">[</span><span class="s">'crunchy frog'</span><span class="p">,</span> <span class="s">'ram bladder'</span><span class="p">,</span> <span class="s">'lark vomit'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>O primeiro exemplo é uma lista de quatro números inteiros. O segundo é uma lista de três strings. Os elementos de uma lista não precisam ser do mesmo tipo. A lista seguinte contém uma string, um número de ponto flutuante, um número inteiro e (olhe só!) outra lista:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="s">'spam'</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">]]</span>
+</code></pre></div></div>
+
+<p>Uma lista dentro de outra lista é uma lista aninhada.</p>
+
+<p>Uma lista que não contém elementos é chamada de lista vazia; você pode criar uma com colchetes vazios [].</p>
+
+<p>Como já se poderia esperar, podemos atribuir uma lista de valores a variáveis:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">cheeses</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Cheddar'</span><span class="p">,</span> <span class="s">'Edam'</span><span class="p">,</span> <span class="s">'Gouda'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">42</span><span class="p">,</span> <span class="mi">123</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">empty</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">cheeses</span><span class="p">,</span> <span class="n">numbers</span><span class="p">,</span> <span class="n">empty</span><span class="p">)</span>
+<span class="p">[</span><span class="s">'Cheddar'</span><span class="p">,</span> <span class="s">'Edam'</span><span class="p">,</span> <span class="s">'Gouda'</span><span class="p">]</span> <span class="p">[</span><span class="mi">42</span><span class="p">,</span> <span class="mi">123</span><span class="p">]</span> <span class="p">[]</span>
+</code></pre></div></div>
+
+<h2 id="102---listas-são-mutáveis">10.2 - Listas são mutáveis</h2>
+
+<p>A sintaxe para acessar os elementos de uma lista é a mesma que para acessar os caracteres de uma string: o operador de colchete. A expressão dentro dos colchetes especifica o índice. Lembre-se de que os índices começam em 0:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">cheeses</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="s">'Cheddar'</span>
+</code></pre></div></div>
+
+<p>Diferente das strings, listas são mutáveis. Quando o operador de colchete aparece do lado esquerdo de uma atribuição, ele identifica o elemento da lista que será atribuído:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">42</span><span class="p">,</span> <span class="mi">123</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">numbers</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">numbers</span>
+<span class="p">[</span><span class="mi">42</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>O primeiro elemento de numbers, que costumava ser 123, agora é 5.</p>
+
+<p>A Figura 10.1 mostra o diagrama de estado para cheeses, numbers e empty.</p>
+
+<p><img src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_1001.png" alt="Figura 10.1 – Diagrama de estado de três listas." />
+<br /><em>Figura 10.1 – Diagrama de estado de três listas.</em></p>
+
+<p>As listas são representadas pelas caixas com a palavra “lista” fora delas e os elementos da lista dentro delas. cheeses refere-se a uma lista com três elementos indexados como 0, 1 e 2. numbers contém dois elementos e o diagrama mostra que o valor do segundo elemento foi reatribuído de 123 para 5. empty refere-se a uma lista sem elementos.</p>
+
+<p>Índices de listas funcionam da mesma forma que os índices de strings:</p>
+
+<ul>
+  <li>
+    <p>Qualquer expressão de números inteiros pode ser usada como índice.</p>
+  </li>
+  <li>
+    <p>Se tentar ler ou escrever um elemento que não existe, você recebe um IndexError.</p>
+  </li>
+  <li>
+    <p>Se um índice tiver um valor negativo, ele conta de trás para a frente, a partir do final da lista.</p>
+  </li>
+</ul>
+
+<p>O operador in também funciona com listas:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">cheeses</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Cheddar'</span><span class="p">,</span> <span class="s">'Edam'</span><span class="p">,</span> <span class="s">'Gouda'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">'Edam'</span> <span class="ow">in</span> <span class="n">cheeses</span>
+<span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">'Brie'</span> <span class="ow">in</span> <span class="n">cheeses</span>
+<span class="bp">False</span>
+</code></pre></div></div>
+
+<h2 id="103---percorrendo-uma-lista">10.3 - Percorrendo uma lista</h2>
+
+<p>A forma mais comum de percorrer os elementos em uma lista é com um loop for. A sintaxe é a mesma que a das strings:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">cheese</span> <span class="ow">in</span> <span class="n">cheeses</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="n">cheese</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Isso funciona bem se você precisa apenas ler os elementos da lista. Mas se você quer escrever ou atualizar os elementos, você precisa dos índices. Uma forma comum de fazer isso é combinar as funções integradas range e len:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">numbers</span><span class="p">)):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">numbers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">numbers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span>
+</code></pre></div></div>
+
+<p>Este loop percorre a lista e atualiza cada elemento. len retorna o número de elementos na lista. range retorna uma lista de índices de 0 a n-1, em que n é o comprimento da lista. Cada vez que passa pelo loop, i recebe o índice do próximo elemento. A instrução de atribuição no corpo usa i para ler o valor antigo do elemento e atribuir o novo valor.</p>
+
+<p>Um loop for que passe por uma lista vazia nunca executa o corpo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[]:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="s">'This never happens.'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Apesar de uma lista poder conter outra lista, a lista aninhada ainda conta como um único elemento. O comprimento desta lista é quatro:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="s">'spam'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="s">'Brie'</span><span class="p">,</span> <span class="s">'Roquefort'</span><span class="p">,</span> <span class="s">'Pol le Veq'</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span>
+</code></pre></div></div>
+
+<h2 id="104---operações-com-listas">10.4 - Operações com listas</h2>
+
+<p>O operador <code class="highlighter-rouge">+</code> concatena listas:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">c</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>O operador <code class="highlighter-rouge">*</code> repete a lista um dado número de vezes:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>O primeiro exemplo repete <code class="highlighter-rouge">[0]</code> quatro vezes. O segundo exemplo repete a lista <code class="highlighter-rouge">[1, 2, 3]</code> três vezes.</p>
+
+<h2 id="105---fatias-de-listas">10.5 - Fatias de listas</h2>
+
+<p>O operador de fatiamento também funciona com listas:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">,</span> <span class="s">'d'</span><span class="p">,</span> <span class="s">'e'</span><span class="p">,</span> <span class="s">'f'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="p">[</span><span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span>
+<span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">,</span> <span class="s">'d'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span>
+<span class="p">[</span><span class="s">'d'</span><span class="p">,</span> <span class="s">'e'</span><span class="p">,</span> <span class="s">'f'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Se você omitir o primeiro índice, a fatia começa no início. Se você omitir o segundo, a fatia vai até o final. Se você omitir ambos, a fatia é uma cópia da lista inteira.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">t</span><span class="p">[:]</span>
+<span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">,</span> <span class="s">'d'</span><span class="p">,</span> <span class="s">'e'</span><span class="p">,</span> <span class="s">'f'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Como as listas são mutáveis, pode ser útil fazer uma cópia antes de executar operações que as alterem.</p>
+
+<p>Um operador de fatia à esquerda de uma atribuição pode atualizar vários elementos:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">,</span> <span class="s">'d'</span><span class="p">,</span> <span class="s">'e'</span><span class="p">,</span> <span class="s">'f'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">'x'</span><span class="p">,</span> <span class="s">'y'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t</span>
+<span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'x'</span><span class="p">,</span> <span class="s">'y'</span><span class="p">,</span> <span class="s">'d'</span><span class="p">,</span> <span class="s">'e'</span><span class="p">,</span> <span class="s">'f'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h2 id="106---métodos-de-listas">10.6 - Métodos de listas</h2>
+
+<p>O Python oferece métodos que operam em listas. Por exemplo, <code class="highlighter-rouge">append</code> adiciona um novo elemento ao fim de uma lista:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">'d'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t</span>
+<span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">,</span> <span class="s">'d'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">extend</code> toma uma lista como argumento e adiciona todos os elementos:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">t1</span> <span class="o">=</span> <span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t2</span> <span class="o">=</span> <span class="p">[</span><span class="s">'d'</span><span class="p">,</span> <span class="s">'e'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t1</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">t2</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t1</span>
+<span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">,</span> <span class="s">'d'</span><span class="p">,</span> <span class="s">'e'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Este exemplo deixa t2 intocado.</p>
+
+<p><code class="highlighter-rouge">sort</code> classifica os elementos da lista em ordem ascendente:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="s">'d'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">,</span> <span class="s">'e'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'a'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t</span>
+<span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">,</span> <span class="s">'d'</span><span class="p">,</span> <span class="s">'e'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>A maior parte dos métodos de listas são nulos; eles alteram a lista e retornam None. Se você escrever t = t.sort() por acidente, ficará desapontado com o resultado.</p>
+
+<h2 id="107---mapeamento-filtragem-e-redução">10.7 - Mapeamento, filtragem e redução</h2>
+
+<p>Para somar o total de todos os números em uma lista, você pode usar um loop como esse:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">add_all</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">t</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">total</span> <span class="o">+=</span> <span class="n">x</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">total</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">total</code> é inicializado com 0. Cada vez que o programa passa pelo loop, <code class="highlighter-rouge">x</code> recebe um elemento da lista. O operador <code class="highlighter-rouge">+=</code> oferece uma forma curta de atualizar uma variável. Esta instrução de atribuição aumentada,</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">total</span> <span class="o">+=</span> <span class="n">x</span>
+</code></pre></div></div>
+<p>é equivalente a</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">total</span> <span class="o">=</span> <span class="n">total</span> <span class="o">+</span> <span class="n">x</span>
+</code></pre></div></div>
+<p>No decorrer da execução do loop, <code class="highlighter-rouge">total</code> acumula a soma dos elementos; uma variável usada desta forma às vezes é chamada de acumuladora.</p>
+
+<p>Somar todos elementos de uma lista é uma operação tão comum que o Python a oferece como uma função integrada, <code class="highlighter-rouge">sum</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">sum</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="mi">6</span>
+</code></pre></div></div>
+
+<p>Uma operação como essa, que combina uma sequência de elementos em um único valor, às vezes é chamada de redução.</p>
+
+<p>Algumas vezes você quer percorrer uma lista enquanto cria outra. Por exemplo, a função seguinte recebe uma lista de strings e retorna uma nova lista que contém strings com letras maiúsculas:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">capitalize_all</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">t</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">capitalize</span><span class="p">())</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">res</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">res</code> é inicializado com uma lista vazia; cada vez que o programa passa pelo loop, acrescentamos o próximo elemento. Então <code class="highlighter-rouge">res</code> é outro tipo de acumulador.</p>
+
+<p>Uma operação como <code class="highlighter-rouge">capitalize_all</code> às vezes é chamada de mapeamento porque ela “mapeia” uma função (nesse caso o método <code class="highlighter-rouge">capitalize</code>) sobre cada um dos elementos em uma sequência.</p>
+
+<p>Outra operação comum é selecionar alguns dos elementos de uma lista e retornar uma sublista. Por exemplo, a função seguinte recebe uma lista de strings e retorna uma lista que contém apenas strings em letra maiúscula:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">only_upper</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">t</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">isupper</span><span class="p">():</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">res</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">isupper</code> é um método de string que retorna True se a string contiver apenas letras maiúsculas.</p>
+
+<p>Uma operação como <code class="highlighter-rouge">only_upper</code> é chamada de filtragem porque filtra alguns dos elementos e desconsidera outros.</p>
+
+<p>As operações de lista mais comuns podem ser expressas como uma combinação de mapeamento, filtragem e redução.</p>
+
+<h2 id="108---como-excluir-elementos">10.8 - Como excluir elementos</h2>
+
+<p>Há várias formas de excluir elementos de uma lista. Se souber o índice do elemento que procura, você pode usar <code class="highlighter-rouge">pop</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t</span>
+<span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span>
+<span class="s">'b'</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">pop</code> altera a lista e retorna o elemento que foi excluído. Se você não incluir um índice, ele exclui e retorna o último elemento.</p>
+
+<p>Se não precisar do valor removido, você pode usar a instrução <code class="highlighter-rouge">del</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">del</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t</span>
+<span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Se souber o elemento que quer excluir (mas não o índice), você pode usar <code class="highlighter-rouge">remove</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">'b'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t</span>
+<span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">]</span>
+</code></pre></div></div>
+<p>O valor devolvido por <code class="highlighter-rouge">remove</code> é <code class="highlighter-rouge">None</code>.</p>
+
+<p>Para remover mais de um elemento, você pode usar <code class="highlighter-rouge">del</code> com um índice de fatia:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">,</span> <span class="s">'d'</span><span class="p">,</span> <span class="s">'e'</span><span class="p">,</span> <span class="s">'f'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">del</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t</span>
+<span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'f'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Como sempre, a fatia seleciona todos os elementos até, mas não incluindo, o segundo índice.</p>
+
+<h2 id="109---listas-e-strings">10.9 - Listas e strings</h2>
+
+<p>Uma string é uma sequência de caracteres e uma lista é uma sequência de valores, mas uma lista de caracteres não é a mesma coisa que uma string. Para converter uma string em uma lista de caracteres, você pode usar list:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="s">'spam'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t</span>
+<span class="p">[</span><span class="s">'s'</span><span class="p">,</span> <span class="s">'p'</span><span class="p">,</span> <span class="s">'a'</span><span class="p">,</span> <span class="s">'m'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Como <code class="highlighter-rouge">list</code> é o nome de uma função integrada, você deve evitar usá-lo como nome de variável. Também evito usar <code class="highlighter-rouge">l</code> porque parece demais com 1. É por isso que uso <code class="highlighter-rouge">t</code>.</p>
+
+<p>A função <code class="highlighter-rouge">list</code> quebra uma string em letras individuais. Se você quiser quebrar uma string em palavras, você pode usar o método <code class="highlighter-rouge">split</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="s">'pining for the fjords'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t</span>
+<span class="p">[</span><span class="s">'pining'</span><span class="p">,</span> <span class="s">'for'</span><span class="p">,</span> <span class="s">'the'</span><span class="p">,</span> <span class="s">'fjords'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Um argumento opcional chamado delimiter especifica quais caracteres podem ser usados para demonstrar os limites das palavras. O exemplo seguinte usa um hífen como delimitador:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="s">'spam-spam-spam'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">delimiter</span> <span class="o">=</span> <span class="s">'-'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">delimiter</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t</span>
+<span class="p">[</span><span class="s">'spam'</span><span class="p">,</span> <span class="s">'spam'</span><span class="p">,</span> <span class="s">'spam'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">join</code> é o contrário de <code class="highlighter-rouge">split</code>. Ele toma uma lista de strings e concatena os elementos. <code class="highlighter-rouge">join</code> é um método de string, então é preciso invocá-lo no delimitador e passar a lista como parâmetro:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="s">'pining'</span><span class="p">,</span> <span class="s">'for'</span><span class="p">,</span> <span class="s">'the'</span><span class="p">,</span> <span class="s">'fjords'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">delimiter</span> <span class="o">=</span> <span class="s">' '</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="n">delimiter</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span>
+<span class="s">'pining for the fjords'</span>
+</code></pre></div></div>
+
+<p>Nesse caso, o delimitador é um caractere de espaço, então <code class="highlighter-rouge">join</code> coloca um espaço entre as palavras. Para concatenar strings sem espaços, você pode usar a string vazia <code class="highlighter-rouge">''</code>, como delimitador.</p>
+
+<p><a id="sec:10.10"></a></p>
+<h2 id="1010---objetos-e-valores">10.10 - Objetos e valores</h2>
+
+<p>Se executarmos essas instruções de atribuição:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="s">'banana'</span>
+<span class="n">b</span> <span class="o">=</span> <span class="s">'banana'</span>
+</code></pre></div></div>
+
+<p>Sabemos que a e b se referem a uma string, mas não sabemos se elas se referem à mesma string. Há dois estados possíveis, mostrados na Figura 10.2.</p>
+
+<p><img src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_1002.png" alt="Figura 10.2 – Diagramas de estado possíveis com duas variáveis." />
+<br /><em>Figura 10.2 – Diagramas de estado possíveis com duas variáveis.</em></p>
+
+<p>Em um caso, a e b se referem a dois objetos diferentes que têm o mesmo valor. No segundo caso, elas se referem ao mesmo objeto.</p>
+
+<p>Para verificar se duas variáveis se referem ao mesmo objeto, você pode usar o operador is:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="s">'banana'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="s">'banana'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="ow">is</span> <span class="n">b</span>
+<span class="bp">True</span>
+</code></pre></div></div>
+
+<p>Nesse exemplo, o Python criou apenas um objeto de string e tanto a quanto b se referem a ele. Mas quando você cria duas listas, você tem dois objetos:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="ow">is</span> <span class="n">b</span>
+<span class="bp">False</span>
+</code></pre></div></div>
+
+<p>Então o diagrama de estado fica igual ao da Figura 10.3.</p>
+
+<p><img src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_1003.png" alt="Figura 10.3 – Diagrama de estado com variáveis associadas a listas distintas, de mesmo valor." />
+<br /><em>Figura 10.3 – Diagrama de estado com variáveis associadas a listas distintas, de mesmo valor.</em></p>
+
+<p>Nesse caso, diríamos que as duas listas são equivalentes, porque elas têm os mesmos elementos, mas não idênticas, porque elas não são o mesmo objeto. Se dois objetos forem idênticos, eles também são equivalentes, mas se eles forem equivalentes, não são necessariamente idênticos.</p>
+
+<p>Até agora, temos usado “objeto” e “valor” de forma intercambiável, mas é mais exato dizer que um objeto tem um valor. Se avaliar [1, 2, 3], você tem um objeto de lista cujo valor é uma sequência de números inteiros. Se outra lista tem os mesmos elementos, dizemos que tem o mesmo valor, mas não é o mesmo objeto.</p>
+
+<h2 id="1011---alias">10.11 - Alias</h2>
+
+<p>Se a se refere a um objeto e você atribui b = a, então ambas as variáveis se referem ao mesmo objeto.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="ow">is</span> <span class="n">a</span>
+<span class="bp">True</span>
+</code></pre></div></div>
+<p>O diagrama de estado ficará igual à Figura 10.4.</p>
+
+<p><img src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_1004.png" alt="Figura 10.4 – Diagrama de estado com duas variáveis associadas à mesma lista." />
+<br /><em>Figura 10.4 – Diagrama de estado com duas variáveis associadas à mesma lista.</em></p>
+
+<p>A associação de uma variável com um objeto é chamada de referência. Neste exemplo, há duas referências ao mesmo objeto.</p>
+
+<p>Um objeto com mais de uma referência tem mais de um nome, então dizemos que o objeto tem um alias.</p>
+
+<p>Se o objeto com alias é mutável, alterações feitas em um alias afetam o outro também.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+<span class="p">[</span><span class="mi">42</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Apesar de esse comportamento poder ser útil, ele é passível de erros. Em geral, é mais seguro evitar usar alias ao trabalhar com objetos mutáveis.</p>
+
+<p>Para objetos imutáveis como strings, usar alias não é um problema tão grande. Neste exemplo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="s">'banana'</span>
+<span class="n">b</span> <span class="o">=</span> <span class="s">'banana'</span>
+</code></pre></div></div>
+
+<p>Quase nunca faz diferença se a e b se referem à mesma string ou não.</p>
+
+<h2 id="1012---argumentos-de-listas">10.12 - Argumentos de listas</h2>
+
+<p>Ao passar uma lista a uma função, a função recebe uma referência à lista. Se a função alterar a lista, quem faz a chamada vê a mudança. Por exemplo, delete_head remove o primeiro elemento de uma lista:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">delete_head</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">del</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">Ela</span> <span class="err">é</span> <span class="n">usada</span> <span class="n">assim</span><span class="p">:</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">letters</span> <span class="o">=</span> <span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">delete_head</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">letters</span>
+<span class="p">[</span><span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>O parâmetro t e a variável letters são alias para o mesmo objeto. O diagrama da pilha fica igual ao da Figura 10.5.</p>
+
+<p><img src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_1005.png" alt="Figura 10.5 – Diagrama da pilha: `__main__` e `delete_head` compartilham referências à mesma lista." />
+<br /><em>Figura 10.5 – Diagrama da pilha:</em> <code class="highlighter-rouge">__main__</code> <em>e</em> <code class="highlighter-rouge">delete_head</code> <em>compartilham referências à mesma lista.</em></p>
+
+<p>Como a lista é compartilhada por dois frames, desenhei-a entre eles.</p>
+
+<p>É importante distinguir entre operações que alteram listas e operações que criam novas listas. Por exemplo, o método <code class="highlighter-rouge">append</code> altera a lista, mas o operador <code class="highlighter-rouge">+</code> cria uma nova lista:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">t1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t2</span> <span class="o">=</span> <span class="n">t1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t1</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t2</span>
+<span class="bp">None</span>
+</code></pre></div></div>
+
+<p>Note que <code class="highlighter-rouge">append</code> altera a lista e retorna <code class="highlighter-rouge">None</code> (na realidade, o console do Python omite o <code class="highlighter-rouge">None</code> da saída, mas você pode conferir usando <code class="highlighter-rouge">t2 is None</code>).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">t3</span> <span class="o">=</span> <span class="n">t1</span> <span class="o">+</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t1</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t3</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t1</span>
+</code></pre></div></div>
+
+<p>O operador <code class="highlighter-rouge">+</code> cria uma nova lista e deixa a lista original inalterada.</p>
+
+<p>Essa diferença é importante quando você escreve funções que devem alterar listas. Por exemplo, esta função não remove a cabeça de uma lista:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">bad_delete_head</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span><span class="c"># ERRADO!</span>
+</code></pre></div></div>
+
+<p>O operador de fatia cria uma nova lista e a atribuição faz t se referir a ela, mas isso não afeta quem faz chamada.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">t4</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">bad_delete_head</span><span class="p">(</span><span class="n">t4</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t4</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>No início de <code class="highlighter-rouge">bad_delete_head</code>, t e t4 se referem à mesma lista. No final, t se refere a uma nova lista, mas t4 ainda se refere à lista original, inalterada.</p>
+
+<p>Uma alternativa é escrever uma função que crie e retorne uma nova lista. Por exemplo, <code class="highlighter-rouge">tail</code> retorna tudo, exceto o primeiro elemento de uma lista:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">tail</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+</code></pre></div></div>
+
+<p>Esta função deixa a lista original inalterada. Ela é usada assim:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">letters</span> <span class="o">=</span> <span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">rest</span> <span class="o">=</span> <span class="n">tail</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">rest</span>
+<span class="p">[</span><span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h2 id="1013---depuração">10.13 - Depuração</h2>
+
+<p>O uso descuidado de listas (e de outros objetos mutáveis) pode levar a longas horas de depuração. Aqui estão algumas armadilhas comuns e formas de evitá-las:</p>
+
+<ol>
+  <li>A maior parte dos métodos de listas alteram o argumento e retornam None. Isto é o oposto dos métodos de strings, que retornam uma nova string e deixam a original intocada.</li>
+</ol>
+
+<p>        Se você está acostumado a escrever código de strings desta forma:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">word</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>        É tentador escrever código de listas como este:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span><span class="c"># ERRADO!</span>
+</code></pre></div></div>
+
+<p>        Como sort retorna None, a próxima operação que você executar com t provavelmente vai falhar.</p>
+
+<p>        Antes de usar métodos e operadores de listas, você deve ler a documentação com cuidado e testá-los no modo interativo.</p>
+
+<ol>
+  <li>Escolha o termo e fique com ele.</li>
+</ol>
+
+<p>        Parte do problema com listas é que há muitas formas de fazer coisas com elas. Por exemplo, para remover um elemento de uma lista você pode usar pop, remove, del ou até uma atribuição de fatia.</p>
+
+<p>        Para adicionar um elemento você pode usar o método append ou o operador +. Assumindo que t é uma lista e x é um elemento da lista, isto está correto:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">t</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">t</span> <span class="o">=</span> <span class="n">t</span> <span class="o">+</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">t</span> <span class="o">+=</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">E</span> <span class="n">isto</span> <span class="n">est</span><span class="err">á</span> <span class="n">errado</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">t</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x</span><span class="p">])</span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span><span class="c"># ERRADO!</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span><span class="c"># ERRADO!</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">t</span> <span class="o">+</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span><span class="c"># ERRADO!</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">t</span> <span class="o">=</span> <span class="n">t</span> <span class="o">+</span> <span class="n">x</span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span><span class="c"># ERRADO!</span>
+</code></pre></div></div>
+
+<p>        Experimente cada um desses exemplos no modo interativo para conferir se você entendeu o que fazem. Note que apenas o último causa um erro de tempo de execução; os outros três são legais, mas eles fazem a coisa errada.</p>
+
+<ol>
+  <li>Faça cópias para evitar o uso de alias.</li>
+</ol>
+
+<p>        Se quiser usar um método como sort, que altera o argumento, mas precisa manter a lista original, você pode fazer uma cópia:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="o">&gt;&gt;&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="o">&gt;&gt;&gt;</span> <span class="n">t2</span> <span class="o">=</span> <span class="n">t</span><span class="p">[:]</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="o">&gt;&gt;&gt;</span> <span class="n">t2</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="o">&gt;&gt;&gt;</span> <span class="n">t</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="o">&gt;&gt;&gt;</span> <span class="n">t2</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>        Neste exemplo você poderia usar também a função integrada sorted, que retorna uma nova lista classificada e deixa a original intocada.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="o">&gt;&gt;&gt;</span> <span class="n">t2</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="o">&gt;&gt;&gt;</span> <span class="n">t</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="o">&gt;&gt;&gt;</span> <span class="n">t2</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h2 id="1014---glossário">10.14 - Glossário</h2>
+
+<dl>
+<dt><a id="glos:lista" href="10-listas.html#termo:lista">lista</a></dt>
+<dd>Uma sequência de valores.</dd>
+
+<dt><a id="glos:elemento" href="10-listas.html#termo:elemento">elemento</a></dt>
+<dd>Um dos valores em uma lista (ou outra sequência), também chamado de item.</dd>
+
+<dt><a id="glos:lista aninhada" href="10-listas.html#termo:lista aninhada">lista aninhada</a></dt>
+<dd>Uma lista que é um elemento de outra lista.</dd>
+
+<dt><a id="glos:acumuladora" href="10-listas.html#termo:acumuladora">acumuladora</a></dt>
+<dd>Variável usada em um loop para adicionar ou acumular um resultado.</dd>
+
+<dt><a id="glos:atribuição aumentada" href="10-listas.html#termo:atribuição aumentada">atribuição aumentada</a></dt>
+<dd>Instrução que atualiza o valor de uma variável usando um operador como +=.</dd>
+
+<dt><a id="glos:redução" href="10-listas.html#termo:redução">redução</a></dt>
+<dd>Padrão de processamento que atravessa uma sequência e acumula os elementos em um único resultado.</dd>
+
+<dt><a id="glos:mapeamento" href="10-listas.html#termo:mapeamento">mapeamento</a></dt>
+<dd>Padrão de processamento que atravessa uma sequência e executa uma operação em cada elemento.</dd>
+
+<dt><a id="glos:filtragem" href="10-listas.html#termo:filtragem">filtragem</a></dt>
+<dd>Padrão de processamento que atravessa uma lista e seleciona os elementos que satisfazem algum critério.</dd>
+
+<dt><a id="glos:objeto" href="10-listas.html#termo:objeto">objeto</a></dt>
+<dd>Algo a que uma variável pode se referir. Um objeto tem um tipo e um valor.</dd>
+
+<dt><a id="glos:equivalente" href="10-listas.html#termo:equivalente">equivalente</a></dt>
+<dd>Ter o mesmo valor.</dd>
+
+<dt><a id="glos:idêntico" href="10-listas.html#termo:idêntico">idêntico</a></dt>
+<dd>Ser o mesmo objeto (o que implica equivalência).</dd>
+
+<dt><a id="glos:referência" href="10-listas.html#termo:referência">referência</a></dt>
+<dd>Associação entre uma variável e seu valor.</dd>
+
+<dt><a id="glos:alias" href="10-listas.html#termo:alias">alias</a></dt>
+<dd>Uma circunstância onde duas ou mais variáveis se referem ao mesmo objeto.</dd>
+
+<dt><a id="glos:delimitador" href="10-listas.html#termo:delimitador">delimitador</a></dt>
+<dd>Um caractere ou uma string usada para indicar onde uma string deve ser dividida.</dd>
+
+</dl>
+
+<h2 id="1015---exercícios">10.15 - Exercícios</h2>
+
+<p>Você pode baixar as soluções para estes exercícios em http://thinkpython2.com/code/list_exercises.py.</p>
+
+<h3 id="exercício-101">Exercício 10.1</h3>
+
+<p>Escreva uma função chamada <code class="highlighter-rouge">nested_sum</code> que receba uma lista de listas de números inteiros e adicione os elementos de todas as listas aninhadas. Por exemplo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">nested_sum</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="mi">21</span>
+</code></pre></div></div>
+
+<h3 id="exercício-102">Exercício 10.2</h3>
+
+<p>Escreva uma função chamada cumsum que receba uma lista de números e retorne a soma cumulativa; isto é, uma nova lista onde o i-ésimo elemento é a soma dos primeiros i+1 elementos da lista original. Por exemplo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">cumsum</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h3 id="exercício-103">Exercício 10.3</h3>
+
+<p>Escreva uma função chamada middle que receba uma lista e retorne uma nova lista com todos os elementos originais, exceto os primeiros e os últimos elementos. Por exemplo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">middle</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h3 id="exercício-104">Exercício 10.4</h3>
+
+<p>Escreva uma função chamada chop que tome uma lista alterando-a para remover o primeiro e o último elementos, e retorne None. Por exemplo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">chop</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t</span>
+<span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h3 id="exercício-105">Exercício 10.5</h3>
+
+<p>Escreva uma função chamada is_sorted que tome uma lista como parâmetro e retorne True se a lista estiver classificada em ordem ascendente, e False se não for o caso. Por exemplo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">is_sorted</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">is_sorted</span><span class="p">([</span><span class="s">'b'</span><span class="p">,</span> <span class="s">'a'</span><span class="p">])</span>
+<span class="bp">False</span>
+</code></pre></div></div>
+
+<h3 id="exercício-106">Exercício 10.6</h3>
+
+<p>Duas palavras são anagramas se você puder soletrar uma rearranjando as letras da outra. Escreva uma função chamada is_anagram que tome duas strings e retorne True se forem anagramas.</p>
+
+<h3 id="exercício-107">Exercício 10.7</h3>
+
+<p>Escreva uma função chamada has_duplicates que tome uma lista e retorne True se houver algum elemento que apareça mais de uma vez. Ela não deve modificar a lista original.</p>
+
+<h3 id="exercício-108">Exercício 10.8</h3>
+
+<p>Este exercício pertence ao assim chamado Paradoxo de aniversário, sobre o qual você pode ler em http://en.wikipedia.org/wiki/Birthday_paradox.</p>
+
+<p>Se há 23 alunos na sua sala, quais são as chances de dois deles fazerem aniversário no mesmo dia? Você pode estimar esta probabilidade gerando amostras aleatórias de 23 dias de aniversário e verificando as correspondências. Dica: você pode gerar aniversários aleatórios com a função randint no módulo random.</p>
+
+<p>Se quiser, você pode baixar minha solução em http://thinkpython2.com/code/birthday.py.</p>
+
+<h3 id="exercício-109">Exercício 10.9</h3>
+
+<p>Escreva uma função que leia o arquivo words.txt e construa uma lista com um elemento por palavra. Escreva duas versões desta função, uma usando o método append e outra usando a expressão <code class="highlighter-rouge">t = t + [x]</code>. Qual leva mais tempo para ser executada? Por quê?</p>
+
+<p>Solução: http://thinkpython2.com/code/wordlist.py.</p>
+
+<h3 id="exercício-1010">Exercício 10.10</h3>
+
+<p>Para verificar se uma palavra está na lista de palavras, você pode usar o operador in, mas isso seria lento porque pesquisaria as palavras em ordem.</p>
+
+<p>Como as palavras estão em ordem alfabética, podemos acelerar as coisas com uma busca por bisseção (também conhecida como pesquisa binária), que é semelhante ao que você faz quando procura uma palavra no dicionário. Você começa no meio e verifica se a palavra que está procurando vem antes da palavra no meio da lista. Se for o caso, procura na primeira metade da lista. Se não, procura na segunda metade.</p>
+
+<p>De qualquer forma, você corta o espaço de busca restante pela metade. Se a lista de palavras tiver 113.809 palavras, o programa seguirá uns 17 passos para encontrar a palavra ou concluir que não está lá.</p>
+
+<p>Escreva uma função chamada in_bisect que receba uma lista ordenada, um valor-alvo e devolva o índice do valor na lista se ele estiver lá, ou None se não estiver.</p>
+
+<p>Ou você pode ler a documentação do módulo bisect e usá-lo!</p>
+
+<p>Solução: http://thinkpython2.com/code/inlist.py.</p>
+
+<h3 id="exercício-1011">Exercício 10.11</h3>
+
+<p>Duas palavras são um “par inverso” se uma for o contrário da outra. Escreva um programa que encontre todos os pares inversos na lista de palavras.</p>
+
+<p>Solução: http://thinkpython2.com/code/reverse_pair.py.</p>
+
+<h3 id="exercício-1012">Exercício 10.12</h3>
+
+<p>Duas palavras “interligam-se” quando, ao tomarmos letras alternadas de cada uma, formamos uma palavra nova. Por exemplo, “shoe” e “cold” interligam-se para formar “schooled”.</p>
+
+<p>Solução: http://thinkpython2.com/code/interlock.py. Crédito: este exercício foi inspirado por um exemplo em http://puzzlers.org.</p>
+
+<ol>
+  <li>
+    <p>Escreva um programa que encontre todos os pares de palavras que se interligam. Dica: não enumere todos os pares!</p>
+  </li>
+  <li>
+    <p>Você pode encontrar palavras que sejam interligadas de três em três; isto é, cada terceira letra forma uma palavra, começando da primeira, segunda ou terceira?</p>
+  </li>
+</ol>
+
+
+      <footer class="site-footer">
+        
+          <span class="site-footer-owner"><a href="https://github.com/PenseAllen/PensePython2e">PensePython2e</a> is maintained by <a href="https://github.com/PenseAllen">PenseAllen</a>.</span>
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </section>
+
+    
+  </body>
+</html>

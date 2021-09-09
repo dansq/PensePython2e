@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Capítulo 14: Arquivos | PensePython2e</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Capítulo 14: Arquivos" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey" />
+<meta property="og:description" content="Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey" />
+<link rel="canonical" href="14-arquivos.html" />
+<meta property="og:url" content="https://penseallen.github.io/PensePython2e/14-arquivos.html" />
+<meta property="og:site_name" content="PensePython2e" />
+<script type="application/ld+json">
+{"@type":"WebPage","headline":"Capítulo 14: Arquivos","url":"https://penseallen.github.io/PensePython2e/14-arquivos.html","description":"Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <link rel="stylesheet" href="assets/css/style.css@v=afa460130599dbde01620e86c38923f785023956.css">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">PensePython2e</h1>
+      <h2 class="project-tagline">Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey</h2>
+      
+        <a href="https://github.com/PenseAllen/PensePython2e" class="btn">View on GitHub</a>
+      
+      
+    </section>
+
+    <section class="main-content">
+      <h1 id="capítulo-14-arquivos">Capítulo 14: Arquivos</h1>
+
+<p>Este capítulo apresenta a ideia de programas “persistentes”, que mantêm dados em armazenamento permanente, e mostra como usar tipos diferentes de armazenamento permanente, como arquivos e bancos de dados.</p>
+
+<h2 id="141---persistência">14.1 - Persistência</h2>
+
+<p>A maioria dos programas que vimos até agora são transitórios, porque são executados por algum tempo e produzem alguma saída, mas, quando terminam, seus dados desaparecem. Se executar o programa novamente, ele começa novamente do zero.</p>
+
+<p>Outros programas são persistentes: rodam por muito tempo (ou todo o tempo); mantêm pelo menos alguns dos seus dados em armazenamento permanente (uma unidade de disco rígido, por exemplo); e se são desligados e reiniciados, continuam de onde pararam.</p>
+
+<p>Exemplos de programas persistentes são sistemas operacionais, que rodam praticamente durante todo o tempo em que um computador está ligado, e servidores web, que rodam todo o tempo, esperando pedidos de entrada na rede.</p>
+
+<p>Uma das formas mais simples para programas manterem seus dados é lendo e escrevendo arquivos de texto. Já vimos programas que leem arquivos de texto; neste capítulo veremos programas que os escrevem.</p>
+
+<p>Uma alternativa é armazenar o estado do programa em um banco de dados. Neste capítulo apresentarei um banco de dados simples e um módulo, pickle, que facilita o armazenamento de dados de programas.</p>
+
+<h2 id="142---leitura-e-escrita">14.2 - Leitura e escrita</h2>
+
+<p>Um arquivo de texto é uma sequência de caracteres armazenados em um meio permanente como uma unidade de disco rígido, pendrive ou CD-ROM. Vimos como abrir e ler um arquivo em “Leitura de listas de palavras” na página 133.</p>
+
+<p>Para escrever um arquivo texto, é preciso abri-lo com o modo <code class="highlighter-rouge">'w'</code> como segundo parâmetro:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">fout</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'output.txt'</span><span class="p">,</span> <span class="s">'w'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Se o arquivo já existe, abri-lo em modo de escrita elimina os dados antigos e começa tudo de novo, então tenha cuidado! Se o arquivo não existir, é criado um arquivo novo.</p>
+
+<p><code class="highlighter-rouge">open</code> retorna um objeto de arquivo que fornece métodos para trabalhar com o arquivo. O método write põe dados no arquivo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">line1</span> <span class="o">=</span> <span class="s">"This here's the wattle,</span><span class="se">\n</span><span class="s">"</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">fout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line1</span><span class="p">)</span>
+<span class="mi">24</span>
+</code></pre></div></div>
+
+<p>O valor devolvido é o número de caracteres que foram escritos. O objeto de arquivo monitora a posição em que está, então se você chamar <code class="highlighter-rouge">write</code> novamente, os novos dados são acrescentados ao fim do arquivo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">line2</span> <span class="o">=</span> <span class="s">"the emblem of our land.</span><span class="se">\n</span><span class="s">"</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">fout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line2</span><span class="p">)</span>
+<span class="mi">24</span>
+</code></pre></div></div>
+
+<p>Ao terminar de escrever, você deve fechar o arquivo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">fout</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Se não fechar o arquivo, ele é fechado para você quando o programa termina.</p>
+
+<h2 id="143---operador-de-formatação">14.3 - Operador de formatação</h2>
+
+<p>O argumento de <code class="highlighter-rouge">write</code> tem que ser uma string, então, se quisermos inserir outros valores em um arquivo, precisamos convertê-los em strings. O modo mais fácil de fazer isso é com <code class="highlighter-rouge">str</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">52</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">fout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>Uma alternativa é usar o operador de formatação, <code class="highlighter-rouge">%</code>. Quando aplicado a números inteiros, <code class="highlighter-rouge">%</code> é o operador de módulo. No entanto, quando o primeiro operando é uma string, <code class="highlighter-rouge">%</code> é o operador de formatação.</p>
+
+<p>O primeiro operando é a string de formatação, que contém uma ou várias sequências de formatação que especificam como o segundo operando deve ser formatado. O resultado é uma string.</p>
+
+<p>Por exemplo, a sequência de formatação ‘%d’ significa que o segundo operando deve ser formatado como um número inteiro decimal:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">camels</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">'</span><span class="si">%</span><span class="s">d'</span> <span class="o">%</span> <span class="n">camels</span>
+<span class="s">'42'</span>
+</code></pre></div></div>
+
+<p>O resultado é a string <code class="highlighter-rouge">'42'</code>, que não deve ser confundida com o valor inteiro <code class="highlighter-rouge">42</code>.</p>
+
+<p>Uma sequência de formatação pode aparecer em qualquer lugar na string, então você pode embutir um valor em uma sentença:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="s">'I have spotted </span><span class="si">%</span><span class="s">d camels.'</span> <span class="o">%</span> <span class="n">camels</span>
+<span class="s">'I have spotted 42 camels.'</span>
+</code></pre></div></div>
+
+<p>Se houver mais de uma sequência de formatação na string, o segundo argumento tem que ser uma tupla. Cada sequência de formatação é combinada com um elemento da tupla, nesta ordem.</p>
+
+<p>O seguinte exemplo usa <code class="highlighter-rouge">'%d'</code> para formatar um número inteiro, <code class="highlighter-rouge">'%g'</code> para formatar um número de ponto flutuante e <code class="highlighter-rouge">'%s'</code> para formatar qualquer objeto como uma string:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="s">'In </span><span class="si">%</span><span class="s">d years I have spotted </span><span class="si">%</span><span class="s">g </span><span class="si">%</span><span class="s">s.'</span> <span class="o">%</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="s">'camels'</span><span class="p">)</span>
+<span class="s">'In 3 years I have spotted 0.1 camels.'</span>
+</code></pre></div></div>
+
+<p>O número de elementos na tupla tem de corresponder ao número de sequências de formatação na string. Além disso, os tipos dos elementos têm de corresponder às sequências de formatação:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="s">'</span><span class="si">%</span><span class="s">d </span><span class="si">%</span><span class="s">d </span><span class="si">%</span><span class="s">d'</span> <span class="o">%</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="nb">TypeError</span><span class="p">:</span> <span class="ow">not</span> <span class="n">enough</span> <span class="n">arguments</span> <span class="k">for</span> <span class="n">format</span> <span class="n">string</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">'</span><span class="si">%</span><span class="s">d'</span> <span class="o">%</span> <span class="s">'dollars'</span>
+<span class="nb">TypeError</span><span class="p">:</span> <span class="o">%</span><span class="n">d</span> <span class="n">format</span><span class="p">:</span> <span class="n">a</span> <span class="n">number</span> <span class="ow">is</span> <span class="n">required</span><span class="p">,</span> <span class="ow">not</span> <span class="nb">str</span>
+</code></pre></div></div>
+
+<p>No primeiro exemplo não há elementos suficientes; no segundo, o elemento é do tipo incorreto.</p>
+
+<p>Para obter mais informações sobre o operador de formato, veja https://docs.python.org/3/library/stdtypes.html#printf-style-string-formatting. Você pode ler sobre uma alternativa mais eficiente, o método de formatação de strings, em https://docs.python.org/3/library/stdtypes.html#str.format.</p>
+
+<h2 id="144---nomes-de-arquivo-e-caminhos">14.4 - Nomes de arquivo e caminhos</h2>
+
+<p>Os arquivos são organizados em diretórios (também chamados de “pastas”). Cada programa em execução tem um “diretório atual”, que é o diretório-padrão da maior parte das operações. Por exemplo, quando você abre um arquivo de leitura, Python o procura no diretório atual.</p>
+
+<p>O módulo <code class="highlighter-rouge">os</code> fornece funções para trabalhar com arquivos e diretórios (“os” é a abreviação de “sistema operacional” em inglês). <code class="highlighter-rouge">os.getcwd</code> devolve o nome do diretório atual:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">os</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">cwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">cwd</span>
+<span class="s">'/home/dinsdale'</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">cwd</code> é a abreviação de “diretório de trabalho atual” em inglês. O resultado neste exemplo é <code class="highlighter-rouge">/home/dinsdale</code>, que é o diretório-padrão de um usuário chamado “dinsdale”.</p>
+
+<p>Uma string como <code class="highlighter-rouge">'/home/dinsdale'</code>, que identifica um arquivo ou diretório, é chamada de caminho (path).</p>
+
+<p>Um nome de arquivo simples, como <code class="highlighter-rouge">memo.txt</code>, também é considerado um caminho, mas é um caminho relativo, porque se relaciona ao diretório atual. Se o diretório atual é <code class="highlighter-rouge">/home/dinsdale</code>, o nome de arquivo <code class="highlighter-rouge">memo.txt</code> se referiria a <code class="highlighter-rouge">/home/dinsdale/memo.txt</code>.</p>
+
+<p>Um caminho que começa com <code class="highlighter-rouge">/</code> não depende do diretório atual; isso é chamado de caminho absoluto. Para encontrar o caminho absoluto para um arquivo, você pode usar <code class="highlighter-rouge">os.path.abspath</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s">'memo.txt'</span><span class="p">)</span>
+<span class="s">'/home/dinsdale/memo.txt'</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">os.path</code> fornece outras funções para trabalhar com nomes de arquivo e caminhos. Por exemplo, <code class="highlighter-rouge">os.path.exists</code> que verifica se um arquivo ou diretório existe:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">'memo.txt'</span><span class="p">)</span>
+<span class="bp">True</span>
+</code></pre></div></div>
+
+<p>Se existir, <code class="highlighter-rouge">os.path.isdir</code> verifica se é um diretório:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="s">'memo.txt'</span><span class="p">)</span>
+<span class="bp">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="s">'/home/dinsdale'</span><span class="p">)</span>
+<span class="bp">True</span>
+</code></pre></div></div>
+
+<p>De forma similar, <code class="highlighter-rouge">os.path.isfile</code> verifica se é um arquivo.</p>
+
+<p>os.listdir retorna uma lista dos arquivos (e outros diretórios) no diretório dado:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err"> </span><span class="o">&gt;&gt;&gt;</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">cwd</span><span class="p">)</span>
+<span class="p">[</span><span class="s">'music'</span><span class="p">,</span> <span class="s">'photos'</span><span class="p">,</span> <span class="s">'memo.txt'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Para demonstrar essas funções, o exemplo seguinte “passeia” por um diretório, exibe os nomes de todos os arquivos e chama a si mesmo recursivamente em todos os diretórios:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">walk</span><span class="p">(</span><span class="n">dirname</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">dirname</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">else</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">walk</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">os.path.join</code> recebe um diretório e um nome de arquivo e os une em um caminho completo.</p>
+
+<p>O módulo <code class="highlighter-rouge">os</code> fornece uma função chamada <code class="highlighter-rouge">walk</code>, que é semelhante, só que mais versátil. Como exercício, leia a documentação e use-a para exibir os nomes dos arquivos em um diretório dado e seus subdiretórios. Você pode baixar minha solução em http://thinkpython2.com/code/walk.py.</p>
+
+<h2 id="145---captura-de-exceções">14.5 - Captura de exceções</h2>
+
+<p>Muitas coisas podem dar errado quando você tenta ler e escrever arquivos. Se tentar abrir um arquivo que não existe, você recebe um <code class="highlighter-rouge">IOError</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">fin</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'bad_file'</span><span class="p">)</span>
+<span class="nb">IOError</span><span class="p">:</span> <span class="p">[</span><span class="n">Errno</span> <span class="mi">2</span><span class="p">]</span> <span class="n">No</span> <span class="n">such</span> <span class="nb">file</span> <span class="ow">or</span> <span class="n">directory</span><span class="p">:</span> <span class="s">'bad</span><span class="err">\</span><span class="s">_file'</span>
+</code></pre></div></div>
+
+<p>Se não tiver permissão para acessar um arquivo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">fout</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'/etc/passwd'</span><span class="p">,</span> <span class="s">'w'</span><span class="p">)</span>
+<span class="n">PermissionError</span><span class="p">:</span> <span class="p">[</span><span class="n">Errno</span> <span class="mi">13</span><span class="p">]</span> <span class="n">Permission</span> <span class="n">denied</span><span class="p">:</span> <span class="s">'/etc/passwd'</span>
+</code></pre></div></div>
+
+<p>E se tentar abrir um diretório para leitura, recebe</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">fin</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'/home'</span><span class="p">)</span>
+<span class="n">IsADirectoryError</span><span class="p">:</span> <span class="p">[</span><span class="n">Errno</span> <span class="mi">21</span><span class="p">]</span> <span class="n">Is</span> <span class="n">a</span> <span class="n">directory</span><span class="p">:</span> <span class="s">'/home'</span>
+</code></pre></div></div>
+
+<p>Para evitar esses erros, você pode usar funções como <code class="highlighter-rouge">os.path.exists</code> e <code class="highlighter-rouge">os.path.isfile</code>, mas levaria muito tempo e código para verificar todas as possibilidades (se “Errno 21” significa algo, pode ser que pelo menos 21 coisas podem dar errado).</p>
+
+<p>É melhor ir em frente e tentar, e lidar com problemas se eles surgirem, que é exatamente o que a instrução <code class="highlighter-rouge">try</code> faz. A sintaxe é semelhante à da instrução <code class="highlighter-rouge">if…else</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">fin</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'bad_file'</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="s">'Something went wrong.'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>O Python começa executando a cláusula <code class="highlighter-rouge">try</code>. Se tudo for bem, ele ignora a cláusula <code class="highlighter-rouge">except</code> e prossegue. Se ocorrer uma exceção, o programa sai da cláusula <code class="highlighter-rouge">try</code> e executa a cláusula <code class="highlighter-rouge">except</code>.</p>
+
+<p>Lidar com exceções usando uma instrução <code class="highlighter-rouge">try</code> chama-se capturar uma exceção. Neste exemplo, a cláusula <code class="highlighter-rouge">except</code> exibe uma mensagem de erro que não é muito útil. Em geral, a captura de uma exceção oferece a oportunidade de corrigir o problema ou tentar novamente, ou, ao menos, de terminar o programa adequadamente.</p>
+
+<h2 id="146---bancos-de-dados">14.6 - Bancos de dados</h2>
+
+<p>Um banco de dados é um arquivo organizado para armazenar dados. Muitos bancos de dados são organizados como um dicionário, porque mapeiam chaves a valores. A maior diferença entre um banco de dados e um dicionário é que o banco de dados está em um disco (ou outro armazenamento permanente), portanto persiste depois que o programa termina.</p>
+
+<p>O módulo dbm fornece uma interface para criar e atualizar arquivos de banco de dados. Como exemplo, criarei um banco de dados que contém legendas de arquivos de imagem.</p>
+
+<p>Abrir um banco de dados é semelhante à abertura de outros arquivos:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">dbm</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">db</span> <span class="o">=</span> <span class="n">dbm</span><span class="o">.</span><span class="nb">open</span><span class="p">(</span><span class="s">'captions'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>O modo ‘c’ significa que o banco de dados deve ser criado, se ainda não existir. O resultado é um objeto de banco de dados que pode ser usado (para a maior parte das operações) como um dicionário.</p>
+
+<p>Quando você cria um novo item, dbm atualiza o arquivo de banco de dados:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">db</span><span class="p">[</span><span class="s">'cleese.png'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'Photo of John Cleese.'</span>
+</code></pre></div></div>
+
+<p>Quando você acessa um dos itens, dbm lê o arquivo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">db</span><span class="p">[</span><span class="s">'cleese.png'</span><span class="p">]</span>
+<span class="n">b</span><span class="s">'Photo of John Cleese.'</span>
+</code></pre></div></div>
+
+<p>O resultado é um objeto <code class="highlighter-rouge">bytes</code>, o que explica o prefixo <code class="highlighter-rouge">b</code>. Um objeto <code class="highlighter-rouge">bytes</code> é semelhante a uma string, em muitos aspectos. Quando você avançar no Python, a diferença se tornará importante, mas, por enquanto, podemos ignorá-la.</p>
+
+<p>Se fizer outra atribuição a uma chave existente, o dbm substitui o valor antigo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">db</span><span class="p">[</span><span class="s">'cleese.png'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'Photo of John Cleese doing a silly walk.'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">db</span><span class="p">[</span><span class="s">'cleese.png'</span><span class="p">]</span>
+<span class="n">b</span><span class="s">'Photo of John Cleese doing a silly walk.'</span>
+</code></pre></div></div>
+
+<p>Alguns métodos de dicionário, como keys e items, não funcionam com objetos de banco de dados. No entanto, a iteração com um loop <code class="highlighter-rouge">for</code>, sim:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">db</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">db</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>Como em outros arquivos, você deve fechar o banco de dados quando terminar:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h2 id="147---usando-o-pickle">14.7 - Usando o Pickle</h2>
+
+<p>Uma limitação de <code class="highlighter-rouge">dbm</code> é que as chaves e os valores têm que ser strings ou bytes. Se tentar usar algum outro tipo, vai receber um erro.</p>
+
+<p>O módulo <code class="highlighter-rouge">pickle</code> pode ajudar. Ele traduz quase qualquer tipo de objeto em uma string conveniente para o armazenamento em um banco de dados, e então traduz strings de volta em objetos.</p>
+
+<p>pickle.dumps recebe um objeto como parâmetro e retorna uma representação de string:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">pickle</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="n">b</span><span class="s">'</span><span class="se">\x80\x03</span><span class="s">]q</span><span class="se">\x00</span><span class="s">(K</span><span class="se">\x01</span><span class="s">K</span><span class="se">\x02</span><span class="s">K</span><span class="se">\x03</span><span class="s">e.'</span>
+</code></pre></div></div>
+
+<p>O formato não é óbvio para leitores humanos; o objetivo é que seja fácil para o <code class="highlighter-rouge">pickle</code> interpretar. <code class="highlighter-rouge">pickle.loads</code> reconstitui o objeto:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">t1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">t1</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t2</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t2</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Embora o novo objeto tenha o mesmo valor que o antigo, não é (em geral) o mesmo objeto:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">t1</span> <span class="o">==</span> <span class="n">t2</span>
+<span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t1</span> <span class="ow">is</span> <span class="n">t2</span>
+<span class="bp">False</span>
+</code></pre></div></div>
+
+<p>Em outras palavras, usar o <code class="highlighter-rouge">pickle.dumps</code> e <code class="highlighter-rouge">pickle.loads</code> tem o mesmo efeito que copiar o objeto.</p>
+
+<p>Você pode usar o <code class="highlighter-rouge">pickle</code> para guardar variáveis que não são strings em um banco de dados. Na verdade, esta combinação é tão comum que foi encapsulada em um módulo chamado <code class="highlighter-rouge">shelve</code>.</p>
+
+<h2 id="148---pipes">14.8 - Pipes</h2>
+
+<p>A maior parte dos sistemas operacionais fornece uma interface de linha de comando, conhecida como shell. Shells normalmente fornecem comandos para navegar nos sistemas de arquivos e executar programas. Por exemplo, em Unix você pode alterar diretórios com <code class="highlighter-rouge">cd</code>, exibir o conteúdo de um diretório com <code class="highlighter-rouge">ls</code> e abrir um navegador web digitando (por exemplo) <code class="highlighter-rouge">firefox</code>.</p>
+
+<p>Qualquer programa que possa ser aberto no shell também pode ser aberto no Python usando um objeto pipe, que representa um programa em execução.</p>
+
+<p>Por exemplo, o comando Unix <code class="highlighter-rouge">ls -l</code> normalmente exibe o conteúdo do diretório atual no formato longo. Você pode abrir ls com <code class="highlighter-rouge">os.popen[1]</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">cmd</span> <span class="o">=</span> <span class="s">'ls -l'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">fp</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>O argumento é uma string que contém um comando shell. O valor de retorno é um objeto que se comporta como um arquivo aberto. É possível ler a saída do processo ls uma linha por vez com readline ou receber tudo de uma vez com read:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">res</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Ao terminar, feche o pipe como se fosse um arquivo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">stat</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">stat</span><span class="p">)</span>
+<span class="bp">None</span>
+</code></pre></div></div>
+
+<p>O valor de retorno é o status final do processo <code class="highlighter-rouge">ls</code>; <code class="highlighter-rouge">None</code> significa que terminou normalmente (sem erros).</p>
+
+<p>Por exemplo, a maior parte dos sistemas Unix oferece um comando chamado <code class="highlighter-rouge">md5sum</code>, que lê o conteúdo de um arquivo e calcula uma assinatura digital. Você pode ler sobre o MD5 em http://en.wikipedia.org/wiki/Md5. Este comando fornece uma forma eficiente de verificar se dois arquivos têm o mesmo conteúdo. A probabilidade de dois conteúdos diferentes produzirem a mesma assinatura digital é muito pequena (isto é, muito pouco provável que aconteça antes do colapso do universo).</p>
+
+<p>Você pode usar um pipe para executar o <code class="highlighter-rouge">md5sum</code> do Python e receber o resultado:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">filename</span> <span class="o">=</span> <span class="s">'book.tex'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">cmd</span> <span class="o">=</span> <span class="s">'md5sum '</span> <span class="o">+</span> <span class="n">filename</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">fp</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">res</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">stat</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="mf">1e0033</span><span class="n">f0ed0656636de0d75144ba32e0</span> <span class="n">book</span><span class="o">.</span><span class="n">tex</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">stat</span><span class="p">)</span>
+<span class="bp">None</span>
+</code></pre></div></div>
+
+<h2 id="149---escrevendo-módulos">14.9 - Escrevendo módulos</h2>
+
+<p>Qualquer arquivo que contenha código do Python pode ser importado como um módulo. Por exemplo, vamos supor que você tenha um arquivo chamado <code class="highlighter-rouge">wc.py</code> com o seguinte código:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">linecount</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">count</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">linecount</span><span class="p">(</span><span class="s">'wc.py'</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>Quando este programa é executado, ele lê a si mesmo e exibe o número de linhas no arquivo, que é 7. Você também pode importá-lo desta forma:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">wc</span>
+<span class="mi">7</span>
+</code></pre></div></div>
+
+<p>Agora você tem um objeto de módulo wc:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">wc</span>
+<span class="o">&lt;</span><span class="n">module</span> <span class="s">'wc'</span> <span class="k">from</span> <span class="s">'wc.py'</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p>O objeto de módulo fornece o linecount:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">wc</span><span class="o">.</span><span class="n">linecount</span><span class="p">(</span><span class="s">'wc.py'</span><span class="p">)</span>
+<span class="mi">7</span>
+</code></pre></div></div>
+
+<p>Então é assim que se escreve módulos no Python.</p>
+
+<p>O único problema com este exemplo é que quando você importa o módulo, ele executa o código de teste no final. Normalmente, quando se importa um módulo, ele define novas funções, mas não as executa.</p>
+
+<p>Os programas que serão importados como módulos muitas vezes usam a seguinte expressão:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="n">linecount</span><span class="p">(</span><span class="s">'wc.py'</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">__name__</code> é uma variável integrada, estabelecida quando o programa inicia. Se o programa estiver rodando como um script, <code class="highlighter-rouge">__name__</code> tem o valor <code class="highlighter-rouge">'__main__'</code>; neste caso, o código de teste é executado. Do contrário, se o módulo está sendo importado, o código de teste é ignorado.</p>
+
+<p>Como exercício, digite este exemplo em um arquivo chamado wc.py e execute-o como um script. Então execute o interpretador do Python e import wc. Qual é o valor de <code class="highlighter-rouge">__name__</code> quando o módulo está sendo importado?</p>
+
+<p>Atenção: se você importar um módulo que já tenha sido importado, o Python não faz nada. Ele não relê o arquivo, mesmo se tiver sido alterado.</p>
+
+<p>Se quiser recarregar um módulo, você pode usar a função integrada <code class="highlighter-rouge">reload</code>, mas isso pode causar problemas, então o mais seguro é reiniciar o interpretador e importar o módulo novamente.</p>
+
+<h2 id="1410---depuração">14.10 - Depuração</h2>
+
+<p>Quando estiver lendo e escrevendo arquivos, você pode ter problemas com whitespace. Esses erros podem ser difíceis para depurar, porque os espaços, tabulações e quebras de linha normalmente são invisíveis:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="s">'1 2</span><span class="se">\t</span><span class="s"> 3</span><span class="se">\n</span><span class="s"> 4'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="mi">1</span> <span class="mi">2</span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span><span class="mi">3</span>
+<span class="err"> </span><span class="mi">4</span>
+</code></pre></div></div>
+
+<p>A função integrada <code class="highlighter-rouge">repr</code> pode ajudar. Ela recebe qualquer objeto como argumento e retorna uma representação em string do objeto. Para strings, representa caracteres de whitespace com sequências de barras invertidas:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+<span class="s">'1 2</span><span class="se">\t</span><span class="s"> 3</span><span class="se">\n</span><span class="s"> 4'</span>
+</code></pre></div></div>
+
+<p>Isso pode ser útil para a depuração.</p>
+
+<p>Outro problema que você pode ter é que sistemas diferentes usam caracteres diferentes para indicar o fim de uma linha. Alguns sistemas usam newline, representado por <code class="highlighter-rouge">\n</code>. Outros usam um caractere de retorno, representado por <code class="highlighter-rouge">\r</code>. Alguns usam ambos. Se mover arquivos entre sistemas diferentes, essas inconsistências podem causar problemas.</p>
+
+<p>Para a maior parte dos sistemas há aplicações para converter de um formato a outro. Você pode encontrá-los (e ler mais sobre o assunto) em http://en.wikipedia.org/wiki/Newline. Ou, é claro, você pode escrever um por conta própria.</p>
+
+<h2 id="1411---glossário">14.11 - Glossário</h2>
+
+<dl>
+<dt><a id="glos:persistente" href="14-arquivos.html#termo:persistente">persistente</a></dt>
+<dd>Relativo a um programa que roda indefinidamente e mantém pelo menos alguns dos seus dados em armazenamento permanente.</dd>
+
+<dt><a id="glos:operador de formatação" href="14-arquivos.html#termo:operador de formatação">operador de formatação</a></dt>
+<dd>Um operador, %, que recebe uma string de formatação e uma tupla e gera uma string que inclui os elementos da tupla formatada como especificado pela string de formatação.</dd>
+
+<dt><a id="glos:string de formatação" href="14-arquivos.html#termo:string de formatação">string de formatação</a></dt>
+<dd>String usada com o operador de formatação, que contém sequências de formatação.</dd>
+
+<dt><a id="glos:sequência de formatação" href="14-arquivos.html#termo:sequência de formatação">sequência de formatação</a></dt>
+<dd>Sequência de caracteres em uma string de formatação, como %d, que especifica como um valor deve ser formatado.</dd>
+
+<dt><a id="glos:arquivo de texto" href="14-arquivos.html#termo:arquivo de texto">arquivo de texto</a></dt>
+<dd>Sequência de caracteres guardados em armazenamento permanente, como uma unidade de disco rígido.</dd>
+
+<dt><a id="glos:diretório" href="14-arquivos.html#termo:diretório">diretório</a></dt>
+<dd>Uma coleção de arquivos nomeada, também chamada de pasta.</dd>
+
+<dt><a id="glos:caminho" href="14-arquivos.html#termo:caminho">caminho</a></dt>
+<dd>String que identifica um arquivo.</dd>
+
+<dt><a id="glos:caminho relativo" href="14-arquivos.html#termo:caminho relativo">caminho relativo</a></dt>
+<dd>Caminho que inicia no diretório atual.</dd>
+
+<dt><a id="glos:caminho absoluto" href="14-arquivos.html#termo:caminho absoluto">caminho absoluto</a></dt>
+<dd>Caminho que inicia no diretório de posição mais alta (raiz) no sistema de arquivos.</dd>
+
+<dt><a id="glos:capturar" href="14-arquivos.html#termo:capturar">capturar</a></dt>
+<dd>Impedir uma exceção de encerrar um programa usando as instruções try e except.</dd>
+
+<dt><a id="glos:banco de dados" href="14-arquivos.html#termo:banco de dados">banco de dados</a></dt>
+<dd>Um arquivo cujo conteúdo é organizado como um dicionário, com chaves que correspondem a valores.</dd>
+
+<dt><a id="glos:objeto bytes" href="14-arquivos.html#termo:objeto bytes">objeto bytes</a></dt>
+<dd>Objeto semelhante a uma string.</dd>
+
+<dt><a id="glos:shell" href="14-arquivos.html#termo:shell">shell</a></dt>
+<dd>Programa que permite aos usuários digitar comandos e executá-los para iniciar outros programas.</dd>
+
+<dt><a id="glos:objeto pipe" href="14-arquivos.html#termo:objeto pipe">objeto pipe</a></dt>
+<dd>Objeto que representa um programa em execução, permitindo que um programa do Python execute comandos e leia os resultados.</dd>
+
+</dl>
+
+<h2 id="1412---exercícios">14.12 - Exercícios</h2>
+
+<h3 id="exercício-141">Exercício 14.1</h3>
+
+<p>Escreva uma função chamada sed que receba como argumentos uma string-padrão, uma string de substituição e dois nomes de arquivo; ela deve ler o primeiro arquivo e escrever o conteúdo no segundo arquivo (criando-o, se necessário). Se a string-padrão aparecer em algum lugar do arquivo, ela deve ser substituída pela string de substituição.</p>
+
+<p>Se ocorrer um erro durante a abertura, leitura, escrita ou fechamento dos arquivos, seu programa deve capturar a exceção, exibir uma mensagem de erro e encerrar.</p>
+
+<p>Solução: http://thinkpython2.com/code/sed.py.</p>
+
+<h3 id="exercício-142">Exercício 14.2</h3>
+
+<p>Se você baixar minha solução do Exercício 12.2 em http://thinkpython2.com/code/anagram_sets.py, verá que ela cria um dicionário que mapeia uma string ordenada de letras à lista de palavras que podem ser soletradas com aquelas letras. Por exemplo, <code class="highlighter-rouge">'opst'</code> mapeia à lista <code class="highlighter-rouge">['opts', 'post', 'pots', 'spot', 'stop', 'tops']</code>.</p>
+
+<p>Escreva um módulo que importe <code class="highlighter-rouge">anagram_sets</code> e forneça duas novas funções: <code class="highlighter-rouge">store_anagrams</code> deve guardar o dicionário de anagramas em uma “prateleira” (objeto criado pelo módulo <code class="highlighter-rouge">sheve</code>); <code class="highlighter-rouge">read_anagrams</code> deve procurar uma palavra e devolver uma lista dos seus anagramas.</p>
+
+<p>Solução: http://thinkpython2.com/code/anagram_db.py.</p>
+
+<h3 id="exercício-143">Exercício 14.3</h3>
+
+<p>Em uma grande coleção de arquivos MP3 pode haver mais de uma cópia da mesma música, guardada em diretórios diferentes ou com nomes de arquivo diferentes. A meta deste exercício é procurar duplicatas.</p>
+
+<ol>
+  <li>
+    <p>Escreva um programa que procure um diretório e todos os seus subdiretórios, recursivamente, e retorne uma lista de caminhos completos de todos os arquivos com um dado sufixo (como .mp3). Dica: os.path fornece várias funções úteis para manipular nomes de caminhos e de arquivos.</p>
+  </li>
+  <li>
+    <p>Para reconhecer duplicatas, você pode usar md5sum para calcular uma “soma de controle” para cada arquivo. Se dois arquivos tiverem a mesma soma de controle, provavelmente têm o mesmo conteúdo.</p>
+  </li>
+  <li>
+    <p>Para conferir o resultado, você pode usar o comando Unix <code class="highlighter-rouge">diff</code>.</p>
+  </li>
+</ol>
+
+<p>Solução: http://thinkpython2.com/code/find_duplicates.py.</p>
+
+
+      <footer class="site-footer">
+        
+          <span class="site-footer-owner"><a href="https://github.com/PenseAllen/PensePython2e">PensePython2e</a> is maintained by <a href="https://github.com/PenseAllen">PenseAllen</a>.</span>
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </section>
+
+    
+  </body>
+</html>

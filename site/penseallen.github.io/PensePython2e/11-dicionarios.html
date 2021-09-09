@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Capítulo 11: Dicionários | PensePython2e</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Capítulo 11: Dicionários" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey" />
+<meta property="og:description" content="Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey" />
+<link rel="canonical" href="11-dicionarios.html" />
+<meta property="og:url" content="https://penseallen.github.io/PensePython2e/11-dicionarios.html" />
+<meta property="og:site_name" content="PensePython2e" />
+<script type="application/ld+json">
+{"@type":"WebPage","headline":"Capítulo 11: Dicionários","url":"https://penseallen.github.io/PensePython2e/11-dicionarios.html","description":"Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <link rel="stylesheet" href="assets/css/style.css@v=afa460130599dbde01620e86c38923f785023956.css">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">PensePython2e</h1>
+      <h2 class="project-tagline">Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey</h2>
+      
+        <a href="https://github.com/PenseAllen/PensePython2e" class="btn">View on GitHub</a>
+      
+      
+    </section>
+
+    <section class="main-content">
+      <h1 id="capítulo-11-dicionários">Capítulo 11: Dicionários</h1>
+
+<p>Este capítulo apresenta outro tipo integrado chamado dicionário. Dicionários são um dos melhores recursos do Python; eles são os blocos de montar de muitos algoritmos eficientes e elegantes.</p>
+
+<h2 id="111---um-dicionário-é-um-mapeamento">11.1 - Um dicionário é um mapeamento</h2>
+
+<p>Um dicionário se parece com uma lista, mas é mais geral. Em uma lista, os índices têm que ser números inteiros; em um dicionário, eles podem ser de (quase) qualquer tipo.</p>
+
+<p>Um dicionário contém uma coleção de índices, que se chamam chaves e uma coleção de valores. Cada chave é associada com um único valor. A associação de uma chave e um valor chama-se par chave-valor ou item.</p>
+
+<p>Em linguagem matemática, um dicionário representa um mapeamento de chaves a valores, para que você possa dizer que cada chave “mostra o mapa a” um valor. Como exemplo, vamos construir um dicionário que faz o mapa de palavras do inglês ao espanhol, portanto as chaves e os valores são todos strings.</p>
+
+<p>A função dict cria um novo dicionário sem itens. Como dict é o nome de uma função integrada, você deve evitar usá-lo como nome de variável.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">eng2sp</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">eng2sp</span>
+<span class="p">{}</span>
+</code></pre></div></div>
+
+<p>As chaves {} representam um dicionário vazio. Para acrescentar itens ao dicionário, você pode usar colchetes:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">eng2sp</span><span class="p">[</span><span class="s">'one'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'uno'</span>
+</code></pre></div></div>
+
+<p>Esta linha cria um item que mapeia da chave ‘one’ ao valor ‘uno’. Se imprimirmos o dicionário novamente, vemos um par chave-valor com dois pontos entre a chave e o valor:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">eng2sp</span>
+<span class="p">{</span><span class="s">'one'</span><span class="p">:</span> <span class="s">'uno'</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p>Este formato de saída também é um formato de entrada. Por exemplo, você pode criar um dicionário com três itens:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">eng2sp</span> <span class="o">=</span> <span class="p">{</span><span class="s">'one'</span><span class="p">:</span> <span class="s">'uno'</span><span class="p">,</span> <span class="s">'two'</span><span class="p">:</span> <span class="s">'dos'</span><span class="p">,</span> <span class="s">'three'</span><span class="p">:</span> <span class="s">'tres'</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p>Porém, se exibir <code class="highlighter-rouge">eng2sp</code>, pode se surpreender:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">eng2sp</span>
+<span class="p">{</span><span class="s">'one'</span><span class="p">:</span> <span class="s">'uno'</span><span class="p">,</span> <span class="s">'three'</span><span class="p">:</span> <span class="s">'tres'</span><span class="p">,</span> <span class="s">'two'</span><span class="p">:</span> <span class="s">'dos'</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p>A ordem dos pares chave-valor pode não ser a mesma. Se você digitar o mesmo exemplo no seu computador, pode receber um resultado diferente. Em geral, a ordem dos itens em um dicionário é imprevisível.</p>
+
+<p>No entanto, isso não é um problema porque os elementos de um dicionário nunca são indexados com índices de números inteiros. Em vez disso, você usa as chaves para procurar os valores correspondentes:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">eng2sp</span><span class="p">[</span><span class="s">'two'</span><span class="p">]</span>
+<span class="s">'dos'</span>
+</code></pre></div></div>
+
+<p>A chave <code class="highlighter-rouge">'two'</code> sempre mapeia ao valor <code class="highlighter-rouge">'dos'</code>, assim a ordem dos itens não importa.</p>
+
+<p>Se a chave não estiver no dicionário, você recebe uma exceção:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">eng2sp</span><span class="p">[</span><span class="s">'four'</span><span class="p">]</span>
+<span class="nb">KeyError</span><span class="p">:</span> <span class="s">'four'</span>
+</code></pre></div></div>
+
+<p>A função <code class="highlighter-rouge">len</code> é compatível com dicionários; ela devolve o número de pares chave-valor:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">eng2sp</span><span class="p">)</span>
+<span class="mi">3</span>
+</code></pre></div></div>
+
+<p>O operador <code class="highlighter-rouge">in</code> funciona em dicionários também; ele acusa se algo aparece como chave no dicionário (aparecer como valor não é o suficiente).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="s">'one'</span> <span class="ow">in</span> <span class="n">eng2sp</span>
+<span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">'uno'</span> <span class="ow">in</span> <span class="n">eng2sp</span>
+<span class="bp">False</span>
+</code></pre></div></div>
+
+<p>Para ver se algo aparece como um valor em um dicionário, você pode usar o método <code class="highlighter-rouge">values</code>, que devolve uma coleção de valores, e então usar o operador <code class="highlighter-rouge">in</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">vals</span> <span class="o">=</span> <span class="n">eng2sp</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">'uno'</span> <span class="ow">in</span> <span class="n">vals</span>
+<span class="bp">True</span>
+</code></pre></div></div>
+
+<p>O operador <code class="highlighter-rouge">in</code> usa algoritmos diferentes para listas e dicionários. Para listas, ele procura os elementos da lista em ordem, como descrito em “Busca”, na página 123. Conforme a lista torna-se mais longa, o tempo de busca também fica proporcionalmente mais longo.</p>
+
+<p>Para dicionários, o Python usa um algoritmo chamado hashtable (tabela de dispersão), que tem uma propriedade notável: o operador <code class="highlighter-rouge">in</code> leva praticamente o mesmo tempo na busca, não importa quantos itens estejam no dicionário. Eu explico como isso é possível em “Hashtables”, na página 302, mas a explicação pode não fazer sentido até que você tenha lido mais alguns capítulos.</p>
+
+<h2 id="112---um-dicionário-como-uma-coleção-de-contadores">11.2 - Um dicionário como uma coleção de contadores</h2>
+
+<p>Suponha que você receba uma string e queira contar quantas vezes cada letra aparece nela. Há vários modos de fazer isso:</p>
+
+<ol>
+  <li>
+    <p>Você pode criar 26 variáveis, uma para cada letra do alfabeto. Então pode atravessar a string e, para cada caractere, incrementar o contador correspondente, provavelmente usando uma condicional encadeada.</p>
+  </li>
+  <li>
+    <p>Você pode criar uma lista com 26 elementos. Então pode converter cada caractere em um número (com a função integrada ord), usar o número como índice na lista e incrementar o respectivo contador.</p>
+  </li>
+  <li>
+    <p>Você pode criar um dicionário com caracteres como chaves e contadores como valores correspondentes. Na primeira vez que visse um caractere, você acrescentaria um item ao dicionário. Depois disso, incrementaria o valor de um item existente.</p>
+  </li>
+</ol>
+
+<p>Cada uma dessas opções executa o mesmo cálculo, mas o implementa de forma diferente.</p>
+
+<p>Uma implementação é um modo de executar um cálculo; algumas implementações são melhores que outras. Por exemplo, uma vantagem da implementação de dicionários é que não precisamos saber de antemão quais letras aparecem na string e só é preciso criar espaço para as letras que realmente venham a aparecer.</p>
+
+<p>O código poderia ser assim:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">histogram</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">d</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">else</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">d</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">d</span>
+</code></pre></div></div>
+
+<p>O nome da função é <code class="highlighter-rouge">histogram</code>, um termo estatístico para uma coleção de contadores (ou frequências).</p>
+
+<p>A primeira linha da função cria um dicionário vazio. O loop for atravessa a string. Cada vez que passa pelo loop, se o caractere c não estiver no dicionário, criamos um item com a chave c e o valor inicial 1 (pois já vimos esta letra uma vez). Se o c já estiver no dicionário, incrementamos d [c].</p>
+
+<p>Funciona assim:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">h</span> <span class="o">=</span> <span class="n">histogram</span><span class="p">(</span><span class="s">'brontosaurus'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">h</span>
+<span class="p">{</span><span class="s">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'b'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'o'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'n'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'s'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'r'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'u'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'t'</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p>O histograma indica que as letras ‘a’ e ‘b’ aparecem uma vez; ‘o’ aparece duas vezes, e assim por diante.</p>
+
+<p>Os dicionários têm um método chamado <code class="highlighter-rouge">get</code>, que toma uma chave e um valor padrão. Se a chave aparecer no dicionário, <code class="highlighter-rouge">get</code> retorna o valor correspondente; se não for o caso, ele retorna o valor padrão. Por exemplo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">h</span> <span class="o">=</span> <span class="n">histogram</span><span class="p">(</span><span class="s">'a'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">h</span>
+<span class="p">{</span><span class="s">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">h</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'a'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="mi">1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">h</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'b'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="mi">0</span>
+</code></pre></div></div>
+
+<p>Como exercício, use o <code class="highlighter-rouge">get</code> para escrever a função <code class="highlighter-rouge">histogram</code> de forma mais concisa. Tente eliminar a instrução <code class="highlighter-rouge">if</code>.</p>
+
+<h2 id="113---loop-e-dicionários">11.3 - Loop e dicionários</h2>
+
+<p>Se usar um dicionário em uma instrução <code class="highlighter-rouge">for</code>, ela percorre as chaves do dicionário. Por exemplo, <code class="highlighter-rouge">print_hist</code> exibe cada chave e o valor correspondente:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">print_hist</span><span class="p">(</span><span class="n">h</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">h</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">h</span><span class="p">[</span><span class="n">c</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>Isso é o que aparece:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">h</span> <span class="o">=</span> <span class="n">histogram</span><span class="p">(</span><span class="s">'parrot'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">print_hist</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+<span class="n">a</span> <span class="mi">1</span>
+<span class="n">p</span> <span class="mi">1</span>
+<span class="n">r</span> <span class="mi">2</span>
+<span class="n">t</span> <span class="mi">1</span>
+<span class="n">o</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<p>Novamente, as chaves não estão em nenhuma ordem determinada. Para atravessar as chaves em ordem ascendente, você pode usar a função integrada <code class="highlighter-rouge">sorted</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">h</span><span class="p">):</span>
+<span class="o">...</span> <span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">h</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+<span class="n">a</span> <span class="mi">1</span>
+<span class="n">o</span> <span class="mi">1</span>
+<span class="n">p</span> <span class="mi">1</span>
+<span class="n">r</span> <span class="mi">2</span>
+<span class="n">t</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<h2 id="114---busca-reversa">11.4 - Busca reversa</h2>
+
+<p>Considerando um dicionário <code class="highlighter-rouge">d</code> e uma chave <code class="highlighter-rouge">k</code>, é fácil encontrar o valor correspondente <code class="highlighter-rouge">v = d [k]</code>. Esta operação chama-se busca.</p>
+
+<p>Mas e se você tiver <code class="highlighter-rouge">v</code> e quiser encontrar <code class="highlighter-rouge">k</code>? Você tem dois problemas: em primeiro lugar, pode haver mais de uma chave que esteja mapeada ao valor <code class="highlighter-rouge">v</code>. Dependendo da aplicação, quem sabe você pode escolher um, ou talvez tenha de fazer uma lista que contenha todos eles. Em segundo lugar, não há sintaxe simples para fazer uma busca reversa; é preciso procurar.</p>
+
+<p>Aqui está uma função que recebe um valor e retorna a primeira chave mapeada ao valor dado:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">reverse_lookup</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">==</span> <span class="n">v</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">k</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">raise</span> <span class="nb">LookupError</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Essa função é mais um exemplo do padrão de busca, mas usa um recurso que ainda não tínhamos visto: <code class="highlighter-rouge">raise</code>. A instrução <code class="highlighter-rouge">raise</code> causa uma exceção; neste caso, causa um <code class="highlighter-rouge">LookupError</code>, que é uma exceção integrada, usada para indicar que uma operação de busca falhou.</p>
+
+<p>Se chegarmos ao fim do loop significa que <code class="highlighter-rouge">v</code> não aparece no dicionário como um valor, portanto apresentaremos uma exceção.</p>
+
+<p>Aqui está um exemplo de uma busca reversa bem sucedida:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">h</span> <span class="o">=</span> <span class="n">histogram</span><span class="p">(</span><span class="s">'parrot'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">k</span> <span class="o">=</span> <span class="n">reverse_lookup</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">k</span>
+<span class="s">'r'</span>
+</code></pre></div></div>
+
+<p>E uma mal sucedida:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">k</span> <span class="o">=</span> <span class="n">reverse_lookup</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="err"> </span> <span class="n">File</span> <span class="s">"&lt;stdin&gt;"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="err"> </span> <span class="n">File</span> <span class="s">"&lt;stdin&gt;"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">5</span><span class="p">,</span> <span class="ow">in</span> <span class="n">reverse_lookup</span>
+<span class="nb">LookupError</span>
+</code></pre></div></div>
+
+<p>O efeito causado por você ao apresentar uma exceção é igual ao causado pelo Python quando faz o mesmo: ele exibe um traceback e uma mensagem de erro.</p>
+
+<p>A instrução raise pode receber uma mensagem de erro detalhada como argumento opcional. Por exemplo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">raise</span> <span class="nb">LookupError</span><span class="p">(</span><span class="s">'value does not appear in the dictionary'</span><span class="p">)</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="err"> </span> <span class="n">File</span> <span class="s">"&lt;stdin&gt;"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="err">?</span>
+<span class="nb">LookupError</span><span class="p">:</span> <span class="n">value</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">appear</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">dictionary</span>
+</code></pre></div></div>
+
+<p>Uma busca reversa é muito mais lenta que uma busca no sentido normal; se for preciso fazê-lo muitas vezes, ou se o dicionário ficar muito grande, o desempenho do seu programa será prejudicado.</p>
+
+<h2 id="115---dicionários-e-listas">11.5 - Dicionários e listas</h2>
+
+<p>As listas podem aparecer como valores em um dicionário. Por exemplo, se você receber um dicionário que mapeie letras e frequências, é uma boa ideia invertê-lo; isto é, crie um dicionário que mapeie de frequências a letras. Como pode haver várias letras com a mesma frequência, cada valor no dicionário invertido deve ser uma lista de letras.</p>
+
+<p>Aqui está uma função que inverte um dicionário:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">invert_dict</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">inverse</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">val</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">val</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">inverse</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">inverse</span><span class="p">[</span><span class="n">val</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span><span class="p">]</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">else</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">inverse</span><span class="p">[</span><span class="n">val</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">inverse</span>
+</code></pre></div></div>
+
+<p>Cada vez que o programa passar pelo loop, a key recebe uma chave de d e val recebe o valor correspondente. Se val não estiver em inverse significa que não foi vista antes, então criamos um item e o inicializamos com um item avulso (em inglês, singleton, uma lista que contém um único elemento). Se não for o caso é porque vimos esse valor antes, então acrescentamos a chave correspondente à lista.</p>
+
+<p>Aqui está um exemplo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">hist</span> <span class="o">=</span> <span class="n">histogram</span><span class="p">(</span><span class="s">'parrot'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">hist</span>
+<span class="p">{</span><span class="s">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'p'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'r'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'t'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'o'</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">inverse</span> <span class="o">=</span> <span class="n">invert_dict</span><span class="p">(</span><span class="n">hist</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">inverse</span>
+<span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'p'</span><span class="p">,</span> <span class="s">'t'</span><span class="p">,</span> <span class="s">'o'</span><span class="p">],</span> <span class="mi">2</span><span class="p">:</span> <span class="p">[</span><span class="s">'r'</span><span class="p">]}</span>
+</code></pre></div></div>
+
+<p>A Figura 11.1 é um diagrama de estado mostrando hist e inverse. Um dicionário é representado como uma caixa com o tipo dict acima dela e os pares chave-valor no interior. Se os valores forem números inteiros, de ponto flutuante ou strings, desenho-os dentro da caixa, mas normalmente prefiro desenhar listas do lado de fora, para manter o diagrama simples.</p>
+
+<p><img src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_1101.png" alt="Figura 11.1 – Diagrama de estado de um dicionário e seu inverso." />
+<br /><em>Figura 11.1 – Diagrama de estado de um dicionário e seu inverso.</em></p>
+
+<p>As listas podem ser valores em um dicionário, como mostra este exemplo, mas não podem ser chaves. Isso é o que acontece se você tentar:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">d</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="s">'oops'</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="err"> </span> <span class="n">File</span> <span class="s">"&lt;stdin&gt;"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="err">?</span>
+<span class="nb">TypeError</span><span class="p">:</span> <span class="nb">list</span> <span class="n">objects</span> <span class="n">are</span> <span class="n">unhashable</span>
+</code></pre></div></div>
+
+<p>Já mencionei que um dicionário é implementado usando uma hashtable e isso significa que é preciso que as chaves possam ser hashable (que seja possível computar seu hash, e que este valor de hash seja imutável).</p>
+
+<p><code class="highlighter-rouge">hash</code> é uma função que recebe um valor (de qualquer tipo) e devolve um número inteiro. Dicionários usam esses números inteiros, chamados valores <code class="highlighter-rouge">hash</code>, para guardar e buscar pares chave-valor.</p>
+
+<p>Este sistema funciona perfeitamente se as chaves forem imutáveis. Porém, se as chaves são mutáveis, como listas, coisas ruins acontecem. Por exemplo, quando você cria um par chave-valor, o Python guarda a chave na posição correspondente. Se você modificar a chave e então guardá-la novamente, ela iria para uma posição diferente. Nesse caso, você poderia ter duas entradas para a mesma chave, ou pode não conseguir encontrar uma chave. De qualquer forma, o dicionário não funcionaria corretamente.</p>
+
+<p>É por isso que as chaves têm de ser hashable, e tipos mutáveis como listas, não são. A forma mais simples de resolver esta limitação é usar tuplas, que serão vistas no próximo capítulo.</p>
+
+<p>Como os dicionários são mutáveis, eles não podem ser usados como chaves, mas podem ser usados como valores.</p>
+
+<h2 id="116---memos">11.6 - Memos</h2>
+
+<p>Se usou a função de fibonacci em “Mais um exemplo”, na página 101, pode ter notado que quanto maior o argumento dado mais tempo a função leva para ser executada. Além disso, o tempo de execução aumenta rapidamente.</p>
+
+<p>Para entender por que, considere a Figura 11.2, que mostra o gráfico de chamada de <code class="highlighter-rouge">fibonacci</code> com n=4.</p>
+
+<p><img src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_1102.png" alt="Figura 11.2 – Gráfico de chamada para fibonacci." />
+<br /><em>Figura 11.2 – Gráfico de chamada para</em> <code class="highlighter-rouge">fibonacci</code>.</p>
+
+<p>Um gráfico de chamada mostra um conjunto de frames de função, com linhas que unem cada frame aos frames das funções que chama. Na parte de cima do gráfico, <code class="highlighter-rouge">fibonacci</code> com <code class="highlighter-rouge">n=4</code> chama <code class="highlighter-rouge">fibonacci</code> com <code class="highlighter-rouge">n=3</code> e <code class="highlighter-rouge">n=2</code>. Por sua vez, <code class="highlighter-rouge">fibonacci</code> com <code class="highlighter-rouge">n=3</code> chama <code class="highlighter-rouge">fibonacci</code> com <code class="highlighter-rouge">n=2</code> e <code class="highlighter-rouge">n=1</code>. E assim por diante.</p>
+
+<p>Conte quantas vezes <code class="highlighter-rouge">fibonacci(0)</code> e <code class="highlighter-rouge">fibonacci(1)</code> são chamadas. Essa é uma solução ineficiente para o problema, e piora conforme o argumento se torna maior.</p>
+
+<p>Uma solução é acompanhar os valores que já foram calculados, guardando-os em um dicionário. Um valor calculado anteriormente que é guardado para uso posterior é chamado de memo. Aqui está uma versão com memos de <code class="highlighter-rouge">fibonacci</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">known</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="k">def</span> <span class="nf">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">known</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">known</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">res</span> <span class="o">=</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">known</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">res</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">res</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">known</code> é um dicionário que monitora os números de Fibonacci que já conhecemos. Começa com dois itens: 0 mapeia a 0 e 1 mapeia a 1.</p>
+
+<p>Sempre que <code class="highlighter-rouge">fibonacci</code> é chamada, ela verifica <code class="highlighter-rouge">known</code>. Se o resultado já estiver lá, pode voltar imediatamente. Se não for o caso, é preciso calcular o novo valor, acrescentá-lo ao dicionário e devolvê-lo.</p>
+
+<p>Se você executar essa versão de <code class="highlighter-rouge">fibonacci</code> e a comparar com a original, descobrirá que é muito mais rápida.</p>
+
+<h2 id="117---variáveis-globais">11.7 - Variáveis globais</h2>
+
+<p>No exemplo anterior, known é criada fora da função, então pertence ao frame especial chamado <code class="highlighter-rouge">__main__</code>. As variáveis em <code class="highlighter-rouge">__main__</code> às vezes são chamadas de globais, porque podem ser acessadas de qualquer função. Em contraste com as variáveis locais, que desaparecem quando sua função termina, as variáveis globais persistem de uma chamada da função à seguinte.</p>
+
+<p>É comum usar variáveis globais para <code class="highlighter-rouge">flags</code>; isto é, variáveis booleanas que indicam (“flag”) se uma condição é verdadeira. Por exemplo, alguns programas usam um <code class="highlighter-rouge">flag</code> denominado verbose para controlar o nível de detalhe da saída:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">verbose</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="k">def</span> <span class="nf">example1</span><span class="p">():</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="s">'Running example1'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Se tentar reatribuir uma variável global, você pode se surpreender. O próximo exemplo mostra como acompanhar se a função foi chamada:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">been_called</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="k">def</span> <span class="nf">example2</span><span class="p">():</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">been_called</span> <span class="o">=</span> <span class="bp">True</span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span><span class="c"># ERRADO</span>
+</code></pre></div></div>
+
+<p>Porém, se executá-la, você verá que o valor de <code class="highlighter-rouge">been_called</code> não se altera. O problema é que <code class="highlighter-rouge">example2</code> cria uma nova variável local chamada <code class="highlighter-rouge">been_called</code>. A variável local some quando a função termina e não tem efeito sobre a variável global.</p>
+
+<p>Para reatribuir uma variável global dentro de uma função é preciso declarar a variável como global antes de usá-la:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">been_called</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="k">def</span> <span class="nf">example2</span><span class="p">():</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">global</span> <span class="n">been_called</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">been_called</span> <span class="o">=</span> <span class="bp">True</span>
+</code></pre></div></div>
+
+<p>A instrução <code class="highlighter-rouge">global</code> diz ao interpretador algo como “Nesta função, quando digo <code class="highlighter-rouge">been_called</code>, estou falando da variável global; não crie uma local”.</p>
+
+<p>Aqui está um exemplo que tenta atualizar uma variável global:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">def</span> <span class="nf">example3</span><span class="p">():</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">count</span> <span class="o">=</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">1</span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span><span class="c"># ERRADO</span>
+</code></pre></div></div>
+
+<p>Se executá-la, você recebe:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">UnboundLocalError</span><span class="p">:</span> <span class="n">local</span> <span class="n">variable</span> <span class="s">'count'</span> <span class="n">referenced</span> <span class="n">before</span> <span class="n">assignment</span>
+</code></pre></div></div>
+
+<p>O Python supõe que <code class="highlighter-rouge">count</code> seja local, e dentro desta suposição, a variável está sendo lida antes de ser escrita. A solução, mais uma vez, é declarar <code class="highlighter-rouge">count</code> como global:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">example3</span><span class="p">():</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">global</span> <span class="n">count</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<p>Se uma variável global se referir a um valor mutável, você pode alterar o valor sem declarar a variável:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">known</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="k">def</span> <span class="nf">example4</span><span class="p">():</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">known</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<p>Então você pode adicionar, retirar e substituir elementos de uma lista global ou dicionário, mas se quiser reatribuir a variável, precisa declará-la:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">example5</span><span class="p">():</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">global</span> <span class="n">known</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">known</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>As variáveis globais podem ser úteis, mas se você tiver muitas delas e alterá-las com frequência, isso poderá dificultar a depuração do programa.</p>
+
+<h2 id="118---depuração">11.8 - Depuração</h2>
+
+<p>Ao trabalhar com conjuntos de dados maiores, depurar exibindo e verificando a saída à mão pode ser trabalhoso. Aqui estão algumas sugestões para depurar grandes conjuntos de dados:</p>
+
+<dl>
+
+<dt>Reduza a entrada</dt>
+
+  <dd>Se for possível, reduza o tamanho do conjunto de dados. Por exemplo, se o programa lê um arquivo de texto, comece com apenas as 10 primeiras linhas, ou com o menor exemplo que puder encontrar. Você pode editar os próprios arquivos ou alterar o programa para que leia só as primeiras n linhas (é melhor).</dd>
+
+  <dd>Se houver um erro, você pode reduzir n ao menor valor que manifeste o erro, e então aumentá-lo gradativamente até encontrar e corrigir o erro.</dd>
+
+<dt>Verifique os resumos e tipos</dt>
+
+  <dd>Em vez de imprimir e verificar o conjunto de dados inteiro, pense em exibir resumos dos dados: por exemplo, o número de itens em um dicionário ou o total de uma lista de números.</dd>
+
+  <dd>Uma causa comum de erros em tempo de execução são valores de tipo incompatível. Para depurar essa espécie de erro, muitas vezes basta exibir o tipo de um valor.</dd>
+
+<dt>Crie autoverificações</dt>
+
+  <dd>É possível escrever o código para verificar erros automaticamente. Por exemplo, se estiver calculando a média de uma lista de números, você pode verificar se o resultado não é mais alto que o maior elemento da lista ou mais baixo que o menor. Isso é chamado de “verificação de sanidade” porque descobre resultados “insanos”.</dd>
+
+  <dd>Outro tipo de verificação compara os resultados de dois cálculos diferentes para ver se são consistentes. Isso é chamado de “verificação de consistência”.</dd>
+
+<dt>Formate a saída</dt>
+
+  <dd>A formatação da saída para depuração pode facilitar a busca de erros. Vimos um exemplo em “Depuração”, na página 172. O módulo `pprint` apresenta uma função `pprint` que exibe tipos integrados em um formato mais legível para humanos (`pprint` é a abreviação de “pretty print” (bela exibição)).</dd>
+
+</dl>
+
+<p>Reforçando, o tempo que você passar construindo o scaffolding (o andaime) pode reduzir o tempo de depuração.</p>
+
+<h2 id="119---glossário">11.9 - Glossário</h2>
+
+<dl>
+<dt><a id="glos:mapeamento" href="11-dicionarios.html#termo:mapeamento">mapeamento</a></dt>
+<dd>Relação na qual cada elemento de um conjunto corresponde a um elemento de outro conjunto.</dd>
+
+<dt><a id="glos:dicionário" href="11-dicionarios.html#termo:dicionário">dicionário</a></dt>
+<dd>Mapeamento de chaves aos seus valores correspondentes.</dd>
+
+<dt><a id="glos:par chave-valor" href="11-dicionarios.html#termo:par chave-valor">par chave-valor</a></dt>
+<dd>Representação do mapeamento de uma chave a um valor.</dd>
+
+<dt><a id="glos:item" href="11-dicionarios.html#termo:item">item</a></dt>
+<dd>Em um dicionário, outro nome para um par chave-valor.</dd>
+
+<dt><a id="glos:chave" href="11-dicionarios.html#termo:chave">chave</a></dt>
+<dd>Objeto que aparece em um dicionário como a primeira parte de um par chave-valor.</dd>
+
+<dt><a id="glos:valor" href="11-dicionarios.html#termo:valor">valor</a></dt>
+<dd>Objeto que aparece em um dicionário como a segunda parte de um par chave-valor. Isso é mais específico que o nosso uso anterior da palavra “valor”.</dd>
+
+<dt><a id="glos:implementação" href="11-dicionarios.html#termo:implementação">implementação</a></dt>
+<dd>Uma forma de executar um cálculo.</dd>
+
+<dt><a id="glos:hashtable" href="11-dicionarios.html#termo:hashtable">hashtable</a></dt>
+<dd>Algoritmo usado para implementar dicionários de Python.</dd>
+
+<dt><a id="glos:função hash" href="11-dicionarios.html#termo:função hash">função hash</a></dt>
+<dd>Função usada por uma hashtable para calcular a posição de uma chave.</dd>
+
+<dt><a id="glos:hashable" href="11-dicionarios.html#termo:hashable">hashable</a></dt>
+<dd>Um tipo que tem uma função hash. Tipos imutáveis como números inteiros, de ponto flutuante e strings são hashable; tipos mutáveis, como listas e dicionários, não são.</dd>
+
+<dt><a id="glos:busca" href="11-dicionarios.html#termo:busca">busca</a></dt>
+<dd>Operação de dicionário que recebe uma chave e encontra o valor correspondente.</dd>
+
+<dt><a id="glos:busca reversa" href="11-dicionarios.html#termo:busca reversa">busca reversa</a></dt>
+<dd>Operação de dicionário que recebe um valor e encontra uma ou várias chaves que o mapeiem.</dd>
+
+<dt><a id="glos:instrução raise" href="11-dicionarios.html#termo:instrução raise">instrução raise</a></dt>
+<dd>Instrução que (deliberadamente) causa uma exceção.</dd>
+
+<dt><a id="glos:item avulso (singleton)" href="11-dicionarios.html#termo:item avulso (singleton)">item avulso (singleton)</a></dt>
+<dd>Uma lista (ou outra sequência) com um único elemento.</dd>
+
+<dt><a id="glos:gráfico de chamada" href="11-dicionarios.html#termo:gráfico de chamada">gráfico de chamada</a></dt>
+<dd>Um diagrama que mostra cada frame criado durante a execução de um programa, com uma flecha apontando quem chama a quem é chamado.</dd>
+
+<dt><a id="glos:memo" href="11-dicionarios.html#termo:memo">memo</a></dt>
+<dd>Valor já calculado, guardado para não ter que fazer o mesmo cálculo no futuro.</dd>
+
+<dt><a id="glos:variável global" href="11-dicionarios.html#termo:variável global">variável global</a></dt>
+<dd>Variável definida fora de uma função. As variáveis globais podem ser acessadas de qualquer função.</dd>
+
+<dt><a id="glos:instrução global" href="11-dicionarios.html#termo:instrução global">instrução global</a></dt>
+<dd>Instrução que declara um nome de variável global.</dd>
+
+<dt><a id="glos:flag" href="11-dicionarios.html#termo:flag">flag</a></dt>
+<dd>Variável booleana usada para indicar se uma condição é verdadeira.</dd>
+
+<dt><a id="glos:declaração" href="11-dicionarios.html#termo:declaração">declaração</a></dt>
+<dd>Instrução tal como global, que diz ao interpretador algo a respeito de uma variável.</dd>
+
+</dl>
+
+<h2 id="1110---exercícios">11.10 - Exercícios</h2>
+
+<h3 id="exercício-111">Exercício 11.1</h3>
+
+<p>Escreva uma função que leia as palavras em words.txt e guarde-as como chaves em um dicionário. Não importa quais são os valores. Então você pode usar o operador in como uma forma rápida de verificar se uma string está no dicionário.</p>
+
+<p>Se fez o Exercício 10.10, você pode comparar a velocidade desta implementação com o operador in de listas e a busca por bisseção.</p>
+
+<h3 id="exercício-112">Exercício 11.2</h3>
+
+<p>Leia a documentação do método de dicionário setdefault e use-o para escrever uma versão mais concisa de invert_dict.</p>
+
+<p>Solução: http://thinkpython2.com/code/invert_dict.py.</p>
+
+<h3 id="exercício-113">Exercício 11.3</h3>
+
+<p>Memorize a função de Ackermann do Exercício 6.2 e veja se a memorização permite avaliar a função com argumentos maiores. Dica: não.</p>
+
+<p>Solução: http://thinkpython2.com/code/ackermann_memo.py.</p>
+
+<h3 id="exercício-114">Exercício 11.4</h3>
+
+<p>Se fez o Exercício 10.7, você já tem uma função chamada has_duplicates, que recebe uma lista como parâmetro e retorna True se houver algum objeto que aparece mais de uma vez na lista.</p>
+
+<p>Use um dicionário para escrever uma versão mais rápida e simples de has_duplicates.</p>
+
+<p>Solução: http://thinkpython2.com/code/has_duplicates.py.</p>
+
+<h3 id="exercício-115">Exercício 11.5</h3>
+
+<p>Duas palavras são “pares rotacionados” se for possível rotacionar um deles e chegar ao outro (ver <code class="highlighter-rouge">rotate_word</code> no Exercício 8.5).</p>
+
+<p>Escreva um programa que leia uma lista de palavras e encontre todos os pares rotacionados.</p>
+
+<p>Solução: http://thinkpython2.com/code/rotate_pairs.py.</p>
+
+<h3 id="exercício-116">Exercício 11.6</h3>
+
+<p>Aqui está outro quebra-cabeça do programa Car Talk (http://www.cartalk.com/content/puzzlers):</p>
+
+<p>Ele foi enviado por Dan O’Leary. Dan descobriu uma palavra comum, com uma sílaba e cinco letras que tem a seguinte propriedade única. Ao removermos a primeira letra, as letras restantes formam um homófono da palavra original, que é uma palavra que soa exatamente da mesma forma. Substitua a primeira letra, isto é, coloque-a de volta, retire a segunda letra e o resultado é um outro homófono da palavra original. E a pergunta é, qual é a palavra?</p>
+
+<p>Agora vou dar um exemplo que não funciona. Vamos usar a palavra de cinco letras, ‘wrack’ (mover, eliminar). W-R-A-C-K, como na expressão ‘wrack with pain’ (se contorcer de dor). Se eu retirar a primeira letra, sobra uma palavra de quatro letras, ‘R-A-C-K’ (galhada). Como na frase, ‘Holy cow, did you see the rack on that buck! It must have been a nine-pointer!’ (‘Minha nossa, você viu a galhada daquele cervo! Deve ter nove pontas!’). É um homófono perfeito. Se puser o ‘w’ de volta e retirar o ‘r’ em vez disso, sobra a palavra ‘wack’, que é uma palavra de verdade, mas não é um homófono das outras duas palavras.</p>
+
+<p>Mas há pelo menos uma palavra que Dan e eu conhecemos, que produz dois homófonos se você retirar qualquer uma das duas primeiras letras, e duas novas palavras de quatro letras são formadas. A pergunta é, qual é a palavra?</p>
+
+<p>Você pode usar o dicionário do Exercício 11.1 para verificar se uma string está na lista de palavras.</p>
+
+<p>Para verificar se duas palavras são homófonas, você pode usar o Dicionário de pronúncia CMU. Ele pode ser baixado em http://www.speech.cs.cmu.edu/cgi-bin/cmudict ou em http://thinkpython2.com/code/c06d. Você também pode baixar http://thinkpy thon2.com/code/pronounce.py, que tem uma função chamada <code class="highlighter-rouge">read_dictionary</code>, que lê o dicionário de pronúncia e retorna um dicionário de Python que mapeia cada palavra a uma string que descreve sua pronúncia primária.</p>
+
+<p>Escreva um programa que liste todas as palavras que resolvem o quebra-cabeça.</p>
+
+<p>Solução: http://thinkpython2.com/code/homophone.py.</p>
+
+
+      <footer class="site-footer">
+        
+          <span class="site-footer-owner"><a href="https://github.com/PenseAllen/PensePython2e">PensePython2e</a> is maintained by <a href="https://github.com/PenseAllen">PenseAllen</a>.</span>
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </section>
+
+    
+  </body>
+</html>
