@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Capítulo 8: Strings | PensePython2e</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Capítulo 8: Strings" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey" />
+<meta property="og:description" content="Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey" />
+<link rel="canonical" href="08-strings.html" />
+<meta property="og:url" content="https://penseallen.github.io/PensePython2e/08-strings.html" />
+<meta property="og:site_name" content="PensePython2e" />
+<script type="application/ld+json">
+{"@type":"WebPage","headline":"Capítulo 8: Strings","url":"https://penseallen.github.io/PensePython2e/08-strings.html","description":"Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <link rel="stylesheet" href="assets/css/style.css@v=afa460130599dbde01620e86c38923f785023956.css">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">PensePython2e</h1>
+      <h2 class="project-tagline">Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey</h2>
+      
+        <a href="https://github.com/PenseAllen/PensePython2e" class="btn">View on GitHub</a>
+      
+      
+    </section>
+
+    <section class="main-content">
+      <h1 id="capítulo-8-strings">Capítulo 8: Strings</h1>
+
+<p>Strings não são como números inteiros, de ponto flutuante ou booleanos. Uma string é uma sequência, ou seja, uma coleção ordenada de outros valores. Neste capítulo você verá como acessar os caracteres que compõem uma string e aprenderá alguns métodos que as strings oferecem.</p>
+
+<h2 id="81---uma-string-é-uma-sequência">8.1 - Uma string é uma sequência</h2>
+
+<p>Uma string é uma sequência de caracteres. Você pode acessar um caractere de cada vez com o operador de colchete:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">fruit</span> <span class="o">=</span> <span class="s">'banana'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">letter</span> <span class="o">=</span> <span class="n">fruit</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>A segunda instrução seleciona o caractere número 1 de fruit e o atribui a letter.</p>
+
+<p>A expressão entre colchetes chama-se índice. O índice aponta qual caractere da sequência você quer (daí o nome).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Mas</span> <span class="n">pode</span> <span class="n">ser</span> <span class="n">que</span> <span class="n">voc</span><span class="err">ê</span> <span class="n">n</span><span class="err">ã</span><span class="n">o</span> <span class="n">obtenha</span> <span class="n">o</span> <span class="n">que</span> <span class="n">espera</span><span class="p">:</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">letter</span>
+<span class="s">'a'</span>
+</code></pre></div></div>
+
+<p>Para a maior parte das pessoas, a primeira letra de ‘banana’ é b, não a. Mas para os cientistas da computação, o índice é uma referência do começo da string, e a referência da primeira letra é zero.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">letter</span> <span class="o">=</span> <span class="n">fruit</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">letter</span>
+<span class="s">'b'</span>
+</code></pre></div></div>
+
+<p>Então b é a 0ª (“zerésima”) letra de ‘banana’, a é a 1ª (primeira) letra e n é a 2ª (segunda) letra.</p>
+
+<p>Você pode usar uma expressão que contenha variáveis e operadores como índice:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">fruit</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="s">'a'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">fruit</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+<span class="s">'n'</span>
+</code></pre></div></div>
+
+<p>Porém, o valor do índice tem que ser um número inteiro. Se não for, é isso que aparece:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">letter</span> <span class="o">=</span> <span class="n">fruit</span><span class="p">[</span><span class="mf">1.5</span><span class="p">]</span>
+<span class="nb">TypeError</span><span class="p">:</span> <span class="n">string</span> <span class="n">indices</span> <span class="n">must</span> <span class="n">be</span> <span class="n">integers</span>
+</code></pre></div></div>
+
+<h2 id="82---len">8.2 - len</h2>
+
+<p>len é uma função integrada que devolve o número de caracteres em uma string:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">fruit</span> <span class="o">=</span> <span class="s">'banana'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">fruit</span><span class="p">)</span>
+<span class="mi">6</span>
+</code></pre></div></div>
+
+<p>Para obter a última letra de uma string, pode parecer uma boa ideia tentar algo assim:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fruit</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">last</span> <span class="o">=</span> <span class="n">fruit</span><span class="p">[</span><span class="n">length</span><span class="p">]</span>
+<span class="nb">IndexError</span><span class="p">:</span> <span class="n">string</span> <span class="n">index</span> <span class="n">out</span> <span class="n">of</span> <span class="nb">range</span>
+</code></pre></div></div>
+
+<p>A razão de haver um IndexError aqui é que não há nenhuma letra em ‘banana’ com o índice 6. Como a contagem inicia no zero, as seis letras são numeradas de 0 a 5. Para obter o último caractere, você deve subtrair 1 de length:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">last</span> <span class="o">=</span> <span class="n">fruit</span><span class="p">[</span><span class="n">length</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">last</span>
+<span class="s">'a'</span>
+</code></pre></div></div>
+
+<p>Ou você pode usar índices negativos, que contam de trás para a frente a partir do fim da string. A expressão fruit[-1] apresenta a última letra, fruit[-2] apresenta a segunda letra de trás para a frente, e assim por diante.</p>
+
+<h2 id="83---travessia-com-loop-for">8.3 - Travessia com loop for</h2>
+
+<p>Muitos cálculos implicam o processamento de um caractere por vez em uma string. Muitas vezes começam no início, selecionam um caractere por vez, fazem algo e continuam até o fim. Este modelo do processamento chama-se travessia. Um modo de escrever uma travessia é com o loop while:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">fruit</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">letter</span> <span class="o">=</span> <span class="n">fruit</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="n">letter</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">index</span> <span class="o">=</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<p>Este loop atravessa a string e exibe cada letra sozinha em uma linha. A condição do loop é index &lt;len (fruit), então quando index é igual ao comprimento da string, a condição é falsa e o corpo do loop não é mais executado. O último caractere acessado é aquele com o índice len (fruit)-1, que é o último caractere na string.</p>
+
+<p>Como exercício, escreva uma função que receba uma string como argumento e exiba as letras de trás para a frente, uma por linha.</p>
+
+<p>Outra forma de escrever uma travessia é com um loop for:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">fruit</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="n">letter</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Cada vez que o programa passar pelo loop, o caractere seguinte na string é atribuído à variável letter. O loop continua até que não sobre nenhum caractere.</p>
+
+<p>O próximo exemplo mostra como usar a concatenação (adição de strings) e um loop for para gerar uma série abecedária (isto é, em ordem alfabética). No livro de Robert McCloskey, Make Way for Ducklings (Abram caminho para os patinhos), os nomes dos patinhos são Jack, Kack, Lack, Mack, Nack, Ouack, Pack e Quack. Este loop produz estes nomes em ordem:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">prefixes</span> <span class="o">=</span> <span class="s">'JKLMNOPQ'</span>
+<span class="n">suffix</span> <span class="o">=</span> <span class="s">'ack'</span>
+<span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">prefixes</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="n">letter</span> <span class="o">+</span> <span class="n">suffix</span><span class="p">)</span>
+<span class="n">A</span> <span class="n">sa</span><span class="err">í</span><span class="n">da</span> <span class="err">é</span><span class="p">:</span>
+<span class="n">Jack</span>
+<span class="n">Kack</span>
+<span class="n">Lack</span>
+<span class="n">Mack</span>
+<span class="n">Nack</span>
+<span class="n">Oack</span>
+<span class="n">Pack</span>
+<span class="n">Qack</span>
+</code></pre></div></div>
+
+<p>Claro que não está exatamente certo porque “Ouack” e “Quack” foram mal soletrados. Como exercício, altere o programa para corrigir este erro.</p>
+
+<h2 id="84---fatiamento-de-strings">8.4 - Fatiamento de strings</h2>
+
+<p>Um segmento de uma string é chamado de fatia. Selecionar uma fatia é como selecionar um caractere:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="s">'Monty Python'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+<span class="s">'Monty'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">[</span><span class="mi">6</span><span class="p">:</span><span class="mi">12</span><span class="p">]</span>
+<span class="s">'Python'</span>
+</code></pre></div></div>
+
+<p>O operador <code class="highlighter-rouge">[n:m]</code> retorna a parte da string do “enésimo” caractere ao “emésimo” caractere, incluindo o primeiro, mas excluindo o último. Este comportamento é contraintuitivo, porém pode ajudar a imaginar os índices que indicam a parte entre os caracteres, como na Figura 8.1.</p>
+
+<p><img src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_0801.png" alt="Figura 8.1 – Índices de fatias." />
+<br /><em>Figura 8.1 – Índices de fatias.</em></p>
+
+<p>Se você omitir o primeiro índice (antes dos dois pontos), a fatia começa no início da string. Se omitir o segundo índice, a fatia vai ao fim da string:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">fruit</span> <span class="o">=</span> <span class="s">'banana'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">fruit</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+<span class="s">'ban'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">fruit</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span>
+<span class="s">'ana'</span>
+</code></pre></div></div>
+
+<p>Se o primeiro índice for maior ou igual ao segundo, o resultado é uma string vazia, representada por duas aspas:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">fruit</span> <span class="o">=</span> <span class="s">'banana'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">fruit</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="s">''</span>
+</code></pre></div></div>
+
+<p>Uma string vazia não contém nenhum caractere e tem o comprimento 0, fora isso, é igual a qualquer outra string.</p>
+
+<p>Continuando este exemplo, o que você acha que <code class="highlighter-rouge">fruit[:]</code> significa? Teste e veja.</p>
+
+<h2 id="85---strings-são-imutáveis">8.5 - Strings são imutáveis</h2>
+
+<p>É tentador usar o operador <code class="highlighter-rouge">[]</code> no lado esquerdo de uma atribuição, com a intenção de alterar um caractere em uma string. Por exemplo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">greeting</span> <span class="o">=</span> <span class="s">'Hello, world!'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">greeting</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s">'J'</span>
+<span class="nb">TypeError</span><span class="p">:</span> <span class="s">'str'</span> <span class="nb">object</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">support</span> <span class="n">item</span> <span class="n">assignment</span>
+</code></pre></div></div>
+
+<p>O “objeto” neste caso é a string e o “item” é o caractere que você tentou atribuir. Por enquanto, um objeto é a mesma coisa que um valor, mas refinaremos esta definição mais adiante (<a href="https://penseallen.github.io/PensePython2e/&lt;a&#32;href=&quot;10-listas.md#sec:10.10&quot;">Objetos e valores</a>, no capítulo 10).</p>
+
+<p>A razão do erro é que as strings são imutáveis, o que significa que você não pode alterar uma string existente. O melhor que você pode fazer é criar uma string que seja uma variação da original:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">greeting</span> <span class="o">=</span> <span class="s">'Hello, world!'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">new_greeting</span> <span class="o">=</span> <span class="s">'J'</span> <span class="o">+</span> <span class="n">greeting</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">new_greeting</span>
+<span class="s">'Jello, world!'</span>
+</code></pre></div></div>
+
+<p>Esse exemplo concatena uma nova primeira letra a uma fatia de <code class="highlighter-rouge">greeting</code>. Não tem efeito sobre a string original.</p>
+
+<h2 id="86---buscando">8.6 - Buscando</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">O</span> <span class="n">que</span> <span class="n">faz</span> <span class="n">a</span> <span class="n">seguinte</span> <span class="n">fun</span><span class="err">çã</span><span class="n">o</span><span class="err">?</span>
+<span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">letter</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">while</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">word</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">==</span> <span class="n">letter</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">index</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">index</span> <span class="o">=</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span><span class="o">-</span><span class="mi">1</span>
+</code></pre></div></div>
+
+<p>De certo modo, <code class="highlighter-rouge">find</code> é o inverso do operador <code class="highlighter-rouge">[]</code>. Em vez de tomar um índice e extrair o caractere correspondente, ele toma um caractere e encontra o índice onde aquele caractere aparece. Se o caractere não for encontrado, a função retorna -1.</p>
+
+<p>Esse é o primeiro exemplo que vimos de uma instrução <code class="highlighter-rouge">return</code> dentro de um loop. Se <code class="highlighter-rouge">word[index] == letter</code>, a função sai do loop e retorna imediatamente.</p>
+
+<p>Se o caractere não aparecer na string, o programa sai do loop normalmente e devolve -1.</p>
+
+<p>Este modelo de cálculo – atravessar uma sequência e retornar quando encontramos o que estamos procurando – chama-se busca.</p>
+
+<p>Como exercício, altere <code class="highlighter-rouge">find</code> para que tenha um terceiro parâmetro: o índice em <code class="highlighter-rouge">word</code> onde deve começar a busca.</p>
+
+<h2 id="87---loop-e-contagem">8.7 - Loop e contagem</h2>
+
+<p>O seguinte programa conta o número de vezes que a letra a aparece em uma string:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">word</span> <span class="o">=</span> <span class="s">'banana'</span>
+<span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">word</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">letter</span> <span class="o">==</span> <span class="s">'a'</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">count</span> <span class="o">=</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="k">print</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Este programa demonstra outro padrão de computação chamado contador. A variável <code class="highlighter-rouge">count</code> é inicializada com 0 e então incrementada cada vez que um a é encontrado. Ao sair do loop, <code class="highlighter-rouge">count</code> contém o resultado – o número total de letras <code class="highlighter-rouge">'a'</code>.</p>
+
+<p>Como exercício, encapsule este código em uma função denominada <code class="highlighter-rouge">count</code> e generalize-o para que aceite a string e a letra como argumentos.</p>
+
+<p>Então reescreva a função para que, em vez de atravessar a string, ela use a versão de três parâmetros do find da seção anterior.</p>
+
+<h2 id="88---métodos-de-strings">8.8 - Métodos de strings</h2>
+
+<p>As strings oferecem métodos que executam várias operações úteis. Um método é semelhante a uma função – toma argumentos e devolve um valor –, mas a sintaxe é diferente. Por exemplo, o método upper recebe uma string e devolve uma nova string com todas as letras maiúsculas.</p>
+
+<p>Em vez da sintaxe de função <code class="highlighter-rouge">upper(word)</code>, ela usa a sintaxe de método <code class="highlighter-rouge">word.upper()</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">word</span> <span class="o">=</span> <span class="s">'banana'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">new_word</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">new_word</span>
+<span class="s">'BANANA'</span>
+</code></pre></div></div>
+
+<p>Esta forma de notação de ponto especifica o nome do método, <code class="highlighter-rouge">upper</code> e o nome da string, <code class="highlighter-rouge">word</code>, à qual o método será aplicado. Os parênteses vazios indicam que este método não toma nenhum argumento.</p>
+
+<p>Uma chamada de método denomina-se invocação; neste caso, diríamos que estamos invocando <code class="highlighter-rouge">upper</code> em <code class="highlighter-rouge">word</code>.</p>
+
+<p>E, na verdade, há um método de string denominado <code class="highlighter-rouge">find</code>, que é notavelmente semelhante à função que escrevemos:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">word</span> <span class="o">=</span> <span class="s">'banana'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">index</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">'a'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">index</span>
+<span class="mi">1</span>
+</code></pre></div></div>
+
+<p>Neste exemplo, invocamos <code class="highlighter-rouge">find</code> em <code class="highlighter-rouge">word</code> e passamos a letra que estamos procurando como um parâmetro.</p>
+
+<p>Na verdade, o método <code class="highlighter-rouge">find</code> é mais geral que a nossa função; ele pode encontrar substrings, não apenas caracteres:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">word</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">'na'</span><span class="p">)</span>
+<span class="mi">2</span>
+</code></pre></div></div>
+
+<p>Por padrão, <code class="highlighter-rouge">find</code> inicia no começo da string, mas pode receber um segundo argumento, o índice onde deve começar:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">word</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">'na'</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="mi">4</span>
+</code></pre></div></div>
+
+<p>Este é um exemplo de um argumento opcional. <code class="highlighter-rouge">find</code> também pode receber um terceiro argumento, o índice para onde deve parar:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">name</span> <span class="o">=</span> <span class="s">'bob'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">'b'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="o">-</span><span class="mi">1</span>
+</code></pre></div></div>
+
+<p>Esta busca falha porque <code class="highlighter-rouge">'b'</code> não aparece no intervalo do índice de 1 a 2, não incluindo 2. Fazer buscas até (mas não incluindo) o segundo índice torna <code class="highlighter-rouge">find</code> similar ao operador de fatiamento.</p>
+
+<h2 id="89---operador-in">8.9 - Operador in</h2>
+
+<p>A palavra <code class="highlighter-rouge">in</code> é um operador booleano que recebe duas strings e retorna <code class="highlighter-rouge">True</code> se a primeira aparecer como uma substring da segunda:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="s">'a'</span> <span class="ow">in</span> <span class="s">'banana'</span>
+<span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">'seed'</span> <span class="ow">in</span> <span class="s">'banana'</span>
+<span class="bp">False</span>
+</code></pre></div></div>
+
+<p>Por exemplo, a seguinte função imprime todas as letras de <code class="highlighter-rouge">word1</code> que também aparecem em <code class="highlighter-rouge">word2</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">in_both</span><span class="p">(</span><span class="n">word1</span><span class="p">,</span> <span class="n">word2</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">word1</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">word2</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="n">letter</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Com nomes de variáveis bem escolhidos, o Python às vezes pode ser lido como um texto em inglês. Você pode ler este loop, “para (cada) letra em (a primeira) palavra, se (a) letra (aparecer) em (a segunda) palavra, exiba (a) letra”.</p>
+
+<p>Veja o que é apresentado ao se comparar maçãs e laranjas:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">in_both</span><span class="p">(</span><span class="s">'apples'</span><span class="p">,</span> <span class="s">'oranges'</span><span class="p">)</span>
+<span class="n">a</span>
+<span class="n">e</span>
+<span class="n">s</span>
+</code></pre></div></div>
+
+<h2 id="810---comparação-de-strings">8.10 - Comparação de strings</h2>
+
+<p>Os operadores relacionais funcionam em strings. Para ver se duas strings são iguais:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">word</span> <span class="o">==</span> <span class="s">'banana'</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="s">'All right, bananas.'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Outras operações relacionais são úteis para colocar palavras em ordem alfabética:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">word</span> <span class="o">&lt;</span> <span class="s">'banana'</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="s">'Your word, '</span> <span class="o">+</span> <span class="n">word</span> <span class="o">+</span> <span class="s">', comes before banana.'</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">word</span> <span class="o">&gt;</span> <span class="s">'banana'</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="s">'Your word, '</span> <span class="o">+</span> <span class="n">word</span> <span class="o">+</span> <span class="s">', comes after banana.'</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="s">'All right, bananas.'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>O Python não lida com letras maiúsculas e minúsculas do mesmo jeito que as pessoas. Todas as letras maiúsculas vêm antes de todas as letras minúsculas, portanto:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Your</span> <span class="n">word</span><span class="p">,</span> <span class="n">Pineapple</span><span class="p">,</span> <span class="n">comes</span> <span class="n">before</span> <span class="n">banana</span><span class="o">.</span>
+</code></pre></div></div>
+
+<p>Uma forma comum de lidar com este problema é converter strings em um formato padrão, como letras minúsculas, antes de executar a comparação. Lembre-se disso caso tenha que se defender de um homem armado com um abacaxi.</p>
+
+<h2 id="811---depuração">8.11 - Depuração</h2>
+
+<p>Ao usar índices para atravessar os valores em uma sequência, é complicado acertar o começo e o fim da travessia. Aqui está uma função que supostamente compara duas palavras e retorna True se uma das palavras for o reverso da outra, mas contém dois erros:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">is_reverse</span><span class="p">(</span><span class="n">word1</span><span class="p">,</span> <span class="n">word2</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">word1</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">word2</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">False</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">j</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">word2</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">while</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">word1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">word2</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">False</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">j</span> <span class="o">=</span> <span class="n">j</span><span class="o">-</span><span class="mi">1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">True</span>
+</code></pre></div></div>
+
+<p>A primeira instrução if verifica se as palavras têm o mesmo comprimento. Se não for o caso, podemos retornar False imediatamente. Do contrário, para o resto da função, podemos supor que as palavras tenham o mesmo comprimento. Este é um exemplo do modelo de guardião em “Verificação de tipos”, na página 101.</p>
+
+<p>i e j são índices: i atravessa word1 para a frente, enquanto j atravessa word2 para trás. Se encontrarmos duas letras que não combinam, podemos retornar False imediatamente. Se terminarmos o loop inteiro e todas as letras corresponderem, retornamos True.</p>
+
+<p>Se testarmos esta função com as palavras “pots” e “stop”, esperamos o valor de retorno True, mas recebemos um IndexError:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">is_reverse</span><span class="p">(</span><span class="s">'pots'</span><span class="p">,</span> <span class="s">'stop'</span><span class="p">)</span>
+<span class="o">...</span>
+<span class="err"> </span> <span class="n">File</span> <span class="s">"reverse.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">15</span><span class="p">,</span> <span class="ow">in</span> <span class="n">is_reverse</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">word1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">word2</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+<span class="nb">IndexError</span><span class="p">:</span> <span class="n">string</span> <span class="n">index</span> <span class="n">out</span> <span class="n">of</span> <span class="nb">range</span>
+</code></pre></div></div>
+
+<p>Para depurar este tipo de erro, minha primeira ação é exibir os valores dos índices imediatamente antes da linha onde o erro aparece.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span><span class="c"># exibir aqui</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">word1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">word2</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">False</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">j</span> <span class="o">=</span> <span class="n">j</span><span class="o">-</span><span class="mi">1</span>
+</code></pre></div></div>
+
+<p>Agora quando executo o programa novamente, recebo mais informação:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">is_reverse</span><span class="p">(</span><span class="s">'pots'</span><span class="p">,</span> <span class="s">'stop'</span><span class="p">)</span>
+<span class="mi">0</span> <span class="mi">4</span>
+<span class="o">...</span>
+<span class="nb">IndexError</span><span class="p">:</span> <span class="n">string</span> <span class="n">index</span> <span class="n">out</span> <span class="n">of</span> <span class="nb">range</span>
+</code></pre></div></div>
+
+<p>Na primeira vez que o programa passar pelo loop, o valor de j é 4, que está fora do intervalo da string ‘pots’. O índice do último caractere é 3, então o valor inicial de j deve ser len(word2)-1.</p>
+
+<p>Se corrigir esse erro e executar o programa novamente, recebo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">is_reverse</span><span class="p">(</span><span class="s">'pots'</span><span class="p">,</span> <span class="s">'stop'</span><span class="p">)</span>
+<span class="mi">0</span> <span class="mi">3</span>
+<span class="mi">1</span> <span class="mi">2</span>
+<span class="mi">2</span> <span class="mi">1</span>
+<span class="bp">True</span>
+</code></pre></div></div>
+
+<p>Desta vez, recebemos a resposta certa, mas parece que o loop só foi executado três vezes, o que é suspeito. Para ter uma ideia melhor do que está acontecendo, é útil desenhar um diagrama de estado. Durante a primeira iteração, o frame de <code class="highlighter-rouge">is_reverse</code> é mostrado na Figura 8.2.</p>
+
+<p><img src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_0802.png" alt="Figura 8.2 – Diagrama de estado de is_reverse." />
+<br /><em>8.2 – Diagrama de estado de is_reverse.</em></p>
+
+<p>Tomei a liberdade de arrumar as variáveis no frame e acrescentei linhas pontilhadas para mostrar que os valores de i e j indicam caracteres em word1 e word2.</p>
+
+<p>Começando com este diagrama, execute o programa em papel, alterando os valores de i e j durante cada iteração. Encontre e corrija o segundo erro desta função.</p>
+
+<h2 id="812---glossário">8.12 - Glossário</h2>
+
+<dl>
+<dt><a id="glos:objeto" href="08-strings.html#termo:objeto">objeto</a></dt>
+<dd>Algo a que uma variável pode se referir. Por enquanto, você pode usar “objeto” e “valor” de forma intercambiável.</dd>
+
+<dt><a id="glos:sequência" href="08-strings.html#termo:sequência">sequência</a></dt>
+<dd>Uma coleção ordenada de valores onde cada valor é identificado por um índice de número inteiro.</dd>
+
+<dt><a id="glos:item" href="08-strings.html#termo:item">item</a></dt>
+<dd>Um dos valores em uma sequência.</dd>
+
+<dt><a id="glos:índice" href="08-strings.html#termo:índice">índice</a></dt>
+<dd>Um valor inteiro usado para selecionar um item em uma sequência, como um caractere em uma string. No Python, os índices começam em 0.</dd>
+
+<dt><a id="glos:fatia" href="08-strings.html#termo:fatia">fatia</a></dt>
+<dd>Parte de uma string especificada por um intervalo de índices.</dd>
+
+<dt><a id="glos:string vazia" href="08-strings.html#termo:string vazia">string vazia</a></dt>
+<dd>Uma string sem caracteres e de comprimento 0, representada por duas aspas.</dd>
+
+<dt><a id="glos:imutável" href="08-strings.html#termo:imutável">imutável</a></dt>
+<dd>A propriedade de uma sequência cujos itens não podem ser alterados.</dd>
+
+<dt><a id="glos:atravessar" href="08-strings.html#termo:atravessar">atravessar</a></dt>
+<dd>Repetir os itens em uma sequência, executando uma operação semelhante em cada um.</dd>
+
+<dt><a id="glos:busca" href="08-strings.html#termo:busca">busca</a></dt>
+<dd>Um modelo de travessia que é interrompido quando encontra o que está procurando.</dd>
+
+<dt><a id="glos:contador" href="08-strings.html#termo:contador">contador</a></dt>
+<dd>Uma variável usada para contar algo, normalmente inicializada com zero e então incrementada.</dd>
+
+<dt><a id="glos:invocação" href="08-strings.html#termo:invocação">invocação</a></dt>
+<dd>Uma instrução que chama um método.</dd>
+
+<dt><a id="glos:argumento opcional" href="08-strings.html#termo:argumento opcional">argumento opcional</a></dt>
+<dd>Um argumento de função ou método que não é necessário.</dd>
+
+</dl>
+
+<h2 id="813---exercícios">8.13 - Exercícios</h2>
+
+<h3 id="exercício-81">Exercício 8.1</h3>
+
+<p>Leia a documentação dos métodos de strings em http://docs.python.org/3/library/stdtypes.html#string-methods. Pode ser uma boa ideia experimentar alguns deles para entender como funcionam. <code class="highlighter-rouge">strip</code> e <code class="highlighter-rouge">replace</code> são especialmente úteis.</p>
+
+<p>A documentação usa uma sintaxe que pode ser confusa. Por exemplo, em <code class="highlighter-rouge">find(sub[, start[, end]])</code>, os colchetes indicam argumentos opcionais. Então <code class="highlighter-rouge">sub</code> é exigido, mas <code class="highlighter-rouge">start</code> é opcional, e se você incluir <code class="highlighter-rouge">start</code>, então <code class="highlighter-rouge">end</code> é opcional.</p>
+
+<h3 id="exercício-82">Exercício 8.2</h3>
+
+<p>Há um método de string chamado <code class="highlighter-rouge">count</code>, que é semelhante à função em “Loop e contagem”, na página 123. Leia a documentação deste método e escreva uma invocação que conte o número de letras <code class="highlighter-rouge">'a'</code> em ‘banana’.</p>
+
+<h3 id="exercício-83">Exercício 8.3</h3>
+
+<p>Uma fatia de string pode receber um terceiro índice que especifique o “tamanho do passo”; isto é, o número de espaços entre caracteres sucessivos. Um tamanho de passo 2 significa tomar um caractere e outro não; 3 significa tomar um e dois não etc.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">fruit</span> <span class="o">=</span> <span class="s">'banana'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">fruit</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="s">'bnn'</span>
+</code></pre></div></div>
+
+<p>Um tamanho de passo -1 atravessa a palavra de trás para a frente, então a fatia <code class="highlighter-rouge">[::-1]</code> gera uma string invertida.</p>
+
+<p>Use isso para escrever uma versão de uma linha de <code class="highlighter-rouge">is_palindrome</code> do Exercício 6.3.</p>
+
+<h3 id="exercício-84">Exercício 8.4</h3>
+
+<p>As seguintes funções pretendem verificar se uma string contém alguma letra minúscula, mas algumas delas estão erradas. Para cada função, descreva o que ela faz (assumindo que o parâmetro seja uma string).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">any_lowercase1</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">islower</span><span class="p">():</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">True</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">else</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">False</span>
+
+<span class="k">def</span> <span class="nf">any_lowercase2</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="s">'c'</span><span class="o">.</span><span class="n">islower</span><span class="p">():</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="s">'True'</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">else</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="s">'False'</span>
+
+<span class="k">def</span> <span class="nf">any_lowercase3</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">flag</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">islower</span><span class="p">()</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">flag</span>
+
+<span class="k">def</span> <span class="nf">any_lowercase4</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">flag</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">flag</span> <span class="o">=</span> <span class="n">flag</span> <span class="ow">or</span> <span class="n">c</span><span class="o">.</span><span class="n">islower</span><span class="p">()</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">flag</span>
+
+<span class="k">def</span> <span class="nf">any_lowercase5</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="ow">not</span> <span class="n">c</span><span class="o">.</span><span class="n">islower</span><span class="p">():</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">False</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">True</span>
+</code></pre></div></div>
+
+<h3 id="exercício-85">Exercício 8.5</h3>
+
+<p>Uma cifra de César é uma forma fraca de criptografia que implica “rotacionar” cada letra por um número fixo de lugares. Rotacionar uma letra significa deslocá-lo pelo alfabeto, voltando ao início se for necessário, portanto ‘A’ rotacionado por 3 é ‘D’ e ‘Z’ rotacionado por 1 é ‘A’.</p>
+
+<p>Para rotacionar uma palavra, faça cada letra se mover pela mesma quantidade de posições. Por exemplo, “cheer” rotacionado por 7 é “jolly” e “melon” rotacionado por -10 é “cubed”. No filme 2001: Uma odisseia no espaço, o computador da nave chama-se HAL, que é IBM rotacionado por -1.</p>
+
+<p>Escreva uma função chamada <code class="highlighter-rouge">rotate_word</code> que receba uma string e um número inteiro como parâmetros, e retorne uma nova string que contém as letras da string original rotacionadas pelo número dado.</p>
+
+<p>Você pode usar a função integrada ord, que converte um caractere em um código numérico e chr, que converte códigos numéricos em caracteres. As letras do alfabeto são codificadas em ordem alfabética, então, por exemplo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="nb">ord</span><span class="p">(</span><span class="s">'c'</span><span class="p">)</span> <span class="o">-</span> <span class="nb">ord</span><span class="p">(</span><span class="s">'a'</span><span class="p">)</span>
+<span class="mi">2</span>
+</code></pre></div></div>
+
+<p>Porque <code class="highlighter-rouge">'c'</code> é a “segunda” letra do alfabeto. Mas tenha cuidado: os códigos numéricos de letras maiúsculas são diferentes.</p>
+
+<p>Piadas potencialmente ofensivas na internet às vezes são codificadas em ROT13, que é uma cifra de César com rotação 13. Se não se ofender facilmente, encontre e decifre algumas delas.</p>
+
+
+      <footer class="site-footer">
+        
+          <span class="site-footer-owner"><a href="https://github.com/PenseAllen/PensePython2e">PensePython2e</a> is maintained by <a href="https://github.com/PenseAllen">PenseAllen</a>.</span>
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </section>
+
+    
+  </body>
+</html>

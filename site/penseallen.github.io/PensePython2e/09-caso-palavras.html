@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Capítulo 9: Estudo de caso: jogos de palavras | PensePython2e</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Capítulo 9: Estudo de caso: jogos de palavras" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey" />
+<meta property="og:description" content="Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey" />
+<link rel="canonical" href="09-caso-palavras.html" />
+<meta property="og:url" content="https://penseallen.github.io/PensePython2e/09-caso-palavras.html" />
+<meta property="og:site_name" content="PensePython2e" />
+<script type="application/ld+json">
+{"@type":"WebPage","headline":"Capítulo 9: Estudo de caso: jogos de palavras","url":"https://penseallen.github.io/PensePython2e/09-caso-palavras.html","description":"Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <link rel="stylesheet" href="assets/css/style.css@v=afa460130599dbde01620e86c38923f785023956.css">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">PensePython2e</h1>
+      <h2 class="project-tagline">Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey</h2>
+      
+        <a href="https://github.com/PenseAllen/PensePython2e" class="btn">View on GitHub</a>
+      
+      
+    </section>
+
+    <section class="main-content">
+      <h1 id="capítulo-9-estudo-de-caso-jogos-de-palavras">Capítulo 9: Estudo de caso: jogos de palavras</h1>
+
+<p>Este capítulo apresenta o segundo estudo de caso que envolve solucionar quebra-cabeças usando palavras com certas propriedades. Por exemplo, encontraremos os palíndromos mais longos em inglês e procuraremos palavras cujas letras apareçam em ordem alfabética. E apresentarei outro plano de desenvolvimento de programa: a redução a um problema resolvido anteriormente.</p>
+
+<h2 id="91---leitura-de-listas-de-palavras">9.1 - Leitura de listas de palavras</h2>
+
+<p>Para os exercícios deste capítulo vamos usar uma lista de palavras em inglês. Há muitas listas de palavras disponíveis na internet, mas a mais conveniente ao nosso propósito é uma das listas de palavras disponibilizadas em domínio público por Grady Ward como parte do projeto lexical Moby (ver http://wikipedia.org/wiki/Moby_Project). É uma lista de 113.809 palavras cruzadas oficiais; isto é, as palavras que se consideram válidas em quebra-cabeças de palavras cruzadas e outros jogos de palavras. Na coleção Moby, o nome do arquivo é 113809of.fic; você pode baixar uma cópia, com um nome mais simples como words.txt, de http://thinkpython2.com/code/words.txt.</p>
+
+<p>Este arquivo está em texto simples, então você pode abri-lo com um editor de texto, mas também pode lê-lo no Python. A função integrada open recebe o nome do arquivo como um parâmetro e retorna um objeto de arquivo que você pode usar para ler o arquivo.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">fin</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'words.txt'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">fin</code> é um nome comum de objeto de arquivo usado para entrada de dados. O objeto de arquivo oferece vários métodos de leitura, inclusive readline, que lê caracteres no arquivo até chegar a um comando de nova linha, devolvendo o resultado como uma string:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">fin</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+<span class="s">'aa</span><span class="se">\r\n</span><span class="s">'</span>
+</code></pre></div></div>
+
+<p>A primeira palavra nesta lista específica é “aa”, uma espécie de lava. A sequência <code class="highlighter-rouge">'\r\n'</code> representa dois caracteres que representam espaços em branco (whitespace), um retorno de carro e uma nova linha, que separa esta palavra da seguinte.</p>
+
+<p>O objeto de arquivo grava a posição em que está no arquivo, então se você chamar readline mais uma vez, receberá a seguinte palavra:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">fin</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+<span class="s">'aah</span><span class="se">\r\n</span><span class="s">'</span>
+</code></pre></div></div>
+
+<p>A palavra seguinte é “aah”, uma palavra perfeitamente legítima, então pare de olhar para mim desse jeito. Ou, se é o whitespace que está incomodando você, podemos nos livrar dele com o método de string <code class="highlighter-rouge">strip</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">line</span> <span class="o">=</span> <span class="n">fin</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">word</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">word</span>
+<span class="s">'aahed'</span>
+</code></pre></div></div>
+
+<p>Você também pode usar um objeto de arquivo como parte de um loop <code class="highlighter-rouge">for</code>. Este programa lê words.txt e imprime cada palavra, uma por linha:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fin</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'words.txt'</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fin</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">word</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="92---exercícios">9.2 - Exercícios</h2>
+
+<p>Há soluções para estes exercícios na próxima seção. Mas é bom você tentar fazer cada um antes de ver as soluções.</p>
+
+<h3 id="exercício-91">Exercício 9.1</h3>
+
+<p>Escreva um programa que leia words.txt e imprima apenas as palavras com mais de 20 caracteres (sem contar whitespace).</p>
+
+<h3 id="exercício-92">Exercício 9.2</h3>
+
+<p>Em 1939, Ernest Vincent Wright publicou uma novela de 50.000 palavras, chamada Gadsby, que não contém a letra “e”. Como o “e” é a letra mais comum em inglês, isso não é algo fácil de fazer.</p>
+
+<p>Na verdade, é difícil até construir um único pensamento sem usar o símbolo mais comum do idioma. No início é lento, mas com prudência e horas de treino, vai ficando cada vez mais fácil.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Muito</span> <span class="n">bem</span><span class="p">,</span> <span class="n">agora</span> <span class="n">eu</span> <span class="n">vou</span> <span class="n">parar</span><span class="o">.</span>
+</code></pre></div></div>
+
+<p>Escreva uma função chamada <code class="highlighter-rouge">has_no_e</code> que retorne <code class="highlighter-rouge">True</code> se a palavra dada não tiver a letra “e” nela.</p>
+
+<p>Altere seu programa na seção anterior para imprimir apenas as palavras que não têm “e” e calcule a porcentagem de palavras na lista que não têm “e”.</p>
+
+<h3 id="exercício-93">Exercício 9.3</h3>
+
+<p>Escreva uma função chamada avoids que receba uma palavra e uma série de letras proibidas, e retorne True se a palavra não usar nenhuma das letras proibidas.</p>
+
+<p>Altere o código para que o usuário digite uma série de letras proibidas e o programa imprima o número de palavras que não contêm nenhuma delas. Você pode encontrar uma combinação de cinco letras proibidas que exclua o menor número possível de palavras?</p>
+
+<h3 id="exercício-94">Exercício 9.4</h3>
+
+<p>Escreva uma função chamada <code class="highlighter-rouge">uses_only</code> que receba uma palavra e uma série de letras e retorne <code class="highlighter-rouge">True</code>, se a palavra só contiver letras da lista. Você pode fazer uma frase usando só as letras acefhlo? Que não seja “Hoe alfalfa?”</p>
+
+<h3 id="exercício-95">Exercício 9.5</h3>
+
+<p>Escreva uma função chamada <code class="highlighter-rouge">uses_all</code> que receba uma palavra e uma série de letras obrigatórias e retorne <code class="highlighter-rouge">True</code> se a palavra usar todas as letras obrigatórias pelo menos uma vez. Quantas palavras usam todas as vogais (aeiou)? E que tal aeiouy?</p>
+
+<h3 id="exercício-96">Exercício 9.6</h3>
+
+<p>Escreva uma função chamada <code class="highlighter-rouge">is_abecedarian</code> que retorne <code class="highlighter-rouge">True</code> se as letras numa palavra aparecerem em ordem alfabética (tudo bem se houver letras duplas). Quantas palavras em ordem alfabética existem?</p>
+
+<h2 id="93---busca">9.3 - Busca</h2>
+
+<p>Todos os exercícios na seção anterior têm algo em comum; eles podem ser resolvidos com o modelo de busca que vimos em <a href="08-strings.html#86---buscando">Buscando</a>. O exemplo mais simples é:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">has_no_e</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">word</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">letter</span> <span class="o">==</span> <span class="s">'e'</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">False</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">True</span>
+</code></pre></div></div>
+
+<p>O loop for atravessa os caracteres em word. Se encontrarmos a letra “e”, podemos retornar False imediatamente; se não for o caso, temos que ir à letra seguinte. Se sairmos do loop normalmente, isso quer dizer que não encontramos um “e”, então retornamos True.</p>
+
+<p>Você pode escrever esta função de forma mais concisa usando o operador in, mas comecei com esta versão porque ela demonstra a lógica do modelo de busca.</p>
+
+<p><code class="highlighter-rouge">avoids</code> é uma versão mais geral de <code class="highlighter-rouge">has_no_e</code>, mas tem a mesma estrutura:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">avoids</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">forbidden</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">word</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">forbidden</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">False</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">True</span>
+</code></pre></div></div>
+
+<p>Podemos retornar <code class="highlighter-rouge">False</code> logo que encontrarmos uma letra proibida; se chegarmos ao fim do loop, retornamos <code class="highlighter-rouge">True</code>.</p>
+
+<p><code class="highlighter-rouge">uses_only</code> é semelhante, exceto pelo sentido da condição, que se inverte:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">uses_only</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">available</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">word</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">letter</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">False</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">True</span>
+</code></pre></div></div>
+
+<p>Em vez de uma lista de letras proibidas, temos uma lista de letras disponíveis. Se encontrarmos uma letra em word que não está em <code class="highlighter-rouge">available</code>, podemos retornar <code class="highlighter-rouge">False</code>.</p>
+
+<p><code class="highlighter-rouge">uses_all</code> é semelhante, mas invertemos a função da palavra e a string de letras:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">uses_all</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">required</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">required</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">letter</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">word</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">False</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">True</span>
+</code></pre></div></div>
+
+<p>Em vez de atravessar as letras em <code class="highlighter-rouge">word</code>, o loop atravessa as letras obrigatórias. Se alguma das letras obrigatórias não aparecer na palavra, podemos retornar <code class="highlighter-rouge">False</code>.</p>
+
+<p>Se você realmente estivesse pensando como um cientista da computação, teria reconhecido que <code class="highlighter-rouge">uses_all</code> foi um exemplo de um problema resolvido anteriormente e escreveria:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">uses_all</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">required</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">uses_only</span><span class="p">(</span><span class="n">required</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Esse é um exemplo de um plano de desenvolvimento de programa chamado <strong>redução a um problema resolvido anteriormente</strong>, ou seja, você reconhece o problema no qual está trabalhando como um exemplo de um problema já resolvido e aplica uma solução existente.</p>
+
+<h2 id="94---loop-com-índices">9.4 - Loop com índices</h2>
+
+<p>Escrevi as funções na seção anterior com loops <code class="highlighter-rouge">for</code> porque eu só precisava dos caracteres nas strings; não precisava fazer nada com os índices.</p>
+
+<p>Para <code class="highlighter-rouge">is_abecedarian</code> temos que comparar letras adjacentes, o que é um pouco complicado para o loop for:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">is_abecedarian</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">previous</span> <span class="o">=</span> <span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">word</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">c</span> <span class="o">&lt;</span> <span class="n">previous</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">False</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">previous</span> <span class="o">=</span> <span class="n">c</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">True</span>
+</code></pre></div></div>
+
+<p>Uma alternativa é usar a recursividade:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">is_abecedarian</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">True</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">word</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">False</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">is_abecedarian</span><span class="p">(</span><span class="n">word</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+</code></pre></div></div>
+
+<p>Outra opção é usar um loop <code class="highlighter-rouge">while</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">is_abecedarian</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">word</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">word</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">False</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">True</span>
+</code></pre></div></div>
+
+<p>O loop começa com <code class="highlighter-rouge">i == 0</code> e termina quando <code class="highlighter-rouge">i == len(word)-1</code>. Cada vez que passa pelo loop, o programa compara o “i-ésimo” caractere (que você pode considerar o caractere atual) com o caractere de posição <code class="highlighter-rouge">i+1</code> (que pode ser considerado o caractere seguinte).</p>
+
+<p>Se o próximo caractere for de uma posição anterior (alfabeticamente anterior) à atual, então descobrimos uma quebra na tendência alfabética, e retornamos <code class="highlighter-rouge">False</code>.</p>
+
+<p>Se chegarmos ao fim do loop sem encontrar uma quebra, então a palavra passa no teste. Para convencer-se de que o loop termina corretamente, considere um exemplo como <code class="highlighter-rouge">'flossy'</code>. O comprimento da palavra é 6, então o loop é executado pela última vez quando i for igual a 4, que é o índice do segundo caractere de trás para frente. Na última iteração, o programa compara o penúltimo caractere com o último, que é o que queremos.</p>
+
+<p>Aqui está uma versão de <code class="highlighter-rouge">is_palindrome</code> (veja o Exercício 6.3) que usa dois índices: um começa no início e aumenta; o outro começa no final e diminui.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">is_palindrome</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">j</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">while</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">j</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">word</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">word</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">False</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">j</span> <span class="o">=</span> <span class="n">j</span><span class="o">-</span><span class="mi">1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">True</span>
+</code></pre></div></div>
+
+<p>Ou podemos reduzir a um problema resolvido anteriormente e escrever:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">is_palindrome</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">is_reverse</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Usando <code class="highlighter-rouge">is_reverse</code> da seção 8.11.</p>
+
+<h2 id="95---depuração">9.5 - Depuração</h2>
+
+<p>Testar programas é difícil. As funções neste capítulo são relativamente fáceis para testar porque é possível verificar os resultados à mão. Ainda assim, pode ser difícil ou até impossível escolher um grupo de palavras que teste todos os erros possíveis.</p>
+
+<p>Tomando <code class="highlighter-rouge">has_no_e</code> como exemplo, há dois casos óbvios para verificar: as palavras que têm um ‘e’ devem retornar False, e as palavras que não têm devem retornar True. Não deverá ser um problema pensar em um exemplo de cada uma.</p>
+
+<p>Dentro de cada caso, há alguns subcasos menos óbvios. Entre as palavras que têm um “e”, você deve testar palavras com um “e” no começo, no fim e em algum lugar no meio. Você deve testar palavras longas, palavras curtas e palavras muito curtas, como a string vazia. A string vazia é um exemplo de um caso especial, não óbvio, onde erros muitas vezes espreitam.</p>
+
+<p>Além dos casos de teste que você gerar, também pode ser uma boa ideia testar seu programa com uma lista de palavras como words.txt. Ao analisar a saída, pode ser que os erros apareçam, mas tenha cuidado: você pode pegar um tipo de erro (palavras que não deveriam ser incluídas, mas foram) e não outro (palavras que deveriam ser incluídas, mas não foram).</p>
+
+<p>Em geral, o teste pode ajudar a encontrar bugs, mas não é fácil gerar um bom conjunto de casos de teste, e, mesmo se conseguir, não há como ter certeza de que o programa está correto. Segundo um lendário cientista da computação:</p>
+
+<p>Testar programas pode ser usado para mostrar a presença de bugs, mas nunca para mostrar a ausência deles! – Edsger W. Dijkstra</p>
+
+<h2 id="96---glossário">9.6 - Glossário</h2>
+
+<dl>
+<dt><a id="glos:objeto de arquivo" href="09-caso-palavras.html#termo:objeto de arquivo">objeto de arquivo</a></dt>
+<dd>Um valor que representa um arquivo aberto.</dd>
+
+<dt><a id="glos:redução a um problema resolvido anteriormente" href="09-caso-palavras.html#termo:redução a um problema resolvido anteriormente">redução a um problema resolvido anteriormente</a></dt>
+<dd>Um modo de resolver um problema expressando-o como uma instância de um problema resolvido anteriormente.</dd>
+
+<dt><a id="glos:caso especial" href="09-caso-palavras.html#termo:caso especial">caso especial</a></dt>
+<dd>Um caso de teste que é atípico ou não é óbvio (e com probabilidade menor de ser tratado corretamente).</dd>
+
+</dl>
+
+<h2 id="97---exercícios">9.7 - Exercícios</h2>
+
+<h3 id="exercício-97">Exercício 9.7</h3>
+
+<p>Esta pergunta é baseada em um quebra-cabeça veiculado em um programa de rádio chamado Car Talk (http://www.cartalk.com/content/puzzlers):</p>
+
+<p>Dê uma palavra com três letras duplas consecutivas. Vou dar exemplos de palavras que quase cumprem a condição, mas não chegam lá. Por exemplo, a palavra committee, c-o-m-m-i-t-t-e-e. Seria perfeita se não fosse aquele ‘i’ que se meteu ali no meio. Ou Mississippi: M-i-s-s-i-s-s-i-p-p-i. Se pudesse tirar aqueles ‘is’, daria certo. Mas há uma palavra que tem três pares consecutivos de letras e, que eu saiba, pode ser a única palavra que existe. É claro que provavelmente haja mais umas 500, mas só consigo pensar nessa. Qual é a palavra?</p>
+
+<p>Escreva um programa que a encontre.</p>
+
+<p>Solução: http://thinkpython2.com/code/cartalk1.py.</p>
+
+<h3 id="exercício-98">Exercício 9.8</h3>
+
+<p>Aqui está outro quebra-cabeça do programa Car Talk (http://www.cartalk.com/content/puzzlers):</p>
+
+<p>“Estava dirigindo outro dia e percebi algo no hodômetro que chamou a minha atenção. Como a maior parte dos hodômetros, ele mostra seis dígitos, apenas em milhas inteiras. Por exemplo, se o meu carro tivesse 300.000 milhas, eu veria 3-0-0-0-0-0.</p>
+
+<p>“Agora, o que vi naquele dia foi muito interessante. Notei que os últimos 4 dígitos eram um palíndromo; isto é, podiam ser lidos da mesma forma no sentido correto e no sentido inverso. Por exemplo, 5-4-4-5 é um palíndromo, então no meu hodômetro poderia ser 3-1-5-4-4-5.</p>
+
+<p>“Uma milha depois, os últimos 5 números formaram um palíndromo. Por exemplo, poderia ser 3-6-5-4-5-6. Uma milha depois disso, os 4 números do meio, dentro dos 6, formavam um palíndromo. E adivinhe só? Um milha depois, todos os 6 formavam um palíndromo!</p>
+
+<p>“A pergunta é: o que estava no hodômetro quando olhei primeiro?”</p>
+
+<p>Escreva um programa Python que teste todos os números de seis dígitos e imprima qualquer número que satisfaça essas condições.</p>
+
+<p>Solução: http://thinkpython2.com/code/cartalk2.py.</p>
+
+<h3 id="exercício-99">Exercício 9.9</h3>
+
+<p>Aqui está outro problema do Car Talk que você pode resolver com uma busca (http://www.cartalk.com/content/puzzlers):</p>
+
+<p>“Há pouco tempo recebi uma visita da minha mãe e percebemos que os dois dígitos que compõem a minha idade, quando invertidos, representavam a idade dela. Por exemplo, se ela tem 73 anos, eu tenho 37 anos. Ficamos imaginando com que frequência isto aconteceu nos anos anteriores, mas acabamos mudando de assunto e não chegamos a uma resposta.</p>
+
+<p>“Quando cheguei em casa, cheguei à conclusão de que os dígitos das nossas idades tinham sido reversíveis seis vezes até então. Também percebi que, se tivéssemos sorte, isso aconteceria novamente dali a alguns anos, e se fôssemos muito sortudos, aconteceria mais uma vez depois disso. Em outras palavras, aconteceria 8 vezes no total. Então a pergunta é: quantos anos tenho agora?”</p>
+
+<p>Escreva um programa em Python que busque soluções para esse problema. Dica: pode ser uma boa ideia usar o método de string zfill.</p>
+
+
+      <footer class="site-footer">
+        
+          <span class="site-footer-owner"><a href="https://github.com/PenseAllen/PensePython2e">PensePython2e</a> is maintained by <a href="https://github.com/PenseAllen">PenseAllen</a>.</span>
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </section>
+
+    
+  </body>
+</html>

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Capítulo 19: Extra | PensePython2e</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Capítulo 19: Extra" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey" />
+<meta property="og:description" content="Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey" />
+<link rel="canonical" href="19-extra.html" />
+<meta property="og:url" content="https://penseallen.github.io/PensePython2e/19-extra.html" />
+<meta property="og:site_name" content="PensePython2e" />
+<script type="application/ld+json">
+{"@type":"WebPage","headline":"Capítulo 19: Extra","url":"https://penseallen.github.io/PensePython2e/19-extra.html","description":"Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <link rel="stylesheet" href="assets/css/style.css@v=afa460130599dbde01620e86c38923f785023956.css">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">PensePython2e</h1>
+      <h2 class="project-tagline">Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey</h2>
+      
+        <a href="https://github.com/PenseAllen/PensePython2e" class="btn">View on GitHub</a>
+      
+      
+    </section>
+
+    <section class="main-content">
+      <h1 id="capítulo-19-extra">Capítulo 19: Extra</h1>
+
+<p>Uma das minhas metas com este livro é ensinar o mínimo possível de Python. Quando havia duas formas de fazer algo, escolhia uma e evitava mencionar a outra. Ou, às vezes, usava a segunda como exercício.</p>
+
+<p>Agora quero voltar a algumas coisas boas que ficaram para trás. O Python oferece vários recursos que não são realmente necessários – você pode escrever um bom código sem eles – mas com eles é possível escrever um código mais conciso, legível ou eficiente e, às vezes, todos os três.</p>
+
+<h2 id="191---expressões-condicionais">19.1 - Expressões condicionais</h2>
+
+<p>Vimos instruções condicionais em “Execução condicional”, na página 78. As instruções condicionais muitas vezes são usadas para escolher um entre dois valores; por exemplo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">y</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s">'nan'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Esta instrução verifica se x é positivo. Nesse caso, ela calcula math.log. Do contrário, math.log causaria um ValueError. Para evitar interromper o programa, geramos um “NaN”, que é um valor de ponto flutuante especial que representa um “Não número”.</p>
+
+<p>Podemos escrever essa instrução de forma mais concisa usando uma expressão condicional:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="s">'nan'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Você quase pode ler esta linha como se tivesse sido escrita em inglês: “y recebe log-x se x for maior que 0; do contrário, ele recebe NaN”.</p>
+
+<p>As funções recursivas por vezes podem ser reescritas usando expressões condicionais. Por exemplo, aqui está uma versão recursiva de factorial:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="mi">1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">else</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Podemos reescrevê-la assim:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">n</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+<p>Outro uso de expressões condicionais é lidar com argumentos opcionais. Por exemplo, aqui está o método init de GoodKangaroo (veja o Exercício 17.2):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">contents</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">contents</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">contents</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="err"> </span> <span class="err"> </span> <span class="bp">self</span><span class="o">.</span><span class="n">pouch_contents</span> <span class="o">=</span> <span class="n">contents</span>
+</code></pre></div></div>
+
+<p>Podemos reescrevê-lo assim:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">contents</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+<span class="err"> </span> <span class="err"> </span> <span class="bp">self</span><span class="o">.</span><span class="n">pouch_contents</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">contents</span> <span class="o">==</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">contents</span>
+</code></pre></div></div>
+
+<p>Em geral, é possível substituir uma instrução condicional por uma expressão condicional se ambos os ramos contiverem expressões simples que sejam retornadas ou atribuídas à mesma variável.</p>
+
+<h2 id="192---abrangência-de-listas">19.2 - Abrangência de listas</h2>
+
+<p>Em “Mapeamento, filtragem e redução”, na página 147, vimos os padrões de filtragem e mapeamento. Por exemplo, esta função toma uma lista de strings, mapeia o método de string capitalize aos elementos, e retorna uma nova lista de strings:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">capitalize_all</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">t</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">capitalize</span><span class="p">())</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">res</span>
+</code></pre></div></div>
+
+<p>Podemos escrever isso de forma mais concisa usando abrangência de listas (list comprehension):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">capitalize_all</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">t</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Os operadores de colchete indicam que estamos construindo uma nova lista. A expressão dentro dos colchetes especifica os elementos da lista, e a cláusula for indica qual sequência estamos atravessando.</p>
+
+<p>A sintaxe da abrangência de listas é um pouco esquisita porque a variável de loop, s nesse exemplo, aparece na expressão antes de chegarmos à definição.</p>
+
+<p>Abrangências de listas também podem ser usadas para filtragem. Por exemplo, esta função só seleciona os elementos de t que são maiúsculos, e retorna uma nova lista:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">only_upper</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">t</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">isupper</span><span class="p">():</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">res</span>
+</code></pre></div></div>
+
+<p>Podemos reescrevê-la usando abrangência de listas:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">only_upper</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">t</span> <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">isupper</span><span class="p">()]</span>
+</code></pre></div></div>
+
+<p>Abrangências de listas são concisas e fáceis de ler, pelo menos para expressões simples. E são normalmente mais rápidas que os loops for equivalentes, às vezes muito mais rápidas. Então, se você ficar irritado comigo por não ter mencionado isso antes, eu entendo.</p>
+
+<p>Porém, em minha defesa, as abrangências de listas são mais difíceis de depurar porque não é possível ter instruções de exibição dentro do loop. Sugiro que você as use só se o cálculo for simples o suficiente para que acerte já de primeira. E para principiantes isso significa nunca.</p>
+
+<h2 id="193---expressões-geradoras">19.3 - Expressões geradoras</h2>
+
+<p>Expressões geradoras são semelhantes às abrangências de listas, mas com parênteses em vez de colchetes:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">g</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">g</span>
+<span class="o">&lt;</span><span class="n">generator</span> <span class="nb">object</span> <span class="o">&lt;</span><span class="n">genexpr</span><span class="o">&gt;</span> <span class="n">at</span> <span class="mh">0x7f4c45a786c0</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p>O resultado é um objeto gerador que sabe como fazer iterações por uma sequência de valores. No entanto, ao contrário de uma abrangência de listas, ele não calcula todos os valores de uma vez; espera pelo pedido. A função integrada next recebe o próximo valor do gerador:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="mi">0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="mi">1</span>
+</code></pre></div></div>
+
+<p>Quando você chega no fim da sequência, next cria uma exceção StopIteration. Também é possível usar um loop for para fazer a iteração pelos valores:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">g</span><span class="p">:</span>
+<span class="o">...</span> <span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+<span class="mi">4</span>
+<span class="mi">9</span>
+<span class="mi">16</span>
+</code></pre></div></div>
+
+<p>O objeto gerador monitora a posição em que está na sequência, portanto o loop for continua de onde next parou. Uma vez que o gerador se esgotar, ele continua criando StopException:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="nb">StopIteration</span>
+</code></pre></div></div>
+
+<p>As expressões geradoras muitas vezes são usadas com funções como sum, max e min:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="mi">30</span>
+</code></pre></div></div>
+
+<h2 id="194---any-e-all">19.4 - any e all</h2>
+
+<p>O Python tem uma função integrada, any, que recebe uma sequência de valores booleanos e retorna True se algum dos valores for True. Ela funciona em listas:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="nb">any</span><span class="p">([</span><span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">True</span><span class="p">])</span>
+<span class="bp">True</span>
+</code></pre></div></div>
+
+<p>Entretanto, muitas vezes é usada com expressões geradoras:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="nb">any</span><span class="p">(</span><span class="n">letter</span> <span class="o">==</span> <span class="s">'t'</span> <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="s">'monty'</span><span class="p">)</span>
+<span class="bp">True</span>
+</code></pre></div></div>
+
+<p>Esse exemplo não é muito útil porque faz a mesma coisa que o operador in. Porém, podemos usar any para reescrever algumas das funções de pesquisa que escrevemos em “Busca”, na página 136. Por exemplo, poderíamos escrever avoids dessa forma:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">avoids</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">forbidden</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">letter</span> <span class="ow">in</span> <span class="n">forbidden</span> <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">word</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>A função quase pode ser lida como uma frase em inglês: “word evita forbidden se não houver nenhuma letra proibida em word”.</p>
+
+<p>Usar <code class="highlighter-rouge">any</code> com uma expressão geradora é eficiente porque ela retorna imediatamente se encontrar um valor True, então não é preciso avaliar a sequência inteira.</p>
+
+<p>O Python oferece outra função integrada, <code class="highlighter-rouge">all</code>, que retorna True se todos os elementos da sequência forem True. Como exercício, use all para reescrever <code class="highlighter-rouge">uses_all</code> de “Busca”, na página 136.</p>
+
+<h2 id="195---conjuntos">19.5 - Conjuntos</h2>
+
+<p>Na seção “Subtração de dicionário”, da página 198, uso dicionários para encontrar as palavras que aparecem em um documento, mas não numa lista de palavras. A função que escrevi recebe d1, que contém as palavras do documento como chaves e d2, que contém a lista de palavras. Ela retorna um dicionário que contém as chaves de d1 que não estão em d2:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">subtract</span><span class="p">(</span><span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">res</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">d1</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">d2</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">res</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">res</span>
+</code></pre></div></div>
+
+<p>Em todos esses dicionários, os valores não são None porque nunca os usamos. O resultado é que desperdiçamos espaço de armazenamento.</p>
+
+<p>O Python fornece outro tipo integrado, chamado set (conjunto), que se comporta como uma coleção de chaves de dicionário sem valores. Acrescentar elementos a um conjunto é rápido; assim como verificar a adesão. E os conjuntos fornecem métodos e operadores para calcular operações de conjuntos.</p>
+
+<p>Por exemplo, a subtração de conjuntos está disponível como um método chamado difference ou como um operador, -. Portanto, podemos reescrever subtract desta forma:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">subtract</span><span class="p">(</span><span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">d2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>O resultado é um conjunto em vez de um dicionário, mas, para operações como iteração, o comportamento é o mesmo.</p>
+
+<p>Alguns exercícios neste livro podem ser feitos de forma concisa e eficiente com conjuntos. Por exemplo, aqui está uma solução para has_duplicates, do Exercício 10.7, que usa um dicionário:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">has_duplicates</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">t</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">True</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">d</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">False</span>
+</code></pre></div></div>
+
+<p>Quando um elemento aparece pela primeira vez, ele é acrescentado ao dicionário. Se o mesmo elemento aparece novamente, a função retorna True.</p>
+
+<p>Usando conjuntos, podemos escrever a mesma função dessa forma:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">has_duplicates</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Um elemento só pode aparecer em um conjunto uma vez, portanto, se um elemento em t aparecer mais de uma vez, o conjunto será menor que t. Se não houver duplicatas, o conjunto terá o mesmo tamanho que t.</p>
+
+<p>Também podemos usar conjuntos para fazer alguns exercícios no Capítulo 9. Por exemplo, aqui está uma versão de uses_only com um loop:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">uses_only</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">available</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">word</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">letter</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">False</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">True</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">uses_only</code> verifica se todas as cartas em word estão em available. Podemos reescrevê-la assim:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">uses_only</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">available</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nb">set</span><span class="p">(</span><span class="n">available</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>O operador <code class="highlighter-rouge">&lt;=</code> verifica se um conjunto é um subconjunto ou outro, incluindo a possibilidade de que sejam iguais, o que é verdade se todas as letras de word aparecerem em available.</p>
+
+<p>Como exercício, reescreva avoids usando conjuntos.</p>
+
+<h2 id="196---contadores">19.6 - Contadores</h2>
+
+<p>Um contador é como um conjunto, exceto que se um elemento aparecer mais de uma vez, o contador registra quantas vezes ele aparece. Se tiver familiaridade com a ideia matemática de um multiconjunto (multiset), um contador é uma forma natural de representar um multiconjunto.</p>
+
+<p>Contadores são definidos em um módulo padrão chamado <code class="highlighter-rouge">collections</code>, portanto é preciso importá-lo. Você pode inicializar um contador com uma string, lista ou alguma outra coisa que seja compatível com iteração:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">count</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="s">'parrot'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">count</span>
+<span class="n">Counter</span><span class="p">({</span><span class="s">'r'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'t'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'o'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'p'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+</code></pre></div></div>
+
+<p>Os contadores comportam-se como dicionários de muitas formas; eles mapeiam cada chave ao número de vezes que aparece. Como em dicionários, as chaves têm de ser hashable.</p>
+
+<p>Ao contrário de dicionários, os contadores não causam uma exceção se você acessar um elemento que não aparece. Em vez disso, retornam 0:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">count</span><span class="p">[</span><span class="s">'d'</span><span class="p">]</span>
+<span class="mi">0</span>
+</code></pre></div></div>
+
+<p>Podemos usar contadores para reescrever <code class="highlighter-rouge">is_anagram</code> do Exercício 10.6:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">is_anagram</span><span class="p">(</span><span class="n">word1</span><span class="p">,</span> <span class="n">word2</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">Counter</span><span class="p">(</span><span class="n">word1</span><span class="p">)</span> <span class="o">==</span> <span class="n">Counter</span><span class="p">(</span><span class="n">word2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Se duas palavras forem anagramas, elas contêm as mesmas letras com as mesmas contagens, então seus contadores são equivalentes.</p>
+
+<p>Os contadores oferecem métodos e operadores para executar operações similares às dos conjuntos, incluindo adição, subtração, união e intersecção. E eles fornecem um método muitas vezes útil, most_common, que retorna uma lista de pares frequência-valor, organizados do mais ao menos comum:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">count</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="s">'parrot'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">val</span><span class="p">,</span> <span class="n">freq</span> <span class="ow">in</span> <span class="n">count</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+<span class="o">...</span> <span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">freq</span><span class="p">)</span>
+<span class="n">r</span> <span class="mi">2</span>
+<span class="n">p</span> <span class="mi">1</span>
+<span class="n">a</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<h2 id="197---defaultdict">19.7 - defaultdict</h2>
+
+<p>O módulo <code class="highlighter-rouge">collections</code> também tem <code class="highlighter-rouge">defaultdict</code>, que se parece com um dicionário, exceto pelo fato de que se você acessar uma chave que não existe, um novo valor pode ser gerado automaticamente.</p>
+
+<p>Quando você cria um defaultdict, fornece uma função usada para criar valores. Uma função usada para criar objetos às vezes é chamada de factory (fábrica). As funções integradas que criam listas, conjuntos e outros tipos podem ser usadas como fábricas:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">d</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Note que o argumento é list, que é um objeto de classe, não list(), que é uma nova lista. A função que você fornece não é chamada a menos que você acesse uma chave que não existe:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s">'new key'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t</span>
+<span class="p">[]</span>
+</code></pre></div></div>
+
+<p>A nova lista, que estamos chamando de t, também é adicionada ao dicionário. Então, se alterarmos t, a mudança aparece em d:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">'new value'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">d</span>
+<span class="n">defaultdict</span><span class="p">(</span><span class="o">&lt;</span><span class="k">class</span> <span class="err">'</span><span class="nc">list</span><span class="s">'&gt;, {'</span><span class="n">new</span> <span class="n">key</span><span class="s">': ['</span><span class="n">new</span> <span class="n">value</span><span class="s">']})</span><span class="err">
+</span></code></pre></div></div>
+
+<p>Se estiver fazendo um dicionário de listas, você pode escrever um código mais simples usando defaultdict. Na minha solução para o Exercício 12.2, que você pode ver em http://thinkpython2.com/code/anagram_sets.py, faço um dicionário que mapeia uma string organizada de letras a uma lista de palavras que pode ser soletrada com essas letras. Por exemplo, ‘opst’ mapeia para a lista <code class="highlighter-rouge">['opts', 'post', 'pots', 'spot', 'stop', 'tops']</code>.</p>
+
+<p>Aqui está o código original:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">all_anagrams</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">word</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">t</span> <span class="o">=</span> <span class="n">signature</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">t</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">d</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span><span class="p">]</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">else</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">d</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">d</span>
+</code></pre></div></div>
+
+<p>Isso pode ser simplificado usando setdefault, que você poderia ter usado no Exercício 11.2:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">all_anagrams</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">word</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">t</span> <span class="o">=</span> <span class="n">signature</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">d</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">d</span>
+</code></pre></div></div>
+
+<p>O problema dessa solução é que ela faz uma lista nova a cada vez, mesmo que não seja necessário. Para listas, isso não é grande coisa, mas se a função fábrica for complicada, poderia ser.</p>
+
+<p>Podemos evitar este problema e simplificar o código usando um defaultdict:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">all_anagrams</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">d</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">word</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">t</span> <span class="o">=</span> <span class="n">signature</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">d</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">d</span>
+</code></pre></div></div>
+
+<p>A minha solução para o Exercício 18.3, que você pode baixar em http://thinkpython2.com/code/PokerHandSoln.py, usa setdefault na função <code class="highlighter-rouge">has_straightflush</code>. O problema dessa solução é criar um objeto Hand cada vez que passa pelo loop, seja ele necessário ou não. Como exercício, reescreva-a usando um defaultdict.</p>
+
+<h2 id="198---tuplas-nomeadas">19.8 - Tuplas nomeadas</h2>
+
+<p>Muitos objetos simples são basicamente coleções de valores relacionados. Por exemplo, o objeto Point, definido no Capítulo 15, contém dois números, x e y. Ao definir uma classe como essa, normalmente você começa com um método init e um método str:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Point</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="s">'(</span><span class="si">%</span><span class="s">g, </span><span class="si">%</span><span class="s">g)'</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>É muito código para transmitir pouca informação. O Python tem uma forma mais concisa de dizer a mesma coisa:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="n">Point</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s">'Point'</span><span class="p">,</span> <span class="p">[</span><span class="s">'x'</span><span class="p">,</span> <span class="s">'y'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>O primeiro argumento é o nome da classe que você quer criar. O segundo é uma lista dos atributos que o objeto Point deve ter, como strings. O valor de retorno de namedtuple é um objeto de classe:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">Point</span>
+<span class="o">&lt;</span><span class="k">class</span> <span class="err">'</span><span class="nc">__main__</span><span class="o">.</span><span class="n">Point</span><span class="s">'&gt;</span><span class="err">
+</span></code></pre></div></div>
+
+<p>Point fornece automaticamente métodos como <code class="highlighter-rouge">__init__</code> e <code class="highlighter-rouge">__str__</code> então não é preciso escrevê-los.</p>
+
+<p>Para criar um objeto Point, você usa a classe Point como uma função:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">p</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">p</span>
+<span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>O método <code class="highlighter-rouge">__init__</code> atribui os argumentos a atributos usando os nomes que você forneceu. O método <code class="highlighter-rouge">__str__</code> exibe uma representação do objeto Point e seus atributos.</p>
+
+<p>Você pode acessar os elementos da tupla nomeada pelo nome:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">p</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">y</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Mas também pode tratar uma tupla nomeada como uma tupla:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">p</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Tuplas nomeadas fornecem uma forma rápida de definir classes simples. O problema é que classes simples não ficam sempre simples. Mais adiante você poderá decidir que quer acrescentar métodos a uma tupla nomeada. Nesse caso, você poderá definir uma nova classe que herde da tupla nomeada:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Pointier</span><span class="p">(</span><span class="n">Point</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="c"># adicionar mais métodos aqui</span>
+</code></pre></div></div>
+
+<p>Ou poderá mudar para uma definição de classe convencional.</p>
+
+<h2 id="199---reunindo-argumentos-de-palavra-chave">19.9 - Reunindo argumentos de palavra-chave</h2>
+
+<p>Em “Tuplas com argumentos de comprimento variável”, na página 181, vimos como escrever uma função que reúne seus argumentos em uma tupla:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">printall</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Você pode chamar esta função com qualquer número de argumentos posicionais (isto é, argumentos que não têm palavras-chave):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">printall</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="s">'3'</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="s">'3'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Porém, o operador <code class="highlighter-rouge">*</code> não reúne argumentos de palavra-chave:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">printall</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">third</span><span class="o">=</span><span class="s">'3'</span><span class="p">)</span>
+<span class="nb">TypeError</span><span class="p">:</span> <span class="n">printall</span><span class="p">()</span> <span class="n">got</span> <span class="n">an</span> <span class="n">unexpected</span> <span class="n">keyword</span> <span class="n">argument</span> <span class="s">'third'</span>
+</code></pre></div></div>
+
+<p>Para reunir argumentos de palavra-chave, você pode usar o operador <code class="highlighter-rouge">**</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">printall</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Você pode chamar o parâmetro de coleta de palavra-chave, como quiser, mas <code class="highlighter-rouge">kwargs</code> é uma escolha comum. O resultado é um dicionário que mapeia palavras-chave a valores:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">printall</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">third</span><span class="o">=</span><span class="s">'3'</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">)</span> <span class="p">{</span><span class="s">'third'</span><span class="p">:</span> <span class="s">'3'</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p>Se tiver um dicionário de palavras-chave e valores, pode usar o operador de dispersão, <code class="highlighter-rouge">**</code>, para chamar uma função:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Point</span><span class="p">(</span><span class="o">**</span><span class="n">d</span><span class="p">)</span>
+<span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Sem o operador de dispersão, a função trataria d como um único argumento posicional, e então atribuiria d a x e se queixaria porque não há nada para atribuir a y:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Point</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="err"> </span> <span class="n">File</span> <span class="s">"&lt;stdin&gt;"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="nb">TypeError</span><span class="p">:</span> <span class="n">__new__</span><span class="p">()</span> <span class="n">missing</span> <span class="mi">1</span> <span class="n">required</span> <span class="n">positional</span> <span class="n">argument</span><span class="p">:</span> <span class="s">'y'</span>
+</code></pre></div></div>
+
+<p>Quando estiver trabalhando com funções com um grande número de parâmetros, muitas vezes é útil criar dicionários e passá-los como argumentos para especificar as opções usadas com maior frequência.</p>
+
+<h2 id="1910---glossário">19.10 - Glossário</h2>
+
+<dl>
+<dt><a id="glos:expressão condicional" href="19-extra.html#termo:expressão condicional">expressão condicional</a></dt>
+<dd>Expressão que contém um de dois valores, dependendo de uma condição.</dd>
+
+<dt><a id="glos:abrangência de listas" href="19-extra.html#termo:abrangência de lista (list comprehension)">abrangência de lista (list comprehension)</a></dt>
+<dd>Expressão com um loop for entre colchetes que produz uma nova lista.</dd>
+
+<dt><a id="glos:expressão geradora" href="19-extra.html#termo:expressão geradora">expressão geradora</a></dt>
+<dd>Uma expressão com um loop for entre parênteses que produz um objeto gerador.</dd>
+
+<dt><a id="glos:multiconjunto (multiset)" href="19-extra.html#termo:multiconjunto (multiset)">multiconjunto</a></dt>
+<dd>Entidade matemática que representa um mapeamento entre os elementos de um conjunto e o número de vezes que aparecem.</dd>
+
+<dt><a id="glos:fábrica (factory)" href="19-extra.html#termo:fábrica (factory)">fábrica (factory)</a></dt>
+<dd>Função normalmente passada como parâmetro, usada para criar objetos.</dd>
+
+</dl>
+
+<h2 id="1911---exercícios">19.11 - Exercícios</h2>
+
+<h3 id="exercício-191">Exercício 19.1</h3>
+
+<p>Esta é uma função que calcula o coeficiente binominal recursivamente:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">binomial_coeff</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="s">"""Compute the binomial coefficient "n choose k".
+
+    n: number of trials
+    k: number of successes
+    returns: int
+
+    """</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="mi">1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="mi">0</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">res</span> <span class="o">=</span> <span class="n">binomial_coeff</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="o">+</span> <span class="n">binomial_coeff</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">res</span>
+</code></pre></div></div>
+
+<p>Reescreva o corpo da função usando expressões condicionais aninhadas.</p>
+
+<p>Uma observação: esta função não é muito eficiente porque acaba calculando os mesmos valores várias vezes. Você pode torná-lo mais eficiente com memos (veja “Memos”, na página 169). No entanto, vai ver que é mais difícil usar memos se escrevê-la usando expressões condicionais.</p>
+
+
+      <footer class="site-footer">
+        
+          <span class="site-footer-owner"><a href="https://github.com/PenseAllen/PensePython2e">PensePython2e</a> is maintained by <a href="https://github.com/PenseAllen">PenseAllen</a>.</span>
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </section>
+
+    
+  </body>
+</html>

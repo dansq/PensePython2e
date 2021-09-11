@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Capítulo 16: Classes e funções | PensePython2e</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Capítulo 16: Classes e funções" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey" />
+<meta property="og:description" content="Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey" />
+<link rel="canonical" href="16-classes-funcoes.html" />
+<meta property="og:url" content="https://penseallen.github.io/PensePython2e/16-classes-funcoes.html" />
+<meta property="og:site_name" content="PensePython2e" />
+<script type="application/ld+json">
+{"@type":"WebPage","headline":"Capítulo 16: Classes e funções","url":"https://penseallen.github.io/PensePython2e/16-classes-funcoes.html","description":"Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <link rel="stylesheet" href="assets/css/style.css@v=afa460130599dbde01620e86c38923f785023956.css">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">PensePython2e</h1>
+      <h2 class="project-tagline">Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey</h2>
+      
+        <a href="https://github.com/PenseAllen/PensePython2e" class="btn">View on GitHub</a>
+      
+      
+    </section>
+
+    <section class="main-content">
+      <h1 id="capítulo-16-classes-e-funções">Capítulo 16: Classes e funções</h1>
+
+<p>Agora que sabemos como criar tipos, o próximo passo deve ser escrever funções que recebam objetos definidos pelo programador como parâmetros e os retornem como resultados. Neste capítulo também vou apresentar o “estilo funcional de programação” e dois novos planos de desenvolvimento de programas.</p>
+
+<p>Os exemplos de código deste capítulo estão disponíveis em http://thinkpython2.com/code/Time1.py. As soluções para os exercícios estão em http://thinkpython2.com/code/Time1_soln.py.</p>
+
+<h2 id="161---time">16.1 - Time</h2>
+
+<p>Para ter mais um exemplo de tipo definido pelo programador, criaremos uma classe chamada <code class="highlighter-rouge">Time</code> (hora), que registra um horário no dia. A definição da classe é assim:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Time</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="s">"""Represents the time of day.
+    attributes: hour, minute, second
+    """</span>
+</code></pre></div></div>
+
+<p>Podemos criar um objeto <code class="highlighter-rouge">Time</code> e ter atributos para horas, minutos e segundos:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">time</span> <span class="o">=</span> <span class="n">Time</span><span class="p">()</span>
+<span class="n">time</span><span class="o">.</span><span class="n">hour</span> <span class="o">=</span> <span class="mi">11</span>
+<span class="n">time</span><span class="o">.</span><span class="n">minute</span> <span class="o">=</span> <span class="mi">59</span>
+<span class="n">time</span><span class="o">.</span><span class="n">second</span> <span class="o">=</span> <span class="mi">30</span>
+</code></pre></div></div>
+
+<p>O diagrama de estado do objeto Time está na Figura 16.1.</p>
+
+<p><img src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_1601.png" alt="Figura 16.1 – Diagrama de um objeto Time." />
+<br /><em>Figura 16.1 – Diagrama de um objeto</em> <code class="highlighter-rouge">Time</code>.</p>
+
+<p>Como exercício, escreva uma função chamada <code class="highlighter-rouge">print_time</code>, que receba um objeto Time e o exiba na forma hour:minute:second. Dica: a sequência de formatação <code class="highlighter-rouge">'%.2d'</code> exibe um número inteiro com, pelo menos, dois dígitos, incluindo um zero à esquerda, se for necessário.</p>
+
+<p>Escreva uma função booleana chamada <code class="highlighter-rouge">is_after</code>, que receba dois objetos Time, <code class="highlighter-rouge">t1</code> e <code class="highlighter-rouge">t2</code>, e devolva <code class="highlighter-rouge">True</code> se <code class="highlighter-rouge">t1</code> for cronologicamente depois de <code class="highlighter-rouge">t2</code> e <code class="highlighter-rouge">False</code> se não for. Desafio: não use uma instrução <code class="highlighter-rouge">if</code>.</p>
+
+<h2 id="162---funções-puras">16.2 - Funções puras</h2>
+
+<p>Nas próximas seções, vamos escrever duas funções que adicionam valores de tempo. Elas demonstram dois tipos de funções: funções puras e modificadores. Também demonstram um plano de desenvolvimento que chamarei de protótipo e correção, que é uma forma de atacar um problema complexo começando com um protótipo simples e lidando com as complicações de forma incremental.</p>
+
+<p>Aqui está um protótipo simples de <code class="highlighter-rouge">add_time</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">add_time</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="nb">sum</span> <span class="o">=</span> <span class="n">Time</span><span class="p">()</span>
+<span class="err"> </span> <span class="err"> </span> <span class="nb">sum</span><span class="o">.</span><span class="n">hour</span> <span class="o">=</span> <span class="n">t1</span><span class="o">.</span><span class="n">hour</span> <span class="o">+</span> <span class="n">t2</span><span class="o">.</span><span class="n">hour</span>
+<span class="err"> </span> <span class="err"> </span> <span class="nb">sum</span><span class="o">.</span><span class="n">minute</span> <span class="o">=</span> <span class="n">t1</span><span class="o">.</span><span class="n">minute</span> <span class="o">+</span> <span class="n">t2</span><span class="o">.</span><span class="n">minute</span>
+<span class="err"> </span> <span class="err"> </span> <span class="nb">sum</span><span class="o">.</span><span class="n">second</span> <span class="o">=</span> <span class="n">t1</span><span class="o">.</span><span class="n">second</span> <span class="o">+</span> <span class="n">t2</span><span class="o">.</span><span class="n">second</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="nb">sum</span>
+</code></pre></div></div>
+
+<p>A função cria um novo objeto <code class="highlighter-rouge">Time</code>, inicializa seus atributos e retorna uma referência ao novo objeto. A função pura é chamada assim porque não altera nenhum dos objetos passados a ela como argumentos; além disso, ela não tem efeitos, como exibir um valor ou receber entradas de usuário, apenas retorna um valor.</p>
+
+<p>Para testar esta função, criarei objetos <code class="highlighter-rouge">Time</code>: <code class="highlighter-rouge">start</code>, que contém o tempo de início de um filme, como <em>Monty Python e o cálice sagrado</em>, e <code class="highlighter-rouge">duration</code>, que contém o tempo de execução do filme, que é de 1 hora e 35 minutos.</p>
+
+<p><code class="highlighter-rouge">add_time</code> calcula quando o filme acaba:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">start</span> <span class="o">=</span> <span class="n">Time</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">start</span><span class="o">.</span><span class="n">hour</span> <span class="o">=</span> <span class="mi">9</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">start</span><span class="o">.</span><span class="n">minute</span> <span class="o">=</span> <span class="mi">45</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">start</span><span class="o">.</span><span class="n">second</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">duration</span> <span class="o">=</span> <span class="n">Time</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">duration</span><span class="o">.</span><span class="n">hour</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">duration</span><span class="o">.</span><span class="n">minute</span> <span class="o">=</span> <span class="mi">35</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">duration</span><span class="o">.</span><span class="n">second</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">done</span> <span class="o">=</span> <span class="n">add_time</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">duration</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">print_time</span><span class="p">(</span><span class="n">done</span><span class="p">)</span>
+<span class="mi">10</span><span class="p">:</span><span class="mi">80</span><span class="p">:</span><span class="mo">00</span>
+</code></pre></div></div>
+
+<p>O resultado, 10:80:00, pode não ser o que você esperava. O problema é que esta função não trata casos onde o número de segundos ou minutos é maior que 60. Quando isso acontece, precisamos transportar os segundos extras à coluna dos minutos ou os minutos extras à coluna das horas.</p>
+
+<p>Aqui está uma versão melhorada:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">add_time</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="nb">sum</span> <span class="o">=</span> <span class="n">Time</span><span class="p">()</span>
+<span class="err"> </span> <span class="err"> </span> <span class="nb">sum</span><span class="o">.</span><span class="n">hour</span> <span class="o">=</span> <span class="n">t1</span><span class="o">.</span><span class="n">hour</span> <span class="o">+</span> <span class="n">t2</span><span class="o">.</span><span class="n">hour</span>
+<span class="err"> </span> <span class="err"> </span> <span class="nb">sum</span><span class="o">.</span><span class="n">minute</span> <span class="o">=</span> <span class="n">t1</span><span class="o">.</span><span class="n">minute</span> <span class="o">+</span> <span class="n">t2</span><span class="o">.</span><span class="n">minute</span>
+<span class="err"> </span> <span class="err"> </span> <span class="nb">sum</span><span class="o">.</span><span class="n">second</span> <span class="o">=</span> <span class="n">t1</span><span class="o">.</span><span class="n">second</span> <span class="o">+</span> <span class="n">t2</span><span class="o">.</span><span class="n">second</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="nb">sum</span><span class="o">.</span><span class="n">second</span> <span class="o">&gt;=</span> <span class="mi">60</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="nb">sum</span><span class="o">.</span><span class="n">second</span> <span class="o">-=</span> <span class="mi">60</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="nb">sum</span><span class="o">.</span><span class="n">minute</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="nb">sum</span><span class="o">.</span><span class="n">minute</span> <span class="o">&gt;=</span> <span class="mi">60</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="nb">sum</span><span class="o">.</span><span class="n">minute</span> <span class="o">-=</span> <span class="mi">60</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="nb">sum</span><span class="o">.</span><span class="n">hour</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="nb">sum</span>
+</code></pre></div></div>
+
+<p>Embora esta função esteja correta, é um pouco extensa. Veremos uma alternativa menor mais adiante.</p>
+
+<h2 id="163---modificadores">16.3 - Modificadores</h2>
+
+<p>Às vezes é útil uma função alterar os objetos que recebe como parâmetros. Nesse caso, as mudanças são visíveis a quem chama a função. As funções que fazem isso chamam-se modificadores.</p>
+
+<p><code class="highlighter-rouge">increment</code>, que acrescenta um dado número de segundos a um objeto <code class="highlighter-rouge">Time</code>, pode ser escrita naturalmente como um modificador. Aqui está um primeiro esboço:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">increment</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">seconds</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">time</span><span class="o">.</span><span class="n">second</span> <span class="o">+=</span> <span class="n">seconds</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">second</span> <span class="o">&gt;=</span> <span class="mi">60</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">time</span><span class="o">.</span><span class="n">second</span> <span class="o">-=</span> <span class="mi">60</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">time</span><span class="o">.</span><span class="n">minute</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">minute</span> <span class="o">&gt;=</span> <span class="mi">60</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">time</span><span class="o">.</span><span class="n">minute</span> <span class="o">-=</span> <span class="mi">60</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="n">time</span><span class="o">.</span><span class="n">hour</span> <span class="o">+=</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<p>A primeira linha executa a operação básica; o resto lida com os casos especiais que vimos antes.</p>
+
+<p>Esta função está correta? O que acontece se <code class="highlighter-rouge">second</code> for muito mais que 60?</p>
+
+<p>Neste caso não basta transportar uma vez, temos que continuar fazendo isso até que time.second seja menos de 60. Uma solução é substituir a instrução <code class="highlighter-rouge">if</code> pela instrução <code class="highlighter-rouge">while</code>. Isso tornaria a função correta, mas não muito eficiente. Como exercício, escreva uma versão correta de <code class="highlighter-rouge">increment</code> que não contenha loops.</p>
+
+<p>O que se faz com modificadores também pode ser feito com funções puras. Na verdade, algumas linguagens de programação só permitem funções puras. Há evidências de que os programas que usam funções puras são mais rápidos para serem desenvolvidos e menos propensos a erros que programas que usam modificadores. No entanto, modificadores são convenientes de vez em quando, e os programas funcionais tendem a ser menos eficientes.</p>
+
+<p>De forma geral, recomendo que você escreva funções puras sempre que achar razoável e recorra a modificadores só se houver alguma vantagem clara. Esta abordagem pode ser chamada de <strong>programação funcional</strong>.</p>
+
+<p>Como exercício, escreva uma versão “pura” de increment que cria e retorna um objeto <code class="highlighter-rouge">Time</code> em vez de alterar o parâmetro.</p>
+
+<h2 id="164---prototipação-versus-planejamento">16.4 - Prototipação versus planejamento</h2>
+
+<p>O plano de desenvolvimento que estou demonstrando chama-se “protótipo e correção”. Para cada função, escrevi um protótipo que executa o cálculo básico e então testa a função, corrigindo erros no decorrer do caminho.</p>
+
+<p>Esta abordagem pode ser eficaz, especialmente se você ainda não tem uma compreensão profunda do problema. Porém, as correções incrementais podem gerar código que se complica desnecessariamente (pois trata de muitos casos especiais) e pouco confiáveis (já que é difícil saber se todos os erros foram encontrados).</p>
+
+<p>Uma alternativa é o desenvolvimento planejado, no qual a compreensão de alto nível do problema pode facilitar muito a programação. Neste caso, descobre-se que um objeto Time é, na verdade, um número de três dígitos na base 60 (veja http://en.wikipedia.org/wiki/Sexagesimal)! O atributo second é a “coluna de unidades”, o atributo minute é a “coluna dos 60”, e o atributo hour é a “coluna do 3.600”.</p>
+
+<p>Quando escrevemos <code class="highlighter-rouge">add_time</code> e <code class="highlighter-rouge">increment</code>, estávamos na verdade fazendo adições na base 60, e por isso transportávamos os resultados de uma coluna à seguinte.</p>
+
+<p>Essa observação sugere outra abordagem para o problema inteiro – podemos converter objetos <code class="highlighter-rouge">Time</code> em números inteiros e aproveitar o fato de que o computador sabe trabalhar com aritmética de números inteiros.</p>
+
+<p>Aqui está uma função que converte objetos <code class="highlighter-rouge">Time</code> em números inteiros:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">time_to_int</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">minutes</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">hour</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="n">time</span><span class="o">.</span><span class="n">minute</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">seconds</span> <span class="o">=</span> <span class="n">minutes</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="n">time</span><span class="o">.</span><span class="n">second</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">seconds</span>
+</code></pre></div></div>
+
+<p>E aqui está uma função que converte um número inteiro em um <code class="highlighter-rouge">Time</code> (lembre-se de que <code class="highlighter-rouge">divmod</code> divide o primeiro argumento pelo segundo e devolve o quociente e o resto como uma tupla):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">int_to_time</span><span class="p">(</span><span class="n">seconds</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">time</span> <span class="o">=</span> <span class="n">Time</span><span class="p">()</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">minutes</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">second</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">seconds</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">time</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">minute</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">minutes</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">time</span>
+</code></pre></div></div>
+
+<p>Você pode ter que pensar um pouco e fazer alguns testes, para se convencer de que essas funções estão corretas. Um modo de testá-las é ver se <code class="highlighter-rouge">time_to_int(int_to_time(x)) == x</code> para muitos valores de <code class="highlighter-rouge">x</code>. Este é um exemplo de uma verificação de consistência.</p>
+
+<p>Uma vez que esteja convencido de que estão corretas, você pode usá-las para reescrever <code class="highlighter-rouge">add_time</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">add_time</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">seconds</span> <span class="o">=</span> <span class="n">time_to_int</span><span class="p">(</span><span class="n">t1</span><span class="p">)</span> <span class="o">+</span> <span class="n">time_to_int</span><span class="p">(</span><span class="n">t2</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">int_to_time</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Esta versão é mais curta que a original, e mais fácil de verificar. Como exercício, reescreva <code class="highlighter-rouge">increment</code> usando <code class="highlighter-rouge">time_to_int</code> e <code class="highlighter-rouge">int_to_time</code>.</p>
+
+<p>Em algumas situações, converter da base 60 para a base 10 e de volta é mais difícil que apenas lidar com as horas. A conversão de base é mais abstrata; nossa intuição para lidar com valores temporais é melhor.</p>
+
+<p>No entanto, se tivermos discernimento para lidar com horas como números de base 60 e investirmos esforço em escrever as funções de conversão (<code class="highlighter-rouge">time_to_int</code> e <code class="highlighter-rouge">int_to_time</code>), chegamos a um programa que é mais curto, mais fácil de ler e depurar, e mais confiável.</p>
+
+<p>Também é mais fácil acrescentar recursos depois. Por exemplo, imagine subtrair dois objetos <code class="highlighter-rouge">Time</code> para encontrar a duração entre eles. Uma abordagem ingênua seria implementar a subtração com transporte. Porém, usar funções de conversão seria mais fácil e, provavelmente, mais correto.</p>
+
+<p>Ironicamente, tornar um problema mais difícil (ou mais geral) facilita (porque há menos casos especiais e menos oportunidades de erro).</p>
+
+<h2 id="165---depuração">16.5 - Depuração</h2>
+
+<p>Um objeto <code class="highlighter-rouge">Time</code> é bem formado se os valores de <code class="highlighter-rouge">minute</code> e <code class="highlighter-rouge">second</code> estiverem entre 0 e 60 (incluindo 0, mas não 60) e se <code class="highlighter-rouge">hour</code> for positivo. <code class="highlighter-rouge">hour</code> e <code class="highlighter-rouge">minute</code> devem ser valores inteiros, mas podemos permitir que <code class="highlighter-rouge">second</code> tenha uma parte fracionária.</p>
+
+<p>Requisitos como esses chamam-se invariáveis porque sempre devem ser verdadeiros. Para dizer de outra forma, se não forem verdadeiros, algo deu errado.</p>
+
+<p>Escrever código para verificar requisitos invariáveis pode ajudar a descobrir erros e encontrar suas causas. Por exemplo, você pode ter uma função como valid_time, que receba um objeto Time e retorne False se ele violar um requisito invariável:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">valid_time</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">hour</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">time</span><span class="o">.</span><span class="n">minute</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">time</span><span class="o">.</span><span class="n">second</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">False</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">minute</span> <span class="o">&gt;=</span> <span class="mi">60</span> <span class="ow">or</span> <span class="n">time</span><span class="o">.</span><span class="n">second</span> <span class="o">&gt;=</span> <span class="mi">60</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">False</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="bp">True</span>
+</code></pre></div></div>
+
+<p>No início de cada função você pode verificar os argumentos para ter certeza de que são válidos:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">add_time</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="ow">not</span> <span class="n">valid_time</span><span class="p">(</span><span class="n">t1</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">valid_time</span><span class="p">(</span><span class="n">t2</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">raise</span> <span class="nb">ValueError</span><span class="p">(</span><span class="s">'invalid Time object in add_time'</span><span class="p">)</span>
+
+<span class="err"> </span> <span class="err"> </span> <span class="n">seconds</span> <span class="o">=</span> <span class="n">time_to_int</span><span class="p">(</span><span class="n">t1</span><span class="p">)</span> <span class="o">+</span> <span class="n">time_to_int</span><span class="p">(</span><span class="n">t2</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">int_to_time</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Ou você pode usar uma instrução <code class="highlighter-rouge">assert</code>, que verifica determinado requisito invariável e cria uma exceção se ela falhar:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">add_time</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">assert</span> <span class="n">valid_time</span><span class="p">(</span><span class="n">t1</span><span class="p">)</span> <span class="ow">and</span> <span class="n">valid_time</span><span class="p">(</span><span class="n">t2</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">seconds</span> <span class="o">=</span> <span class="n">time_to_int</span><span class="p">(</span><span class="n">t1</span><span class="p">)</span> <span class="o">+</span> <span class="n">time_to_int</span><span class="p">(</span><span class="n">t2</span><span class="p">)</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">int_to_time</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Instruções assert são úteis porque distinguem o código que lida com condições normais do código que verifica erros.</p>
+
+<h2 id="166---glossário">16.6 - Glossário</h2>
+
+<dl>
+<dt><a id="glos:protótipo e correção" href="16-classes-funcoes.html#termo:protótipo e correção">protótipo e correção</a></dt>
+<dd>Plano de desenvolvimento no qual a escrita do programa parte de um esboço inicial, e depois segue ao teste e correção de erros, conforme sejam encontrados.</dd>
+
+<dt><a id="glos:desenvolvimento planejado" href="16-classes-funcoes.html#termo:desenvolvimento planejado">desenvolvimento planejado</a></dt>
+<dd>Plano de desenvolvimento que implica uma compreensão de alto nível do problema e mais planejamento que desenvolvimento incremental ou desenvolvimento prototipado.</dd>
+
+<dt><a id="glos:função pura" href="16-classes-funcoes.html#termo:função pura">função pura</a></dt>
+<dd>Função que não altera nenhum dos objetos que recebe como argumento. A maior parte das funções puras gera resultado.</dd>
+
+<dt><a id="glos:modificador" href="16-classes-funcoes.html#termo:modificador">modificador</a></dt>
+<dd>Função que modifica um ou vários dos objetos que recebe como argumento. A maior parte dos modificadores são nulos; isto é, retornam None.</dd>
+
+<dt><a id="glos:programação funcional" href="16-classes-funcoes.html#termo:programação funcional">programação funcional</a></dt>
+<dd>Estilo de projeto de programa no qual a maioria das funções são puras.</dd>
+
+<dt><a id="glos:invariável" href="16-classes-funcoes.html#termo:invariável">invariável</a></dt>
+<dd>Condição que sempre deve ser verdadeira durante a execução de um programa.</dd>
+
+<dt><a id="glos:instrução assert" href="16-classes-funcoes.html#termo:instrução assert">instrução assert</a></dt>
+<dd>Instrução que verifica uma condição e levanta uma exceção se esta falhar.</dd>
+
+</dl>
+
+<h2 id="167---exercícios">16.7 - Exercícios</h2>
+
+<p>Os exemplos de código deste capítulo estão disponíveis em http://thinkpython2.com/code/Time1.py; as soluções para os exercícios estão disponíveis em http://thinkpython2.com/code/Time1_soln.py.</p>
+
+<h3 id="exercício-161">Exercício 16.1</h3>
+
+<p>Escreva uma função chamada <code class="highlighter-rouge">mul_time</code> que receba um objeto <code class="highlighter-rouge">Time</code> e um número e retorne um novo objeto <code class="highlighter-rouge">Time</code> que contenha o produto do <code class="highlighter-rouge">Time</code> original e do número.</p>
+
+<p>Então use <code class="highlighter-rouge">mul_time</code> para escrever uma função que receba um objeto <code class="highlighter-rouge">Time</code> representando o tempo até o fim de uma corrida e um número que represente a distância, e retorne um objeto <code class="highlighter-rouge">Time</code> com o passo médio (tempo por milha).</p>
+
+<h3 id="exercício-162">Exercício 16.2</h3>
+
+<p>O módulo <code class="highlighter-rouge">datetime</code> fornece objetos <code class="highlighter-rouge">time</code> que são semelhantes aos objetos <code class="highlighter-rouge">Time</code> deste capítulo, mas ele oferece um grande conjunto de métodos e operadores. Leia a documentação em http://docs.python.org/3/library/datetime.html.</p>
+
+<ol>
+  <li>
+    <p>Use o módulo <code class="highlighter-rouge">datetime</code> para escrever um programa que receba a data atual e exiba o dia da semana.</p>
+  </li>
+  <li>
+    <p>Escreva um programa que receba um aniversário como entrada e exiba a idade do usuário e o número de dias, horas, minutos e segundos até o seu próximo aniversário.</p>
+  </li>
+  <li>
+    <p>Para duas pessoas nascidas em dias diferentes, há um dia em que a idade de uma equivale a duas vezes a da outra. Este é o Dia Duplo delas. Escreva um programa que receba dois aniversários e calcule o Dia Duplo dos aniversariantes.</p>
+  </li>
+  <li>
+    <p>Para um desafio um pouco maior, escreva a versão mais geral que calcule o dia em que uma pessoa é N vezes mais velha que a outra.</p>
+  </li>
+</ol>
+
+
+      <footer class="site-footer">
+        
+          <span class="site-footer-owner"><a href="https://github.com/PenseAllen/PensePython2e">PensePython2e</a> is maintained by <a href="https://github.com/PenseAllen">PenseAllen</a>.</span>
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </section>
+
+    
+  </body>
+</html>

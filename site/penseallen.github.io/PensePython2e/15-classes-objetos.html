@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Capítulo 15: Classes e objetos | PensePython2e</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Capítulo 15: Classes e objetos" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey" />
+<meta property="og:description" content="Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey" />
+<link rel="canonical" href="15-classes-objetos.html" />
+<meta property="og:url" content="https://penseallen.github.io/PensePython2e/15-classes-objetos.html" />
+<meta property="og:site_name" content="PensePython2e" />
+<script type="application/ld+json">
+{"@type":"WebPage","headline":"Capítulo 15: Classes e objetos","url":"https://penseallen.github.io/PensePython2e/15-classes-objetos.html","description":"Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <link rel="stylesheet" href="assets/css/style.css@v=afa460130599dbde01620e86c38923f785023956.css">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">PensePython2e</h1>
+      <h2 class="project-tagline">Tradução do livro Pense em Python (2ª ed.), de Allen B. Downey</h2>
+      
+        <a href="https://github.com/PenseAllen/PensePython2e" class="btn">View on GitHub</a>
+      
+      
+    </section>
+
+    <section class="main-content">
+      <h1 id="capítulo-15-classes-e-objetos">Capítulo 15: Classes e objetos</h1>
+
+<p>A esta altura você já sabe como usar funções para organizar código e tipos integrados para organizar dados. O próximo passo é aprender “programação orientada a objeto”, que usa tipos definidos pelos programadores para organizar tanto o código quanto os dados. A programação orientada a objeto é um tópico abrangente; será preciso passar por alguns capítulos para abordar o tema.</p>
+
+<p>Os exemplos de código deste capítulo estão disponíveis em http://thinkpython2.com/code/Point1.py; as soluções para os exercícios estão disponíveis em http://thinkpython2.com/code/Point1_soln.py.</p>
+
+<h2 id="151---tipos-definidos-pelos-programadores">15.1 - Tipos definidos pelos programadores</h2>
+
+<p>Já usamos muitos tipos integrados do Python; agora vamos definir um tipo próprio. Como exemplo, criaremos um tipo chamado <code class="highlighter-rouge">Point</code>, que representa um ponto no espaço bidimensional.</p>
+
+<p>Na notação matemática, os pontos muitas vezes são escritos entre parênteses, com uma vírgula separando as coordenadas. Por exemplo, (0,0) representa a origem e (x, y) representa o ponto que está x unidades à direita e y unidades acima da origem.</p>
+
+<p>Há várias formas para representar pontos no Python:</p>
+
+<ul>
+  <li>
+    <p>Podemos armazenar as coordenadas separadamente em duas variáveis, x e y.</p>
+  </li>
+  <li>
+    <p>Podemos armazenar as coordenadas como elementos em uma lista ou tupla.</p>
+  </li>
+  <li>
+    <p>Podemos criar um tipo para representar pontos como objetos.</p>
+  </li>
+</ul>
+
+<p>Criar um tipo é mais complicado que outras opções, mas tem vantagens que logo ficarão evidentes.</p>
+
+<p>Um tipo definido pelo programador também é chamado de classe. Uma definição de classe pode ser assim:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Point</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="s">"""Represents a point in 2-D space."""</span>
+</code></pre></div></div>
+
+<p>O cabeçalho indica que a nova classe se chama <code class="highlighter-rouge">Point</code>. O corpo é uma docstring que explica para que a classe serve. Você pode definir variáveis e métodos dentro de uma definição de classe, mas voltaremos a isso depois.</p>
+
+<p>Definir uma classe denominada <code class="highlighter-rouge">Point</code> cria um objeto de classe:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">Point</span>
+<span class="o">&lt;</span><span class="k">class</span> <span class="err">'</span><span class="nc">__main__</span><span class="o">.</span><span class="n">Point</span><span class="s">'&gt;</span><span class="err">
+</span></code></pre></div></div>
+
+<p>Como <code class="highlighter-rouge">Point</code> é definido no nível superior, seu “nome completo” é <code class="highlighter-rouge">__main__.Point</code>.</p>
+
+<p>O objeto de classe é como uma fábrica para criar objetos. Para criar um <code class="highlighter-rouge">Point</code>, você chama <code class="highlighter-rouge">Point</code> como se fosse uma função:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">blank</span> <span class="o">=</span> <span class="n">Point</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">blank</span>
+<span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">Point</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0xb7e9d3ac</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p>O valor de retorno é uma referência a um objeto <code class="highlighter-rouge">Point</code>, ao qual atribuímos blank.</p>
+
+<p>Criar um objeto chama-se instanciação, e o objeto é uma instância da classe.</p>
+
+<p>Quando você exibe uma instância, o Python diz a que classe ela pertence e onde está armazenada na memória (o prefixo o 0x significa que o número seguinte está em formato hexadecimal).</p>
+
+<p>Cada objeto é uma instância de alguma classe, então “objeto” e “instância” são intercambiáveis. Porém, neste capítulo uso “instância” para indicar que estou falando sobre um tipo definido pelo programador.</p>
+
+<h2 id="152---atributos">15.2 - Atributos</h2>
+
+<p>Você pode atribuir valores a uma instância usando a notação de ponto:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">blank</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">3.0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">blank</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mf">4.0</span>
+</code></pre></div></div>
+
+<p>Essa sintaxe é semelhante à usada para selecionar uma variável de um módulo, como math.pi ou string.whitespace. Nesse caso, entretanto, estamos atribuindo valores a elementos nomeados de um objeto. Esses elementos chamam-se atributos.</p>
+
+<p>Em inglês, quando é um substantivo, a palavra “AT-trib-ute” é pronunciada com ênfase na primeira sílaba, ao contrário de “a-TRIB-ute”, que é um verbo.</p>
+
+<p>O diagrama seguinte mostra o resultado dessas atribuições. Um diagrama de estado que mostra um objeto e seus atributos chama-se diagrama de objeto; veja a Figura 15.1.</p>
+
+<p><img src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_1501.png" alt="Figura 15.1 – Diagrama de um objeto Point." />
+<br /><em>Figura 15.1 – Diagrama de um objeto</em> <code class="highlighter-rouge">Point</code>.</p>
+
+<p>A variável blank refere-se a um objeto <code class="highlighter-rouge">Point</code>, que contém dois atributos. Cada atributo refere-se a um número de ponto flutuante.</p>
+
+<p>Você pode ler o valor de um atributo usando a mesma sintaxe:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">blank</span><span class="o">.</span><span class="n">y</span>
+<span class="mf">4.0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">blank</span><span class="o">.</span><span class="n">x</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span>
+<span class="mf">3.0</span>
+</code></pre></div></div>
+
+<p>A expressão <code class="highlighter-rouge">blank.x</code> significa “Vá ao objeto a que blank se refere e pegue o valor de x”. No exemplo, atribuímos este valor a uma variável <code class="highlighter-rouge">x</code>. Não há nenhum conflito entre a variável <code class="highlighter-rouge">x</code> e o atributo <code class="highlighter-rouge">x</code>.</p>
+
+<p>Você pode usar a notação de ponto como parte de qualquer expressão. Por exemplo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="s">'(</span><span class="si">%</span><span class="s">g, </span><span class="si">%</span><span class="s">g)'</span> <span class="o">%</span> <span class="p">(</span><span class="n">blank</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">blank</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+<span class="s">'(3.0, 4.0)'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">distance</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">blank</span><span class="o">.</span><span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">blank</span><span class="o">.</span><span class="n">y</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">distance</span>
+<span class="mf">5.0</span>
+</code></pre></div></div>
+
+<p>Você pode passar uma instância como argumento da forma habitual. Por exemplo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">print_point</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">print</span><span class="p">(</span><span class="s">'(</span><span class="si">%</span><span class="s">g, </span><span class="si">%</span><span class="s">g)'</span> <span class="o">%</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">print_point</code> toma um ponto como argumento e o exibe em notação matemática. Para invocá-lo, você pode passar <code class="highlighter-rouge">blank</code> como argumento:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">print_point</span><span class="p">(</span><span class="n">blank</span><span class="p">)</span>
+<span class="p">(</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Dentro da função, <code class="highlighter-rouge">p</code> é um alias para <code class="highlighter-rouge">blank</code>, então, se a função altera <code class="highlighter-rouge">p</code>, <code class="highlighter-rouge">blank</code> também muda.</p>
+
+<p>Como exercício, escreva uma função chamada <code class="highlighter-rouge">distance_between_points</code>, que toma dois pontos como argumentos e retorna a distância entre eles.</p>
+
+<h2 id="153---retângulos">15.3 - Retângulos</h2>
+
+<p>Às vezes, é óbvio quais deveriam ser os atributos de um objeto, mas outras é preciso decidir entre as possibilidades. Por exemplo, vamos supor que você esteja criando uma classe para representar retângulos. Que atributos usaria para especificar a posição e o tamanho de um retângulo? Você pode ignorar ângulo; para manter as coisas simples, suponha que o retângulo seja vertical ou horizontal.</p>
+
+<p>Há duas possibilidades, no mínimo:</p>
+
+<ul>
+  <li>
+    <p>Você pode especificar um canto do retângulo (ou o centro), a largura e a altura.</p>
+  </li>
+  <li>
+    <p>Você pode especificar dois cantos opostos.</p>
+  </li>
+</ul>
+
+<p>Nesse ponto é difícil dizer qual opção é melhor, então implementaremos a primeira, como exemplo.</p>
+
+<p>Aqui está a definição de classe:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Rectangle</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="s">"""Represents a rectangle.
+    attributes: width, height, corner.
+    """</span>
+</code></pre></div></div>
+
+<p>A docstring lista os atributos: width e height são números; corner é um objeto <code class="highlighter-rouge">Point</code> que especifica o canto inferior esquerdo.</p>
+
+<p>Para representar um retângulo, você tem que instanciar um objeto <code class="highlighter-rouge">Rectangle</code> e atribuir valores aos atributos:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">box</span> <span class="o">=</span> <span class="n">Rectangle</span><span class="p">()</span>
+<span class="n">box</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="mf">100.0</span>
+<span class="n">box</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="mf">200.0</span>
+<span class="n">box</span><span class="o">.</span><span class="n">corner</span> <span class="o">=</span> <span class="n">Point</span><span class="p">()</span>
+<span class="n">box</span><span class="o">.</span><span class="n">corner</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">box</span><span class="o">.</span><span class="n">corner</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mf">0.0</span>
+</code></pre></div></div>
+
+<p>A expressão <code class="highlighter-rouge">box.corner.x</code> significa “Vá ao objeto ao qual <code class="highlighter-rouge">box</code> se refere e pegue o atributo denominado <code class="highlighter-rouge">corner</code>; então vá a este objeto e pegue o atributo denominado <code class="highlighter-rouge">x</code>”.</p>
+
+<p>A Figura 15.2 mostra o estado deste objeto. Um objeto que é um atributo de outro objeto é integrado.</p>
+
+<p>A Figura 10.1 mostra o diagrama de estado para cheeses, numbers e empty.</p>
+
+<p><img src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_1502.png" alt="Figura 15.2 – Diagrama de um objeto Rectangle." />
+<br /><em>Figura 15.2 – Diagrama de um objeto</em> <code class="highlighter-rouge">Rectangle</code>.</p>
+
+<h2 id="154---instâncias-como-valores-de-retorno">15.4 - Instâncias como valores de retorno</h2>
+
+<p>As funções podem retornar instâncias. Por exemplo, <code class="highlighter-rouge">find_center</code> recebe um <code class="highlighter-rouge">Rectangle</code> como argumento e devolve um <code class="highlighter-rouge">Point</code>, que contém as coordenadas do centro do retângulo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">find_center</span><span class="p">(</span><span class="n">rect</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">p</span> <span class="o">=</span> <span class="n">Point</span><span class="p">()</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">p</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">rect</span><span class="o">.</span><span class="n">corner</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">p</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">rect</span><span class="o">.</span><span class="n">corner</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">rect</span><span class="o">.</span><span class="n">height</span><span class="o">/</span><span class="mi">2</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="n">p</span>
+</code></pre></div></div>
+
+<p>Aqui está um exemplo que passa <code class="highlighter-rouge">box</code> como um argumento para <code class="highlighter-rouge">find_center</code> e atribui o <code class="highlighter-rouge">ponto</code> resultante à variável <code class="highlighter-rouge">center</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">center</span> <span class="o">=</span> <span class="n">find_center</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">print_point</span><span class="p">(</span><span class="n">center</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="155---objetos-são-mutáveis">15.5 - Objetos são mutáveis</h2>
+
+<p>Você pode alterar o estado de um objeto fazendo uma atribuição a um dos seus atributos. Por exemplo, para mudar o tamanho de um retângulo sem mudar sua posição, você pode alterar os valores de width e height:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">box</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">width</span> <span class="o">+</span> <span class="mi">50</span>
+<span class="n">box</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">height</span> <span class="o">+</span> <span class="mi">100</span>
+</code></pre></div></div>
+
+<p>Você também pode escrever funções que alteram objetos. Por exemplo, <code class="highlighter-rouge">grow_rectangle</code> recebe um objeto <code class="highlighter-rouge">Rectangle</code> e dois números, <code class="highlighter-rouge">dwidth</code> e <code class="highlighter-rouge">dheight</code>, e adiciona os números à largura e altura do retângulo:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">grow_rectangle</span><span class="p">(</span><span class="n">rect</span><span class="p">,</span> <span class="n">dwidth</span><span class="p">,</span> <span class="n">dheight</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">rect</span><span class="o">.</span><span class="n">width</span> <span class="o">+=</span> <span class="n">dwidth</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">rect</span><span class="o">.</span><span class="n">height</span> <span class="o">+=</span> <span class="n">dheight</span>
+</code></pre></div></div>
+
+<p>Eis um exemplo que demonstra o efeito:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">box</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">box</span><span class="o">.</span><span class="n">height</span>
+<span class="p">(</span><span class="mf">150.0</span><span class="p">,</span> <span class="mf">300.0</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">grow_rectangle</span><span class="p">(</span><span class="n">box</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">box</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">box</span><span class="o">.</span><span class="n">height</span>
+<span class="p">(</span><span class="mf">200.0</span><span class="p">,</span> <span class="mf">400.0</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Dentro da função, <code class="highlighter-rouge">rect</code> é um alias de <code class="highlighter-rouge">box</code>, então quando a função altera <code class="highlighter-rouge">rect</code>, <code class="highlighter-rouge">box</code> aponta para o objeto alterado.</p>
+
+<p>Como exercício, escreva uma função chamada <code class="highlighter-rouge">move_rectangle</code> que toma um Rectangle e dois números chamados dx e dy. Ela deve alterar a posição do retângulo, adicionando dx à coordenada x de corner e adicionando dy à coordenada y de corner.</p>
+
+<h2 id="156---cópia">15.6 - Cópia</h2>
+
+<p>Alias podem tornar um programa difícil de ler porque as alterações em um lugar podem ter efeitos inesperados em outro lugar. É difícil monitorar todas as variáveis que podem referir-se a um dado objeto.</p>
+
+<p>Em vez de usar alias, copiar o objeto pode ser uma alternativa. O módulo <code class="highlighter-rouge">copy</code> contém uma função chamada <code class="highlighter-rouge">copy</code> que pode duplicar qualquer objeto:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">Point</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">p1</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">3.0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">p1</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mf">4.0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">copy</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">p1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">p1</code> e <code class="highlighter-rouge">p2</code> contêm os mesmos dados, mas não são o mesmo <code class="highlighter-rouge">Point</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">print_point</span><span class="p">(</span><span class="n">p1</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">print_point</span><span class="p">(</span><span class="n">p2</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">p1</span> <span class="ow">is</span> <span class="n">p2</span>
+<span class="bp">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">p1</span> <span class="o">==</span> <span class="n">p2</span>
+<span class="bp">False</span>
+</code></pre></div></div>
+
+<p>O operador <code class="highlighter-rouge">is</code> indica que <code class="highlighter-rouge">p1</code> e <code class="highlighter-rouge">p2</code> não são o mesmo objeto, que é o que esperamos. Porém, você poderia ter esperado que <code class="highlighter-rouge">==</code> fosse apresentado como <code class="highlighter-rouge">True</code>, porque esses pontos contêm os mesmos dados. Nesse caso, pode ficar desapontado ao saber que, para instâncias, o comportamento padrão do operador <code class="highlighter-rouge">==</code> é o mesmo que o do operador <code class="highlighter-rouge">is</code>; ele verifica a identidade dos objetos, não a sua equivalência. Isso acontece porque, para tipos definidos pelo programador, o Python não sabe o que deve ser considerado equivalente. Pelo menos, ainda não.</p>
+
+<p>Se você usar <code class="highlighter-rouge">copy.copy</code> para duplicar um retângulo, descobrirá que ele copia o objeto <code class="highlighter-rouge">Rectangle</code>, mas não o <code class="highlighter-rouge">Point</code> embutido nele:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">box2</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">box2</span> <span class="ow">is</span> <span class="n">box</span>
+<span class="bp">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">box2</span><span class="o">.</span><span class="n">corner</span> <span class="ow">is</span> <span class="n">box</span><span class="o">.</span><span class="n">corner</span>
+<span class="bp">True</span>
+</code></pre></div></div>
+
+<p>A Figura 15.3 mostra como fica o diagrama de objeto. Esta operação chama-se cópia superficial porque copia o objeto e qualquer referência que contenha, mas não os objetos integrados.</p>
+
+<p><img src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_1503.png" alt="Figura 15.3 – Diagrama: dois objetos Rectangle compartilhando o mesmo Point." />
+<br /><em>Figura 15.3 – Diagrama: dois objetos</em> <code class="highlighter-rouge">Rectangle</code> <em>compartilhando o mesmo</em> <code class="highlighter-rouge">Point</code>.</p>
+
+<p>Para a maior parte das aplicações, não é isso que você quer. Nesse exemplo, invocar <code class="highlighter-rouge">grow_rectangle</code> em um dos Rectangles não afetaria o outro, mas invocar <code class="highlighter-rouge">move_rectangle</code> em qualquer um deles afetaria a ambos! Esse comportamento é confuso e propenso a erros.</p>
+
+<p>Felizmente, o módulo <code class="highlighter-rouge">copy</code> oferece um método chamado <code class="highlighter-rouge">deepcopy</code> que copia não só o objeto, mas também os objetos aos quais ele se refere, e os objetos aos quais estes se referem, e assim por diante. Você não se surpreenderá ao descobrir que esta operação se chama cópia profunda.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">box3</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">box3</span> <span class="ow">is</span> <span class="n">box</span>
+<span class="bp">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">box3</span><span class="o">.</span><span class="n">corner</span> <span class="ow">is</span> <span class="n">box</span><span class="o">.</span><span class="n">corner</span>
+<span class="bp">False</span>
+<span class="n">box3</span> <span class="n">e</span> <span class="n">box</span> <span class="n">s</span><span class="err">ã</span><span class="n">o</span> <span class="n">objetos</span> <span class="n">completamente</span> <span class="n">separados</span><span class="o">.</span>
+</code></pre></div></div>
+
+<p>Como exercício, escreva uma versão de <code class="highlighter-rouge">move_rectangle</code> que cria e retorne um novo retângulo em vez de alterar o antigo.</p>
+
+<h2 id="157---depuração">15.7 - Depuração</h2>
+
+<p>Ao começar a trabalhar com objetos, provavelmente você encontrará algumas novas exceções. Se tentar acessar um atributo que não existe, recebe um <code class="highlighter-rouge">AttributeError</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">p</span> <span class="o">=</span> <span class="n">Point</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">p</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">p</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">p</span><span class="o">.</span><span class="n">z</span>
+<span class="nb">AttributeError</span><span class="p">:</span> <span class="n">Point</span> <span class="n">instance</span> <span class="n">has</span> <span class="n">no</span> <span class="n">attribute</span> <span class="s">'z'</span>
+</code></pre></div></div>
+
+<p>Se não estiver certo sobre o tipo que um objeto é, pode perguntar:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="nb">type</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="k">class</span> <span class="err">'</span><span class="nc">__main__</span><span class="o">.</span><span class="n">Point</span><span class="s">'&gt;</span><span class="err">
+</span></code></pre></div></div>
+
+<p>Você também pode usar <code class="highlighter-rouge">isinstance</code> para verificar se um objeto é uma instância de uma classe:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">Point</span><span class="p">)</span>
+<span class="bp">True</span>
+</code></pre></div></div>
+
+<p>Caso não tenha certeza se um objeto tem determinado atributo, você pode usar a função integrada <code class="highlighter-rouge">hasattr</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s">'x'</span><span class="p">)</span>
+<span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s">'z'</span><span class="p">)</span>
+<span class="bp">False</span>
+</code></pre></div></div>
+
+<p>O primeiro argumento pode ser qualquer objeto; o segundo argumento é uma <code class="highlighter-rouge">string</code> com o nome do atributo.</p>
+
+<p>Você também pode usar uma instrução <code class="highlighter-rouge">try</code> para ver se o objeto tem os atributos de que precisa:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">x</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">x</span>
+<span class="k">except</span> <span class="nb">AttributeError</span><span class="p">:</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+</code></pre></div></div>
+
+<p>Essa abordagem pode facilitar a escrita de funções que atuam com tipos diferentes; você verá mais informações sobre isso em “Polimorfismo”, na página 248.</p>
+
+<h2 id="158---glossário">15.8 - Glossário</h2>
+
+<dl>
+<dt><a id="glos:classe" href="15-classes-objetos.html#termo:classe">classe</a></dt>
+<dd>Tipo definido pelo programador. Uma definição de classe cria um objeto de classe.</dd>
+
+<dt><a id="glos:objeto de classe" href="15-classes-objetos.html#termo:objeto de classe">objeto de classe</a></dt>
+<dd>Objeto que contém a informação sobre um tipo definido pelo programador. O objeto de classe pode ser usado para criar instâncias do tipo.</dd>
+
+<dt><a id="glos:instância" href="15-classes-objetos.html#termo:instância">instância</a></dt>
+<dd>Objeto que pertence a uma classe.</dd>
+
+<dt><a id="glos:instanciar" href="15-classes-objetos.html#termo:instanciar">instanciar</a></dt>
+<dd>Criar um objeto.</dd>
+
+<dt><a id="glos:atributo" href="15-classes-objetos.html#termo:atributo">atributo</a></dt>
+<dd>Um dos valores denominados associados a um objeto.</dd>
+
+<dt><a id="glos:objeto integrado" href="15-classes-objetos.html#termo:objeto integrado">objeto integrado</a></dt>
+<dd>Objeto que é armazenado como um atributo de outro objeto.</dd>
+
+<dt><a id="glos:cópia superficial" href="15-classes-objetos.html#termo:cópia superficial">cópia superficial</a></dt>
+<dd>Copiar o conteúdo de um objeto, inclusive qualquer referência a objetos integrados; implementada pela função copy no módulo copy.</dd>
+
+<dt><a id="glos:cópia profunda" href="15-classes-objetos.html#termo:cópia profunda">cópia profunda</a></dt>
+<dd>Copiar o conteúdo de um objeto, bem como qualquer objeto integrado, e qualquer objeto integrado a estes, e assim por diante; implementado pela função deepcopy no módulo copy.</dd>
+
+<dt><a id="glos:diagrama de objeto" href="15-classes-objetos.html#termo:diagrama de objeto">diagrama de objeto</a></dt>
+<dd>Diagrama que mostra objetos, seus atributos e os valores dos atributos.</dd>
+
+</dl>
+
+<h2 id="159---exercícios">15.9 - Exercícios</h2>
+
+<h3 id="exercício-151">Exercício 15.1</h3>
+
+<ol>
+  <li>
+    <p>Escreva uma definição para uma classe denominada <code class="highlighter-rouge">Circle</code>, com os atributos center e radius, onde center é um objeto <code class="highlighter-rouge">Point</code> e radius é um número.</p>
+  </li>
+  <li>
+    <p>Instancie um objeto <code class="highlighter-rouge">Circle</code>, que represente um círculo com o centro em 150, 100 e raio 75.</p>
+  </li>
+  <li>
+    <p>Escreva uma função denominada <code class="highlighter-rouge">point_in_circle</code>, que tome um <code class="highlighter-rouge">Circle</code> e um <code class="highlighter-rouge">Point</code> e retorne <code class="highlighter-rouge">True</code>, se o ponto estiver dentro ou no limite do círculo.</p>
+  </li>
+  <li>
+    <p>Escreva uma função chamada <code class="highlighter-rouge">rect_in_circle</code>, que tome um <code class="highlighter-rouge">Circle</code> e um Rectangle e retorne <code class="highlighter-rouge">True</code>, se o retângulo estiver totalmente dentro ou no limite do círculo.</p>
+  </li>
+  <li>
+    <p>Escreva uma função denominada <code class="highlighter-rouge">rect_circle_overlap</code>, que tome um <code class="highlighter-rouge">Circle</code> e um Rectangle e retorne <code class="highlighter-rouge">True</code>, se algum dos cantos do retângulo cair dentro do círculo. Ou, em uma versão mais desafiadora, retorne <code class="highlighter-rouge">True</code> se alguma parte do retângulo cair dentro do círculo.</p>
+  </li>
+</ol>
+
+<p>Solução: http://thinkpython2.com/code/Circle.py.</p>
+
+<h3 id="exercício-152">Exercício 15.2</h3>
+
+<ol>
+  <li>
+    <p>Escreva uma função chamada <code class="highlighter-rouge">draw_rect</code> que receba um objeto <code class="highlighter-rouge">Turtle</code> e um <code class="highlighter-rouge">Rectangle</code> e use o <code class="highlighter-rouge">Turtle</code> para desenhar o retângulo. Veja no Capítulo 4 os exemplos de uso de objetos <code class="highlighter-rouge">Turtle</code>.</p>
+  </li>
+  <li>
+    <p>Escreva uma função chamada <code class="highlighter-rouge">draw_circle</code>, que tome um Turtle e um <code class="highlighter-rouge">Circle</code> e desenhe o círculo.</p>
+  </li>
+</ol>
+
+
+      <footer class="site-footer">
+        
+          <span class="site-footer-owner"><a href="https://github.com/PenseAllen/PensePython2e">PensePython2e</a> is maintained by <a href="https://github.com/PenseAllen">PenseAllen</a>.</span>
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </section>
+
+    
+  </body>
+</html>
